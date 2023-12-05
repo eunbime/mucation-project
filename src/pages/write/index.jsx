@@ -1,7 +1,13 @@
 import React from 'react';
 
 const Write = () => {
-  return <div>Write</div>;
+  return (
+    <Container>
+      <Video></Video>
+      <Form></Form>
+      <Map></Map>
+    </Container>
+  );
 };
 
 export default Write;
