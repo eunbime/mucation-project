@@ -52,6 +52,29 @@ const GlobalStyles = createGlobalStyle`
     border-spacing: 0;
   }
 
+  :root {
+    --mainWhite: #fff
+    --mainBlack: #222
+  }
+
+  * {
+        box-sizing: border-box;
+    }
+
+  a {
+      text-decoration: none;
+      color: black;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+  }
+
+  .material-icons {
+      font-size: 30px;
+  }
+
 `;
 
 export default GlobalStyles;
