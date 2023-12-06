@@ -7,6 +7,7 @@ import Write from 'pages/write';
 import Profile from 'pages/profile';
 import Login from 'pages/login';
 
+
 const Router = () => {
   return (
     <BrowserRouter>
