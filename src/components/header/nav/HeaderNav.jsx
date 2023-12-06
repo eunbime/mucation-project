@@ -4,9 +4,9 @@ import styled from 'styled-components';
 const HeaderNav = () => {
   return (
     <Container>
-      <div>로그인</div>
-      <div>로그아웃</div>
-      <div>프로필</div>
+      <button>로그인</button>
+      <button>로그아웃</button>
+      <button>프로필</button>
     </Container>
   );
 };
