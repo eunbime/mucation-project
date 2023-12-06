@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import WritePageTitle from './WritePageTitle';
@@ -6,13 +6,30 @@ import WritePageContext from './WritePageContext';
 import WritePageMap from './WritePageMap';
 import Button from 'components/common/Button';
 import WritePageVideoArea from './WritePageVideoArea';
-import WriteModalBtn from './WriteModal'
+import WriteModalSearch from './WriteModalSearch';
+import WriteModal from './WriteModal';
+
 const Write = () => {
   // 동영상 선택시 선택된 동영상 정보 저장
-  const [selectVideo, setSelectVideo] = useState('udkrTgTMucQ');
+  const [selectVideo, setSelectVideo] = useState(null);
 
   // 유저 입력 data
   const [inputValue, setInputValue] = useState({ title: '', context: '' });
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    console.log(selectVideo);
+  }, [selectVideo]);
+
+  const toggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  // 동영상 선택 모달 오픈
+  const selectVideoModalOpenHandler = () => {
+    toggleModal();
+  };
 
   // set User input
   const setTitleValue = (e) => {
@@ -26,13 +43,6 @@ const Write = () => {
     setInputValue((prev) => {
       return { ...prev, context: e.target.value };
     });
-  };
-
-  // 동영상 선택 모달 오픈
-  const selectVideoModalOpenHandler = () => {
-    // TODO : 병택님 모달 오픈 해주세요~
-    // selectVideo/setSelectVideo 사용하세요~
-    alert('모달 오픈!');
   };
 
   // 작성 취소 이벤트
@@ -56,7 +66,6 @@ const Write = () => {
       location: '',
       videoUrl: selectVideo
     };
-
     // TODO : post event 추가 필요
     alert('작성 완료!');
   };
@@ -67,15 +76,17 @@ const Write = () => {
     { text: '등록하기', handler: postWriteHandler }
   ];
 
-  const writePageButton = WRITE_PAGE_BUTTON.map((button,index) =>  <Button key={index} text={button.text} handler={button.handler} />);
+  const writePageButton = WRITE_PAGE_BUTTON.map((button, index) => (
+    <Button key={index} text={button.text} handler={button.handler} />
+  ));
 
   return (
     <StWritePageContainer>
+      {isOpen && <WriteModal setSelectVideo={setSelectVideo} selectVideo={selectVideo} toggleModal={toggleModal} />}
       <WritePageVideoArea selectVideo={selectVideo} selectVideoModalOpenHandler={selectVideoModalOpenHandler} />
       <WritePageTitle titleValue={inputValue.title} setTitleValue={setTitleValue} />
       <WritePageContext contextValue={inputValue.context} setContextValue={setContextValue} />
       <WritePageMap />
-      <WriteModalBtn/>
       <StWritePageBtnArea>{writePageButton}</StWritePageBtnArea>
     </StWritePageContainer>
   );
