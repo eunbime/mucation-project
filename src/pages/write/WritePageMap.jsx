@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker, MapTypeControl } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
-import { Navigate, useNavigate } from 'react-router-dom';
 
-export default function MapInfo() {
+const MapInfo = () => {
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });
   const mapRef = useRef(null);
   const [info, setInfo] = useState('');
@@ -51,6 +50,7 @@ export default function MapInfo() {
     }
   }, []);
 
+  // 위치 정보 가져오기
   const getInfo = () => {
     const map = mapRef.current;
     if (!map) return;
@@ -83,11 +83,6 @@ export default function MapInfo() {
     message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
     setInfo(message);
   };
-
-  // 현재 위치 체크
-  console.log('currentLocation', currentLocation);
-  // 이동 위치 체크
-  console.log('state', state.center);
 
   if (error) return <div>오류가 발생했습니다.</div>;
 
@@ -129,4 +124,6 @@ export default function MapInfo() {
       )}
     </>
   );
-}
+};
+
+export default MapInfo;

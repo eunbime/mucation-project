@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { MapWrapper, MapButtonBox } from './Location.styles';
 
 const Location = () => {
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });
@@ -12,6 +12,8 @@ const Location = () => {
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
   const [isOpen, setIsOpen] = useState(false);
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
+  const [searchInput, setSearchInput] = useState('');
+  const [map, setMap] = useState();
 
   useEffect(() => {
     // 지도 초기 위치 설정 (현재 위치로 고정)
@@ -54,6 +56,29 @@ const Location = () => {
     }
   }, []);
 
+  // 키워드로 장소 겁색 및 이동
+  const handleToSearch = (e) => {
+    e.preventDefault();
+    if (!map) return;
+    const ps = new window.kakao.maps.services.Places();
+
+    ps.keywordSearch(searchInput, (data, status, _pagination) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        const bounds = new window.kakao.maps.LatLngBounds();
+
+        for (var i = 0; i < data.length; i++) {
+          bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
+        }
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+      }
+    });
+  };
+
+  // 위치 정보 값 가져오기
   const getInfo = () => {
     const map = mapRef.current;
     if (!map) return;
@@ -112,6 +137,7 @@ const Location = () => {
             }
           })
         }
+        onCreate={setMap}
       >
         <MapMarker
           position={state.center}
@@ -145,8 +171,13 @@ const Location = () => {
         </MapMarker>
       </Map>
       <MapButtonBox>
-        <button>검색아이콘</button>
-        <button onClick={() => setState({ ...state, center: { ...currentLocation } })}>현재위치아이콘</button>
+        <form onSubmit={(e) => handleToSearch(e)}>
+          <button onClick={handleToSearch}>검색</button>
+          <input type="text" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
+        </form>
+        <button type="button" onClick={() => setState({ ...state, center: { ...currentLocation } })}>
+          현재위치아이콘
+        </button>
         <input
           type="range"
           defaultValue="5"
@@ -160,22 +191,5 @@ const Location = () => {
     </MapWrapper>
   );
 };
-
-const MapWrapper = styled.div`
-  border: 1px solid #222;
-  background-color: #eee;
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
-
-const MapButtonBox = styled.div`
-  display: flex;
-  gap: 1rem;
-  position: absolute;
-  left: 1rem;
-  bottom: 1rem;
-  z-index: 10;
-`;
 
 export default Location;
