@@ -33,8 +33,10 @@ const GlobalStyles = createGlobalStyle`
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
+
   input, textarea{
     box-sizing: border-box;
+
   }
   ol, ul {
     list-style: none;
