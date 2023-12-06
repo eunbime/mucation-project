@@ -1,3 +1,4 @@
+import MusicList from 'components/music-list/MusicList';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -8,13 +9,11 @@ const Home = () => {
   // const [map, setMap] = useState('');
 
   useEffect(() => {
-    // 카카오맵 라이브러리 추가
+    // 카카오맵 라이브러리를 HTML head에 추가
     const script = document.createElement('script');
-
     script.src =
       '//dapi.kakao.com/v2/maps/sdk.js?appkey=e63170e75fde04a415750e5958b42634&libraries=LIBRARY&autoload=false';
-
-    document.head.appendChild(script); // html head에 추가
+    document.head.appendChild(script);
 
     // 스크립트가 로드 된 후
     script.onload = () => {
@@ -45,7 +44,7 @@ const Home = () => {
           } else {
             // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
 
-            var locPosition = new window.kakao.maps.LatLng(33.450701, 126.570667),
+            let locPosition = new window.kakao.maps.LatLng(33.450701, 126.570667),
               message = 'geolocation을 사용할수 없어요..';
 
             displayMarker(locPosition, message);
@@ -105,14 +104,7 @@ const Home = () => {
           </button>
         </MapButtonBox>
       </MapSection>
-      <MusicListSection>
-        <MusicList>
-          <MusicItem>list1</MusicItem>
-          <MusicItem>list2</MusicItem>
-          <MusicItem>list3</MusicItem>
-          <MusicItem>list4</MusicItem>
-        </MusicList>
-      </MusicListSection>
+      <MusicList />
     </Container>
   );
 };
@@ -152,27 +144,6 @@ const MapButtonBox = styled.div`
   left: 1rem;
   bottom: 1rem;
   z-index: 10;
-`;
-
-const MusicListSection = styled.section`
-  border: 1px solid #222;
-  border: 1px solid #222;
-  width: 100%;
-  margin: 0 auto;
-`;
-
-const MusicList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  gap: 1rem;
-`;
-
-const MusicItem = styled.li`
-  border: 1px solid black;
-  width: 100%;
-  height: 200px;
 `;
 
 export default Home;

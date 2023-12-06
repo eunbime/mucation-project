@@ -71,10 +71,6 @@ const GlobalStyles = createGlobalStyle`
     border: none;
   }
 
-  .material-icons {
-      font-size: 30px;
-  }
-
 `;
 
 export default GlobalStyles;
