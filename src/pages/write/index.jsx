@@ -8,6 +8,7 @@ import Button from 'components/common/Button';
 import WritePageVideoArea from './WritePageVideoArea';
 
 const Write = () => {
+
   // 동영상 선택시 선택된 동영상 정보 저장
   const [selectVideo, setSelectVideo] = useState('udkrTgTMucQ');
 
