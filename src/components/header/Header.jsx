@@ -1,11 +1,14 @@
 import React from 'react';
 import HeaderNav from './nav/HeaderNav';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
     <Container>
-      <h1>Home</h1>
+      <Link to={'/'}>
+        <h1>Home</h1>
+      </Link>
       <HeaderNav />
     </Container>
   );
@@ -22,7 +25,10 @@ const Container = styled.div`
   left: 0;
   top: 0;
   z-index: 100;
-  background-color: #fff;
+  background-color: var(--subColor);
+  h1 {
+    color: var(--mainWhite);
+  }
 `;
 
 export default Header;

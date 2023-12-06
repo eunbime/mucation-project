@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { Map, MapMarker, MapTypeControl } from 'react-kakao-maps-sdk';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-export default function MapInfo() {
+const Location = () => {
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });
+  const navigate = useNavigate();
   const mapRef = useRef(null);
   const [info, setInfo] = useState('');
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
+  const [isOpen, setIsOpen] = useState(false);
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
 
   useEffect(() => {
@@ -84,16 +87,15 @@ export default function MapInfo() {
     setInfo(message);
   };
 
-  // 현재 위치 체크
-  console.log('currentLocation', currentLocation);
-  // 이동 위치 체크
-  console.log('state', state.center);
+  console.log(loading, error);
 
+  if (loading) return <div>loading...</div>;
   if (error) return <div>오류가 발생했습니다.</div>;
 
   return (
-    <>
+    <MapWrapper>
       <Map // 지도를 표시할 Container
+        ref={mapRef}
         center={state.center}
         isPanto={state.isPantos}
         style={{
@@ -114,19 +116,66 @@ export default function MapInfo() {
         <MapMarker
           position={state.center}
           clickable={true} // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정
-        />
+          onClick={() => setIsOpen(!isOpen)}
+          /** 마커 이미지 커스텀 */
+          // image={{
+          //   src: 'https://w7.pngwing.com/pngs/800/189/png-transparent-multimedia-music-play-player-song-video-multimedia-controls-solid-icon.png',
+          //   size: {
+          //     width: 30,
+          //     height: 30
+          //   }, // 마커이미지의 크기입니다
+          //   options: {
+          //     offset: {
+          //       x: 10,
+          //       y: 30
+          //     } // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+          //   }
+          // }}
+        >
+          {isOpen && (
+            // onClick 시 게시물 아이디를 받아서 해당 디테일 페이지로 이동
+            <div style={{ minWidth: '150px' }} onClick={() => navigate('/detail')}>
+              {/* 노래 제목 및 앨범 커버 또는 프리뷰 이미지 가져오기 */}
+              <div>
+                <img alt="cover" width="50" height="50" />
+              </div>
+              <div style={{ padding: '5px', color: '#000' }}>노래제목</div>
+            </div>
+          )}
+        </MapMarker>
       </Map>
-      <button onClick={() => setState({ ...state, center: { ...currentLocation } })}>현재 위치로 설정</button>
-      {loading ? (
-        <div>지도를 로딩중입니다.</div>
-      ) : (
-        !!state && (
-          <div>
-            <p>{'지도 레벨은 ' + state.level + ' 이고'}</p>
-            <p>{'중심 좌표는 위도 ' + state.center.lat + ', 경도 ' + state.center.lng + ' 입니다'}</p>
-          </div>
-        )
-      )}
-    </>
+      <MapButtonBox>
+        <button>검색아이콘</button>
+        <button onClick={() => setState({ ...state, center: { ...currentLocation } })}>현재위치아이콘</button>
+        <input
+          type="range"
+          defaultValue="5"
+          min="1"
+          max="10"
+          onChange={(e) => {
+            mapRef.current.setLevel(e.currentTarget.value, { animate: true });
+          }}
+        />
+      </MapButtonBox>
+    </MapWrapper>
   );
-}
+};
+
+const MapWrapper = styled.div`
+  border: 1px solid #222;
+  background-color: #eee;
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
+
+const MapButtonBox = styled.div`
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 10;
+`;
+
+export default Location;

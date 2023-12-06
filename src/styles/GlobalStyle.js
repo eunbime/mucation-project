@@ -33,10 +33,6 @@ const GlobalStyles = createGlobalStyle`
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
-  body {
-    line-height: 1;
-    font-size: 62.5%;
-  }
   input, textarea{
     box-sizing: border-box;
   }
@@ -60,8 +56,20 @@ const GlobalStyles = createGlobalStyle`
   }
 
   :root {
-    --mainWhite: #fff
-    --mainBlack: #222
+    --mainWhite: #fff;
+    --mainBlack: #222;
+    --mainOrange: #FF683B;
+    --bgColor: #171717;
+    --subColor: #252525;
+    --neonColor: #D9FD79;
+    --violetColor: #7270FF;
+  }
+
+  body {
+    line-height: 1;
+    font-size: 1rem;
+    background-color: var(--bgColor);
+    color: var(--mainWhite)
   }
 
   * {
