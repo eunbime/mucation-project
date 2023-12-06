@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 // import store from 'redux/config/configStore';
 
 const queryClient = new QueryClient();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <Provider store={store}>
