@@ -59,6 +59,25 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box ;
   }
 
+  :root {
+    --mainWhite: #fff
+    --mainBlack: #222
+  }
+
+  * {
+        box-sizing: border-box;
+    }
+
+  a {
+      text-decoration: none;
+      color: black;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+  }
+
 `;
 
 export default GlobalStyles;
