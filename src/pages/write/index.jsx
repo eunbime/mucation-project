@@ -6,6 +6,8 @@ import WritePageContext from './WritePageContext';
 import WritePageMap from './WritePageMap';
 import Button from 'components/common/Button';
 import WritePageVideoArea from './WritePageVideoArea';
+import { useQuery, useQueryClient } from 'react-query';
+import getPosts from '../../axios/firebaseApi.js';
 
 const Write = () => {
   // 동영상 선택시 선택된 동영상 정보 저장
@@ -68,6 +70,11 @@ const Write = () => {
   ];
 
   const writePageButton = WRITE_PAGE_BUTTON.map((button) => <Button text={button.text} handler={button.handler} />);
+
+  // TEST POST LIST
+  const queryClient = useQueryClient();
+  const { isLoading, isError, data } = useQuery({ queryKey: ['music'], queryFn: getPosts });
+  console.log(data);
 
   return (
     <StWritePageContainer>
