@@ -35,10 +35,6 @@ const GlobalStyles = createGlobalStyle`
   }
   body {
     line-height: 1;
-    font-size: 62.5%;
-  }
-  input, textarea{
-    box-sizing: border-box;
   }
   ol, ul {
     list-style: none;
