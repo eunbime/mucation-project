@@ -26,7 +26,7 @@ const WriteModalSearch = () => {
       {search.map((i) => {
         return (
           <>
-            <div></div>
+            <div>타이틀:{i.items.sinppet.title}</div>
             <div></div>
             <div></div>
           </>

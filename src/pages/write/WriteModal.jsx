@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './WriteModalBtn.css';
+import './WriteModa.css';
 import WriteModalSearch from './WriteModalSearch';
 
-const WriteModalBtn = () => {
+const WriteModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
@@ -15,7 +15,7 @@ const WriteModalBtn = () => {
 
   return (
     <div>
-      <button onClick={openModal}>모달 열기</button>
+      {/* <button onClick={openModal}>모달 열기</button> */}
 
       {isOpen && (
         <div className="modal-overlay" onClick={closeModal}>
@@ -31,4 +31,4 @@ const WriteModalBtn = () => {
   );
 };
 
-export default WriteModalBtn;
+export default WriteModal;
