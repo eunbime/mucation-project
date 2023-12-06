@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { Map, MapMarker, MapTypeControl } from 'react-kakao-maps-sdk';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
+import { useNavigate } from 'react-router-dom';
+import { MapWrapper, MapButtonBox } from './Location.styles';
 
-const MapInfo = () => {
+const Location = () => {
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });
+  const navigate = useNavigate();
   const mapRef = useRef(null);
   const [info, setInfo] = useState('');
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
+  const [isOpen, setIsOpen] = useState(false);
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
+  const [searchInput, setSearchInput] = useState('');
+  const [map, setMap] = useState();
 
   useEffect(() => {
     // 지도 초기 위치 설정 (현재 위치로 고정)
@@ -50,7 +56,29 @@ const MapInfo = () => {
     }
   }, []);
 
-  // 위치 정보 가져오기
+  // 키워드로 장소 겁색 및 이동
+  const handleToSearch = (e) => {
+    e.preventDefault();
+    if (!map) return;
+    const ps = new window.kakao.maps.services.Places();
+
+    ps.keywordSearch(searchInput, (data, status, _pagination) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        const bounds = new window.kakao.maps.LatLngBounds();
+
+        for (var i = 0; i < data.length; i++) {
+          bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
+        }
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+      }
+    });
+  };
+
+  // 위치 정보 값 가져오기
   const getInfo = () => {
     const map = mapRef.current;
     if (!map) return;
@@ -84,11 +112,15 @@ const MapInfo = () => {
     setInfo(message);
   };
 
+  console.log(loading, error);
+
+  if (loading) return <div>loading...</div>;
   if (error) return <div>오류가 발생했습니다.</div>;
 
   return (
-    <>
+    <MapWrapper>
       <Map // 지도를 표시할 Container
+        ref={mapRef}
         center={state.center}
         isPanto={state.isPantos}
         style={{
@@ -105,25 +137,59 @@ const MapInfo = () => {
             }
           })
         }
+        onCreate={setMap}
       >
         <MapMarker
           position={state.center}
           clickable={true} // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정
-        />
+          onClick={() => setIsOpen(!isOpen)}
+          /** 마커 이미지 커스텀 */
+          // image={{
+          //   src: 'https://w7.pngwing.com/pngs/800/189/png-transparent-multimedia-music-play-player-song-video-multimedia-controls-solid-icon.png',
+          //   size: {
+          //     width: 30,
+          //     height: 30
+          //   }, // 마커이미지의 크기입니다
+          //   options: {
+          //     offset: {
+          //       x: 10,
+          //       y: 30
+          //     } // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+          //   }
+          // }}
+        >
+          {isOpen && (
+            // onClick 시 게시물 아이디를 받아서 해당 디테일 페이지로 이동
+            <div style={{ minWidth: '150px' }} onClick={() => navigate('/detail')}>
+              {/* 노래 제목 및 앨범 커버 또는 프리뷰 이미지 가져오기 */}
+              <div>
+                <img alt="cover" width="50" height="50" />
+              </div>
+              <div style={{ padding: '5px', color: '#000' }}>노래제목</div>
+            </div>
+          )}
+        </MapMarker>
       </Map>
-      <button onClick={() => setState({ ...state, center: { ...currentLocation } })}>현재 위치로 설정</button>
-      {loading ? (
-        <div>지도를 로딩중입니다.</div>
-      ) : (
-        !!state && (
-          <div>
-            <p>{'지도 레벨은 ' + state.level + ' 이고'}</p>
-            <p>{'중심 좌표는 위도 ' + state.center.lat + ', 경도 ' + state.center.lng + ' 입니다'}</p>
-          </div>
-        )
-      )}
-    </>
+      <MapButtonBox>
+        <form onSubmit={(e) => handleToSearch(e)}>
+          <button onClick={handleToSearch}>검색</button>
+          <input type="text" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
+        </form>
+        <button type="button" onClick={() => setState({ ...state, center: { ...currentLocation } })}>
+          현재위치아이콘
+        </button>
+        <input
+          type="range"
+          defaultValue="5"
+          min="1"
+          max="10"
+          onChange={(e) => {
+            mapRef.current.setLevel(e.currentTarget.value, { animate: true });
+          }}
+        />
+      </MapButtonBox>
+    </MapWrapper>
   );
 };
 
-export default MapInfo;
+export default Location;
