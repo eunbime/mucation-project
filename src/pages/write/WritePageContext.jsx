@@ -20,6 +20,10 @@ const StContextSection = styled.section`
     width: 100%;
     height: 100%;
     resize: none;
+    outline: none;
+    border: 1px solid #fff;
+    background-color: transparent;
+    color: #fff;
   }
 `;
 export default WritePageContext;

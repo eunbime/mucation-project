@@ -16,6 +16,7 @@ const StTitleSection = styled.section`
   height: 3rem;
   font-size: 1.5rem;
   margin: 2rem 0 1.5rem 0;
+
   & label {
     font-weight: bold;
     display: flex;
@@ -26,13 +27,18 @@ const StTitleSection = styled.section`
     height: 70%;
     transform: translate(0, -50%);
     padding: 0 1rem;
-    border-right: 2px solid black;
+    color: #fd5625;
+    background-color: transparent;
   }
   & input {
     font-size: inherit;
     padding: 0 1em 0 4em;
     width: 100%;
     height: 100%;
+    border: none;
+    border-bottom: 1px solid #fd5625;
+    outline: none;
+    background-color: transparent;
   }
 `;
 export default WritePageTitle;

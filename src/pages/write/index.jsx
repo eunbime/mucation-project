@@ -6,8 +6,10 @@ import WritePageContext from './WritePageContext';
 import WritePageMap from './WritePageMap';
 import Button from 'components/common/Button';
 import WritePageVideoArea from './WritePageVideoArea';
+import { getPosts, addPost } from '../../axios/firebaseApi.js';
 import WriteModalSearch from './WriteModalSearch';
 import WriteModal from './WriteModal';
+
 
 const Write = () => {
   // 동영상 선택시 선택된 동영상 정보 저장
@@ -64,8 +66,16 @@ const Write = () => {
       id: uuidv4(),
       date: new Date().getTime(),
       location: '',
-      videoUrl: selectVideo
+      videoUrl: selectVideo,
+      uid: 'BwccmAjZk7VOb4oi0FUYr7jPeps1',
+      title: inputValue.title,
+      context: inputValue.context
+      // thumnail
     };
+
+
+    addPost(newMusicPost);
+
     // TODO : post event 추가 필요
     alert('작성 완료!');
   };
@@ -79,6 +89,8 @@ const Write = () => {
   const writePageButton = WRITE_PAGE_BUTTON.map((button, index) => (
     <Button key={index} text={button.text} handler={button.handler} />
   ));
+
+  // TEST
 
   return (
     <StWritePageContainer>
@@ -99,6 +111,7 @@ const StWritePageContainer = styled.div`
   align-items: center;
   width: 60%;
   margin: auto;
+  background-color: #000;
 `;
 
 const StWritePageBtnArea = styled.div`
