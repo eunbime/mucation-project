@@ -82,6 +82,7 @@ const Write = () => {
 };
 
 const StWritePageContainer = styled.div`
+  padding-top: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
