@@ -55,6 +55,28 @@ const GlobalStyles = createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
+  * {
+    box-sizing: border-box ;
+  }
+
+  :root {
+    --mainWhite: #fff
+    --mainBlack: #222
+  }
+
+  * {
+        box-sizing: border-box;
+    }
+
+  a {
+      text-decoration: none;
+      color: black;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
+  }
 
 `;
 
