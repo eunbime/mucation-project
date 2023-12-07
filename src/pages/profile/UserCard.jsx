@@ -1,23 +1,13 @@
-import { getAuth } from 'firebase/auth';
-import React from 'react';
 import styled from 'styled-components';
+import { getAuth } from 'firebase/auth';
 
 const UserCard = () => {
-  const auth = getAuth();
-  const user = auth.currentUser;
-  console.log(auth);
   return (
     <div>
       <UserInfoContainer>
-        <Avatar
-          src={
-            user.photoURL === null
-              ? 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png'
-              : user.photoURL
-          }
-        ></Avatar>
-        <Nickname>{user.displayName === null ? '익명' : user.displayName}</Nickname>
-        <Email>{user.email === null ? '익명' : user.email}</Email>
+        <Avatar src={'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png'}></Avatar>
+        <Nickname></Nickname>
+        <Email></Email>
         <Introduce>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos, ex recusandae eligendi voluptates.
         </Introduce>

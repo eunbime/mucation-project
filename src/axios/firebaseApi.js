@@ -1,5 +1,6 @@
 import { addDoc, collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase.js';
+import { getAuth } from 'firebase/auth';
 
 // POSTS 가져오기
 export const getPosts = async () => {
