@@ -1,54 +1,63 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import { query, collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase.js';
+import {
+  StUserSharedPostsContainer,
+  StPostCard,
+  StThumnail,
+  StPostInfoWrapper,
+  StPostTitle,
+  StPostContent
+} from './profile.styles';
+import { deletePost } from '../../axios/firebaseApi.js';
 
 const UserPostCard = () => {
+  const [userPost, setUserPosts] = useState([]);
+  const firebaseUID = localStorage.getItem('uid');
+
+  useEffect(() => {
+    const fetchPostData = async () => {
+      try {
+        const q = query(collection(db, 'music'));
+        const querySnapshot = await getDocs(q);
+
+        const initialPosts = [];
+        querySnapshot.forEach((post) => {
+          const data = { id: post.id, ...post.data() };
+          initialPosts.push(data);
+        });
+        setUserPosts(initialPosts?.filter((el) => el.uid === firebaseUID));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchPostData();
+  }, []);
+
+  const onClickDeletePost = (id) => {
+    // 삭제 후 리랜더링 필요
+    deletePost(id);
+  };
+
   return (
-    <UserSharedPostsContainer>
-      <PostCard>
-        <Thumnail></Thumnail>
-        <PostInfoWrapper>
-          <PostTitle>Post Title</PostTitle>
-          <PostContent>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos, ex recusandae eligendi voluptates.
-          </PostContent>
-        </PostInfoWrapper>
-      </PostCard>
-    </UserSharedPostsContainer>
+    <StUserSharedPostsContainer>
+      {userPost.map((post) => {
+        return (
+          <StPostCard>
+            <StThumnail></StThumnail>
+            <StPostInfoWrapper>
+              <StPostTitle>{post.title}</StPostTitle>
+              <StPostContent>{post.context}</StPostContent>
+              <p>{post.date}</p>
+            </StPostInfoWrapper>
+            <button onClick={() => onClickDeletePost(post.id)}>삭제</button>
+            <button>수정</button>
+          </StPostCard>
+        );
+      })}
+    </StUserSharedPostsContainer>
   );
 };
 
 export default UserPostCard;
-
-const UserSharedPostsContainer = styled.div`
-  display: flex;
-  background-color: #7270ff;
-  margin: 2rem;
-`;
-
-const PostCard = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  gap: 1rem;
-`;
-
-const Thumnail = styled.img`
-  background-color: orange;
-  height: 10rem;
-  width: 20rem;
-`;
-
-const PostInfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const PostTitle = styled.h2`
-  color: #fff;
-  font-size: 2.4rem;
-`;
-
-const PostContent = styled.p`
-  color: #fff;
-`;

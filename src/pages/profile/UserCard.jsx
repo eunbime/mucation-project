@@ -1,68 +1,57 @@
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { query, collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase.js';
+import { StUserInfoContainer, StAvatar, StNickname, StEmail, StIntroduce, StFavoriteGenre } from './profile.styles';
 
 const UserCard = () => {
+  const firebaseUID = localStorage.getItem('uid');
+  const [userInfo, setUserInfo] = useState([]);
+
+  // auth에 한줄 소개와 관심분야를 넣을 수 없어서 firestore에 유저에 대한 모든 정보 저장하고 프로필 업데이트 기능 진행.
+  // 단, 현재 사용자의 uid와 firebase에 저장된 uid가 같아야 함.
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const q = query(collection(db, 'user'));
+        const querySnapshot = await getDocs(q);
+
+        const currentUser = [];
+        querySnapshot.forEach((user) => {
+          const data = user.data();
+          currentUser.push(data);
+        });
+        setUserInfo(currentUser?.filter((el) => el.uid === firebaseUID));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  console.log(userInfo);
+
   return (
     <div>
-      <UserInfoContainer>
-        <Avatar src={'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png'}></Avatar>
-        <Nickname></Nickname>
-        <Email></Email>
-        <Introduce>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos, ex recusandae eligendi voluptates.
-        </Introduce>
-        <FavoriteGenre>#KPOP</FavoriteGenre>
-        <button>프로필 수정</button>
-      </UserInfoContainer>
+      {userInfo.map((user) => {
+        return (
+          <StUserInfoContainer>
+            <StAvatar
+              src={
+                user.avatar === '' ? 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png' : user.avatar
+              }
+            ></StAvatar>
+            <StNickname>{user.nickname === '' ? '이름없음' : user.nickname}</StNickname>
+            <StEmail>{user.email}</StEmail>
+            <StIntroduce>{user.introduce}</StIntroduce>
+            {/* 관심 장르 배열로 가져와야 함 */}
+            <StFavoriteGenre>{user.interest}</StFavoriteGenre>
+            <button>프로필 수정</button>
+          </StUserInfoContainer>
+        );
+      })}
     </div>
   );
 };
 
 export default UserCard;
-
-// --mainWhite: #fff;
-// --mainBlack: #222;
-// --mainOrange: #FF683B;
-// --bgColor: #171717;
-// --subColor: #252525;
-// --neonColor: #D9FD79;
-// --violetColor: #7270FF;
-
-const UserInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  gap: 1rem;
-`;
-
-const Avatar = styled.img`
-  background-color: #fff;
-  height: 7rem;
-  width: 7rem;
-  border-radius: 50%;
-`;
-
-const Nickname = styled.h2`
-  color: var(--mainOrange);
-  font-size: 1.8rem;
-`;
-
-const Email = styled.p`
-  font-size: 1rem;
-  color: #fff;
-`;
-
-const Introduce = styled.p`
-  color: #fff;
-  font-size: 1.2rem;
-  text-align: center;
-  line-height: 1.2;
-`;
-
-const FavoriteGenre = styled.span`
-  color: #7270ff;
-  border: 1px solid #7270ff;
-  padding: 0.4rem 0.8rem;
-  border-radius: 5rem;
-`;

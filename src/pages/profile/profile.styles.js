@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 
-// --mainWhite: #fff;
-// --mainBlack: #222;
-// --mainOrange: #FF683B;
-// --bgColor: #171717;
-// --subColor: #252525;
-// --neonColor: #D9FD79;
-// --violetColor: #7270FF;
-
 const StUserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,34 +10,80 @@ const StUserInfoContainer = styled.div`
 `;
 
 const StAvatar = styled.img`
-  background-color: var(--mainWhite);
   height: 7rem;
   width: 7rem;
   border-radius: 50%;
 `;
 
-const Nickname = styled.h2`
+const StNickname = styled.h2`
   color: var(--mainOrange);
   font-size: 1.8rem;
 `;
 
-const Email = styled.p`
+const StEmail = styled.p`
   font-size: 1rem;
   color: var(--mainWhite);
 `;
 
-const Introduce = styled.p`
+const StIntroduce = styled.p`
   color: var(--mainWhite);
   font-size: 1.2rem;
   text-align: center;
   line-height: 1.2;
 `;
 
-const FavoriteGenre = styled.span`
+const StFavoriteGenre = styled.span`
   color: var(--violetColor);
   border: 1px solid var(--violetColor);
   padding: 0.4rem 0.8rem;
   border-radius: 5rem;
 `;
 
-export {};
+const StUserSharedPostsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const StPostCard = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+`;
+
+const StThumnail = styled.img`
+  background-color: orange;
+  height: 10rem;
+  width: 20rem;
+`;
+
+const StPostInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StPostTitle = styled.h2`
+  color: #fff;
+  font-size: 2.4rem;
+`;
+
+const StPostContent = styled.p`
+  color: #fff;
+  font-size: 1.4rem;
+`;
+
+export {
+  StUserInfoContainer,
+  StAvatar,
+  StNickname,
+  StEmail,
+  StIntroduce,
+  StFavoriteGenre,
+  StUserSharedPostsContainer,
+  StPostCard,
+  StThumnail,
+  StPostInfoWrapper,
+  StPostTitle,
+  StPostContent
+};
