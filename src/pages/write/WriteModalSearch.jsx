@@ -7,8 +7,7 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
   const [value, handler] = useInput('');
 
   const [search, setSearch] = useState('');
-  
-  //유투브 검색
+
   const getSearchHandler = async () => {
     try {
       const response = await axios.get(`${youtubeApi}&q=${value}`);
@@ -23,13 +22,12 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
   const handleVideoSelect = (video) => {
     setSelectVideo(video);
     toggleModal();
-    // closeModal(); // Close the modal
+
   };
 
   return (
     <div>
       <input type="text" onChange={handler} />
-      <p>ddddd {selectVideo}</p>
       <button onClick={getSearchHandler}>찾기</button>
 
       {search.length > 0 ? (

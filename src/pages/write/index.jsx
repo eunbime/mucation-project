@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import styled from 'styled-components';
 import WritePageTitle from './WritePageTitle';
 import WritePageContext from './WritePageContext';
 import WritePageMap from './WritePageMap';
 import Button from 'components/common/Button';
 import WritePageVideoArea from './WritePageVideoArea';
-import { getPosts, addPost } from '../../axios/firebaseApi.js';
+import { addPost } from '../../axios/firebaseApi.js';
 import WriteModal from './WriteModal';
+import { StWriteContainer, StWriteBtnArea } from './write.styles';
+import { useNavigate } from 'react-router-dom';
 
 const Write = () => {
+  const navigate = useNavigate();
+
   // 동영상 선택시 선택된 동영상 정보 저장
-  const [selectVideo, setSelectVideo] = useState(null);
+  const [selectVideo, setSelectVideo] = useState({ videoId: '', thumbnail: '' });
 
   // 유저 입력 data
   const [inputValue, setInputValue] = useState({ title: '', context: '' });
 
+  // 모달 토글 정보
   const [isOpen, setIsOpen] = useState(false);
 
+  // 위치정보
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
 
+  // 동영상 선택 모달 토글
   const toggleModal = () => {
     setIsOpen((prev) => !prev);
-  };
-
-  // 동영상 선택 모달 오픈
-  const selectVideoModalOpenHandler = () => {
-    toggleModal();
   };
 
   // set User input
@@ -47,16 +48,14 @@ const Write = () => {
   const cancelWriteHandler = () => {
     if (!window.confirm('정말 작성을 취소하시겠습니까?')) return;
 
-    // TODO : 작성 취소 후 메인페이지로 전환 필요
-    alert('작성 취소!');
+    navigate('/');
   };
 
   // 작성 완료 이벤트
   const postWriteHandler = () => {
     // 새로운 데이터 묶음
     // TODO : 데이터 변경 필요
-    // location => map에서 가져온 위치정보 들어가야함
-    // videoUrl => 영상 정보에서 Url 정보를 추출해서 넣어야함
+    // uid 데이터 추가 필요
     const newMusicPost = {
       id: uuidv4(),
       date: new Date().getTime(),
@@ -70,8 +69,7 @@ const Write = () => {
 
     addPost(newMusicPost);
 
-    // TODO : post event 추가 필요
-    alert('작성 완료!');
+    navigate('/');
   };
 
   // 작성 버튼 생성
@@ -84,38 +82,16 @@ const Write = () => {
     <Button key={index} text={button.text} handler={button.handler} />
   ));
 
-  // TEST
-
   return (
-    <StWritePageContainer>
+    <StWriteContainer>
       {isOpen && <WriteModal setSelectVideo={setSelectVideo} selectVideo={selectVideo} toggleModal={toggleModal} />}
-      <WritePageVideoArea
-        selectVideo={selectVideo.videoId}
-        selectVideoModalOpenHandler={selectVideoModalOpenHandler}
-        toggleModal={toggleModal}
-      />
+      <WritePageVideoArea selectVideo={selectVideo.videoId} toggleModal={toggleModal} />
       <WritePageTitle titleValue={inputValue.title} setTitleValue={setTitleValue} />
       <WritePageContext contextValue={inputValue.context} setContextValue={setContextValue} />
       <WritePageMap setState={setState} state={state} />
-      <StWritePageBtnArea>{writePageButton}</StWritePageBtnArea>
-    </StWritePageContainer>
+      <StWriteBtnArea>{writePageButton}</StWriteBtnArea>
+    </StWriteContainer>
   );
 };
-
-const StWritePageContainer = styled.div`
-  padding-top: 10.625rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 57.9375rem;
-  margin: auto;
-`;
-
-const StWritePageBtnArea = styled.div`
-  margin-bottom: 1rem;
-  & button {
-    margin: 0 1rem;
-  }
-`;
 
 export default Write;
