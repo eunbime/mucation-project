@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker, MapTypeControl } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 
-const MapInfo = () => {
+const MapInfo = ({ setState, state }) => {
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });
   const mapRef = useRef(null);
   const [info, setInfo] = useState('');
-  const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
+  // const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
 
   useEffect(() => {
