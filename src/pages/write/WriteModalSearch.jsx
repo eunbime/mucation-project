@@ -5,10 +5,10 @@ import axios from 'axios';
 
 const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
   const [value, handler] = useInput('');
-  // console.log('서치부분',setSelectVideo)
-  const [search, setSearch] = useState('');
-  //유투브 검색
 
+  const [search, setSearch] = useState('');
+  
+  //유투브 검색
   const getSearchHandler = async () => {
     try {
       const response = await axios.get(`${youtubeApi}&q=${value}`);
@@ -35,7 +35,11 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
       {search.length > 0 ? (
         search.map((item) => (
           <section key={item.id.videoId}>
-            <div onClick={() => handleVideoSelect(item.id.videoId)}>
+            <div
+              onClick={() =>
+                handleVideoSelect({ videoId: item.id.videoId, thumbnail: item.snippet.thumbnails.default.url })
+              }
+            >
               <div>타이틀: {item.snippet.title}</div>
               <div id={item.id.videoId}></div>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import WritePageTitle from './WritePageTitle';
@@ -6,7 +6,7 @@ import WritePageContext from './WritePageContext';
 import WritePageMap from './WritePageMap';
 import Button from 'components/common/Button';
 import WritePageVideoArea from './WritePageVideoArea';
-import WriteModalSearch from './WriteModalSearch';
+import { getPosts, addPost } from '../../axios/firebaseApi.js';
 import WriteModal from './WriteModal';
 
 const Write = () => {
@@ -18,9 +18,7 @@ const Write = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    console.log(selectVideo);
-  }, [selectVideo]);
+  const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
 
   const toggleModal = () => {
     setIsOpen((prev) => !prev);
@@ -60,12 +58,18 @@ const Write = () => {
     // location => map에서 가져온 위치정보 들어가야함
     // videoUrl => 영상 정보에서 Url 정보를 추출해서 넣어야함
     const newMusicPost = {
-      ...inputValue,
       id: uuidv4(),
       date: new Date().getTime(),
-      location: '',
-      videoUrl: selectVideo
+      location: state.center,
+      videoId: selectVideo.videoId,
+      uid: 'BwccmAjZk7VOb4oi0FUYr7jPeps1',
+      title: inputValue.title,
+      context: inputValue.context,
+      thumbnail: selectVideo.thumbnail
     };
+
+    addPost(newMusicPost);
+
     // TODO : post event 추가 필요
     alert('작성 완료!');
   };
@@ -80,24 +84,30 @@ const Write = () => {
     <Button key={index} text={button.text} handler={button.handler} />
   ));
 
+  // TEST
+
   return (
     <StWritePageContainer>
       {isOpen && <WriteModal setSelectVideo={setSelectVideo} selectVideo={selectVideo} toggleModal={toggleModal} />}
-      <WritePageVideoArea selectVideo={selectVideo} selectVideoModalOpenHandler={selectVideoModalOpenHandler} />
+      <WritePageVideoArea
+        selectVideo={selectVideo.videoId}
+        selectVideoModalOpenHandler={selectVideoModalOpenHandler}
+        toggleModal={toggleModal}
+      />
       <WritePageTitle titleValue={inputValue.title} setTitleValue={setTitleValue} />
       <WritePageContext contextValue={inputValue.context} setContextValue={setContextValue} />
-      <WritePageMap />
+      <WritePageMap setState={setState} state={state} />
       <StWritePageBtnArea>{writePageButton}</StWritePageBtnArea>
     </StWritePageContainer>
   );
 };
 
 const StWritePageContainer = styled.div`
-  padding-top: 5rem;
+  padding-top: 10.625rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 57.9375rem;
   margin: auto;
 `;
 
