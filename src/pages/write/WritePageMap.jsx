@@ -2,7 +2,7 @@ import ControlButton from 'components/location/ControlButton';
 import { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
-import styled from 'styled-components';
+import { StMapWrapper, StAddressBox } from './WritePageMap.styles';
 
 const { kakao } = window;
 const MapInfo = ({ setState, state }) => {
@@ -121,19 +121,5 @@ const MapInfo = ({ setState, state }) => {
     </>
   );
 };
-
-const StMapWrapper = styled.section`
-  border: 1px solid #222;
-  background-color: #eee;
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
-
-const StAddressBox = styled.section`
-  padding: 2rem 0 1rem 0;
-  border-bottom: 1px solid var(--mainOrange);
-  margin-bottom: 2rem;
-`;
 
 export default MapInfo;

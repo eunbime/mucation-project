@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
-import { StMapWrapper } from './Location.styles';
+import { StMapWrapper, Controlbar } from './Location.styles';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
 import ControlButton from './ControlButton';
@@ -168,6 +168,15 @@ const Location = () => {
       </Map>
 
       <ControlButton state={state} setState={setState} currentLocation={currentLocation} mapRef={mapRef} />
+      <Controlbar
+        type="range"
+        defaultValue="5"
+        min="1"
+        max="10"
+        onChange={(e) => {
+          mapRef.current.setLevel(e.currentTarget.value, { animate: true });
+        }}
+      />
     </StMapWrapper>
   );
 };

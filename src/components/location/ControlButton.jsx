@@ -1,16 +1,18 @@
 import React, { useRef, useState } from 'react';
-import { StMapButtonBox } from './Location.styles';
+import { StMapButtonBox, StSearchForm, StButton } from './ControlButton.styles';
+import { MdOutlineSearch, MdMyLocation } from 'react-icons/md';
 
-// head에 작성한 Kakao API 불러오기
 const { kakao } = window;
 
 const ControlButton = ({ state, setState, currentLocation, mapRef }) => {
   const listRef = useRef();
   const [searchInput, setSearchInput] = useState('');
+  const [isOpenInput, setIsOpenInput] = useState(false);
 
   // 키워드로 장소 겁색 및 이동
   const handleToSearch = (e) => {
     e.preventDefault();
+    setIsOpenInput(!isOpenInput);
     if (!mapRef) return;
 
     const ps = new kakao.maps.services.Places();
@@ -42,23 +44,25 @@ const ControlButton = ({ state, setState, currentLocation, mapRef }) => {
 
   return (
     <StMapButtonBox>
-      <form onSubmit={(e) => handleToSearch(e)}>
-        <button onClick={handleToSearch}>검색</button>
-        <input type="text" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
-      </form>
+      <StSearchForm onSubmit={(e) => handleToSearch(e)}>
+        <StButton type="submit">
+          <MdOutlineSearch />
+        </StButton>
+        {isOpenInput && (
+          <input
+            type="text"
+            maxLength={20}
+            autoFocus
+            placeholder="공유하고 싶은 장소를 검색해보세요."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+        )}
+      </StSearchForm>
       <ul ref={listRef}>placeList</ul>
-      <button type="button" onClick={() => setState({ ...state, center: { ...currentLocation } })}>
-        현재위치아이콘
-      </button>
-      <input
-        type="range"
-        defaultValue="5"
-        min="1"
-        max="10"
-        onChange={(e) => {
-          mapRef.current.setLevel(e.currentTarget.value, { animate: true });
-        }}
-      />
+      <StButton type="button" onClick={() => setState({ ...state, center: { ...currentLocation } })}>
+        <MdMyLocation />
+      </StButton>
     </StMapButtonBox>
   );
 };

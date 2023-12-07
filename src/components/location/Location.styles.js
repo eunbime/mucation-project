@@ -8,13 +8,17 @@ const StMapWrapper = styled.div`
   position: relative;
 `;
 
-const StMapButtonBox = styled.div`
-  display: flex;
-  gap: 1rem;
+const Controlbar = styled.input`
   position: absolute;
-  left: 1rem;
-  top: 1rem;
+  right: 1rem;
+  bottom: 1rem;
   z-index: 10;
+  width: 20%;
+  border-radius: 8px;
+  outline: none;
+  transition: 450ms ease-in;
+  accent-color: var(--mainOrange);
+  /* -webkit-appearance: none; */
 `;
 
-export { StMapWrapper, StMapButtonBox };
+export { StMapWrapper, Controlbar };
