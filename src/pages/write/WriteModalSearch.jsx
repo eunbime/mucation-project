@@ -5,9 +5,8 @@ import axios from 'axios';
 
 const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
   const [value, handler] = useInput('');
-  // console.log('서치부분',setSelectVideo)
+
   const [search, setSearch] = useState('');
-  //유투브 검색
 
   const getSearchHandler = async () => {
     try {
@@ -29,7 +28,7 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
   return (
     <div>
       <input type="text" onChange={handler} />
-      <p>ddddd {selectVideo}</p>
+      <p>ddddd {selectVideo.videoId}</p>
       <button onClick={getSearchHandler}>찾기</button>
 
       {search.length > 0 ? (
