@@ -35,7 +35,11 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
       {search.length > 0 ? (
         search.map((item) => (
           <section key={item.id.videoId}>
-            <div onClick={() => handleVideoSelect(item.id.videoId)}>
+            <div
+              onClick={() =>
+                handleVideoSelect({ videoId: item.id.videoId, thumbnail: item.snippet.thumbnails.default.url })
+              }
+            >
               <div>타이틀: {item.snippet.title}</div>
               <div id={item.id.videoId}></div>
 
