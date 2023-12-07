@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { getAuth } from 'firebase/auth';
 
 const UserCard = () => {
   return (
@@ -20,6 +19,14 @@ const UserCard = () => {
 
 export default UserCard;
 
+// --mainWhite: #fff;
+// --mainBlack: #222;
+// --mainOrange: #FF683B;
+// --bgColor: #171717;
+// --subColor: #252525;
+// --neonColor: #D9FD79;
+// --violetColor: #7270FF;
+
 const UserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,7 +44,7 @@ const Avatar = styled.img`
 `;
 
 const Nickname = styled.h2`
-  color: #fd5625;
+  color: var(--mainOrange);
   font-size: 1.8rem;
 `;
 
