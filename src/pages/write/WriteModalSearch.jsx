@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import youtubeApi from '../../axios/youtubeApi';
 import useInput from 'hooks/useInput';
 import axios from 'axios';
+import { StWriteModalImg, StWriteModalNonSearch, StWriteModalSearch, StWriteModalSearchInput,StWriteModalSectionBorder } from './WriteModalSearch.stlye.js';
 
 const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
   const [value, handler] = useInput('');
@@ -22,32 +23,36 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
   const handleVideoSelect = (video) => {
     setSelectVideo(video);
     toggleModal();
-    // closeModal(); // Close the modal
+  };
+
+  // 엔터 키가 눌렸는지 확인
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      getSearchHandler();
+    }
   };
 
   return (
     <div>
-      <input type="text" onChange={handler} />
-      <p>ddddd {selectVideo.videoId}</p>
-      <button onClick={getSearchHandler}>찾기</button>
+      <StWriteModalSearchInput type="text" onChange={handler} onKeyDown={handleKeyPress} />
+      <StWriteModalSearch onClick={getSearchHandler}>찾기</StWriteModalSearch>
 
       {search.length > 0 ? (
         search.map((item) => (
           <section key={item.id.videoId}>
-            <div
+            <StWriteModalSectionBorder
               onClick={() =>
                 handleVideoSelect({ videoId: item.id.videoId, thumbnail: item.snippet.thumbnails.default.url })
               }
             >
+              <StWriteModalImg src={item.snippet.thumbnails.high.url} alt="앨범이미지" />
               <div>타이틀: {item.snippet.title}</div>
               <div id={item.id.videoId}></div>
-
-              <img src={item.snippet.thumbnails.default.url} alt="앨범이미지" />
-            </div>
+            </StWriteModalSectionBorder>
           </section>
         ))
       ) : (
-        <div>좋아하는 노래를 검색하고 클릭 해주세요.</div>
+        <StWriteModalNonSearch>좋아하는 노래를 검색 해주세요.</StWriteModalNonSearch>
       )}
     </div>
   );

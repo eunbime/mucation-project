@@ -7,14 +7,13 @@ import Write from 'pages/write';
 import Profile from 'pages/profile';
 import Login from 'pages/login';
 
-
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login/:mode" element={<Login />} />
           <Route path="/detail" element={<Detail />} />
           <Route path="/write" element={<Write />} />
           <Route path="/profile" element={<Profile />} />
