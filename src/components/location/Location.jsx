@@ -14,7 +14,6 @@ const Location = () => {
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
-  const [map, setMap] = useState('');
 
   useEffect(() => {
     // 지도 초기 위치 설정 (현재 위치로 고정)
@@ -77,7 +76,7 @@ const Location = () => {
 
     // 마커 생성
     var marker = new window.kakao.maps.Marker({
-      map: map, // 마커를 표시할 지도
+      map: mapRef.current, // 마커를 표시할 지도
       position: positions[i].latlng, // 마커를 표시할 위치
       title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시 됨
       image: markerImage
@@ -100,7 +99,7 @@ const Location = () => {
     (function (marker, infowindow) {
       // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
       window.kakao.maps.event.addListener(marker, 'mouseover', function () {
-        infowindow.open(map, marker);
+        infowindow.open(mapRef.current, marker);
       });
 
       // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
@@ -145,7 +144,7 @@ const Location = () => {
             }
           })
         }
-        onCreate={setMap}
+        // onCreate={setMap}
       >
         <MapMarker
           position={state.center}
@@ -168,7 +167,7 @@ const Location = () => {
         </MarkerClusterer>
       </Map>
 
-      <ControlButton state={state} setState={setState} currentLocation={currentLocation} mapRef={mapRef} map={map} />
+      <ControlButton state={state} setState={setState} currentLocation={currentLocation} mapRef={mapRef} />
     </StMapWrapper>
   );
 };
