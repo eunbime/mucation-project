@@ -8,13 +8,14 @@ import Profile from 'pages/profile';
 import Login from 'pages/login';
 import AuthLayout from './Layout/AuthLayout';
 
+
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login/:mode" element={<Login />} />
           <Route path="/detail" element={<Detail />} />
           {/* <Route path="/auth" element={<AuthLayout />}> */}
           <Route path="/write" element={<Write />} />
