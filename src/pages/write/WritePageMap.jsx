@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Map, MapMarker, MapTypeControl } from 'react-kakao-maps-sdk';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 
 const MapInfo = () => {
@@ -83,6 +83,13 @@ const MapInfo = () => {
     message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
     setInfo(message);
   };
+
+  // 주소 변환
+  // 주소-좌표 변환 객체를 생성합니다
+  // let map = new window.kakao.maps.Map(mapRef.current, state);
+  let geocoder = new window.kakao.maps.services.Geocoder();
+  // geocoder.coord2Address(state.center.lat, state.center.lng, callback, options)
+  // const callback = ()
 
   if (error) return <div>오류가 발생했습니다.</div>;
 

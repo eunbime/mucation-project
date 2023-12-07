@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
-import { MapWrapper, MapButtonBox } from './Location.styles';
+import { MapWrapper, MapButtonBox } from './Location.style';
 
 const Location = () => {
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });

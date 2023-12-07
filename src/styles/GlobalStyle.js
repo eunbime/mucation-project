@@ -1,4 +1,3 @@
-import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
@@ -75,12 +74,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   * {
-        box-sizing: border-box;
-    }
+    box-sizing: border-box;
+  }
 
   a {
-      text-decoration: none;
-      color: black;
+    text-decoration: none;
   }
 
   button {
