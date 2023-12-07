@@ -6,7 +6,7 @@ import { getPosts } from 'api/posts';
 
 // 메인화면, 마이페이지에서 사용
 const PostList = () => {
-  const { isLoading, isError, data } = useQuery('posts', getPosts);
+  const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
 
   if (isLoading) return <p>loading...</p>;
 
@@ -15,12 +15,9 @@ const PostList = () => {
   return (
     <PostSection>
       <PostListWrapper>
-        {/* {data.map((item) => (
+        {posts.map((item) => (
           <PostItem key={item.id} post={item} />
-        ))} */}
-        <PostItem />
-        <PostItem />
-        <PostItem />
+        ))}
       </PostListWrapper>
     </PostSection>
   );

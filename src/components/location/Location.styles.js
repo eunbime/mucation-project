@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const MapWrapper = styled.div`
+const StMapWrapper = styled.div`
   border: 1px solid #222;
   background-color: #eee;
   width: 100%;
@@ -8,13 +8,13 @@ const MapWrapper = styled.div`
   position: relative;
 `;
 
-const MapButtonBox = styled.div`
+const StMapButtonBox = styled.div`
   display: flex;
   gap: 1rem;
   position: absolute;
   left: 1rem;
-  bottom: 1rem;
+  top: 1rem;
   z-index: 10;
 `;
 
-export { MapWrapper, MapButtonBox };
+export { StMapWrapper, StMapButtonBox };
