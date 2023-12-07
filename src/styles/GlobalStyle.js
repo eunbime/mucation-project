@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
 
+
   /* http://meyerweb.com/eric/tools/css/reset/ 
     v2.0 | 20110126
     License: none (public domain)
@@ -71,7 +72,8 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1;
     font-size: 1rem;
     background-color: var(--bgColor);
-    color: var(--mainWhite)
+    color: var(--mainWhite);
+    font-family: 'Roboto', sans-serif;
   }
 
   * {
