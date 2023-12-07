@@ -88,8 +88,12 @@ const MapInfo = () => {
   // 주소-좌표 변환 객체를 생성합니다
   // let map = new window.kakao.maps.Map(mapRef.current, state);
   let geocoder = new window.kakao.maps.services.Geocoder();
-  // geocoder.coord2Address(state.center.lat, state.center.lng, callback, options)
-  // const callback = ()
+  const callback = (result, status) => {
+    if (status === window.kakao.maps.services.Status.OK) {
+      console.log(result);
+    }
+  };
+  geocoder.coord2Address(state.center.lat, state.center.lng, callback);
 
   if (error) return <div>오류가 발생했습니다.</div>;
 
