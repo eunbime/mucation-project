@@ -12,10 +12,14 @@ const MapControlButton = ({ state, setState, currentLocation, mapRef }) => {
   // 키워드로 장소 겁색 및 이동
   const handleToSearch = (e) => {
     e.preventDefault();
-    setIsOpenInput(!isOpenInput);
     if (!mapRef) return;
 
     const ps = new kakao.maps.services.Places();
+
+    if (!searchInput.replace(/^\s+|\s+$/g, '')) {
+      alert('키워드를 입력해주세요!');
+      return false;
+    }
 
     ps.keywordSearch(searchInput, (data, status, _pagination) => {
       if (status === kakao.maps.services.Status.OK) {
@@ -27,8 +31,8 @@ const MapControlButton = ({ state, setState, currentLocation, mapRef }) => {
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
 
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        // map.setBounds(bounds);
+        alert(`${searchInput}(으)로 이동합니다!`);
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다.
         mapRef.current.setBounds(bounds);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert('검색 결과가 존재하지 않습니다.');
@@ -38,14 +42,14 @@ const MapControlButton = ({ state, setState, currentLocation, mapRef }) => {
         return;
       }
     });
-  };
 
-  // placeSearchCb
+    setIsOpenInput(false);
+  };
 
   return (
     <StMapButtonBox>
       <StSearchForm onSubmit={(e) => handleToSearch(e)}>
-        <StButton type="submit">
+        <StButton type="button" onClick={() => setIsOpenInput(!isOpenInput)}>
           <MdOutlineSearch />
         </StButton>
         {isOpenInput && (

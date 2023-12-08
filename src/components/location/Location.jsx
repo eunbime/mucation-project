@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
+import { Map, MapMarker, MarkerClusterer, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
 import { StMapWrapper, Controlbar } from './Location.styles';
@@ -16,6 +16,7 @@ const Location = () => {
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
+  const [isOpenWindow, setIsOpenWindow] = useState(false);
 
   useEffect(() => {
     // 지도 초기 위치 설정 (현재 위치로 고정)
@@ -37,7 +38,7 @@ const Location = () => {
             center: { ...location },
             // 지도 위치 변경시 panto 이용할 지
             isPanto: false,
-            level: 5,
+            level: 4,
             isLoading: false
           }));
         },
@@ -62,8 +63,9 @@ const Location = () => {
   // 게시물에서 필요한 값 추출
   var positions = posts?.map((post) => {
     return {
+      id: post.id,
       title: post.title,
-      latlng: new kakao.maps.LatLng(post.location._lat, post.location._long)
+      latlng: new kakao.maps.LatLng(post?.location?._lat, post?.location?._long)
     };
   });
 
@@ -84,12 +86,14 @@ const Location = () => {
       image: markerImage
     });
 
+    const iwContent = `<div style="color:black;padding:1rem">${positions[i].title}</div>`;
+
     // 인포 윈도우 생성
     var infowindow = new kakao.maps.InfoWindow({
-      content: positions[i].title // 인포윈도우에 표시할 내용
+      content: iwContent // 인포윈도우에 표시할 내용
     });
 
-    // console.log(infowindow.getContent());
+    console.log(infowindow.getContent());
 
     // 클릭 이벤트
     kakao.maps.event.addListener(marker, 'click', function () {
@@ -123,6 +127,19 @@ const Location = () => {
     });
   };
 
+  // 클러스터 클릭 이벤트
+  const onClusterclick = (_target, cluster) => {
+    const map = mapRef.current;
+    // 현재 지도 레벨에서 1레벨 확대한 레벨
+    const level = map.getLevel() - 1;
+
+    // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
+    map.setLevel(level, { anchor: cluster.getCenter() });
+  };
+
+  console.log(mapRef.current?.getBounds());
+  console.log(posts);
+
   if (loading || isLoading) return <div>loading...</div>;
   if (error || isError) return <div>오류가 발생했습니다. 🥲</div>;
 
@@ -148,33 +165,58 @@ const Location = () => {
         }
         // onCreate={setMap}
       >
+        <MarkerClusterer
+          averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+          minLevel={15} // 클러스터 할 최소 지도 레벨
+          disableClickZoom={true}
+          onClusterclick={onClusterclick}
+        >
+          {positions?.map((pos, idx) => {
+            console.log('pos', pos.latlng.Ma);
+            return (
+              <CustomOverlayMap
+                key={`${pos.latlng.Ma}-${pos.latlng.La}`}
+                position={{
+                  lat: pos.latlng.Ma,
+                  lng: pos.latlng.La
+                }}
+              >
+                <div
+                  style={{
+                    color: 'black',
+                    textAlign: 'center',
+                    background: 'white',
+                    width: '2rem',
+                    height: '2rem',
+                    borderRadius: '50%',
+                    backgroundColor: 'orange'
+                  }}
+                >
+                  {idx}
+                </div>
+              </CustomOverlayMap>
+            );
+          })}
+        </MarkerClusterer>
         <MapMarker
           position={state.center}
           clickable={true} // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정
           onClick={handleToCreatePost} // 클릭 시 작성 페이지로 이동 (현재 좌표 값 갖고 이동)
-        ></MapMarker>
-        <MarkerClusterer
-          averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-          minLevel={10} // 클러스터 할 최소 지도 레벨
+          onMouseOver={() => setIsOpenWindow(true)}
+          onMouseOut={() => setIsOpenWindow(false)}
         >
-          {positions.map((pos) => (
-            <MapMarker
-              key={`${pos.lat}-${pos.lng}`}
-              position={{
-                lat: pos.lat,
-                lng: pos.lng
-              }}
-            />
-          ))}
-        </MarkerClusterer>
+          {isOpenWindow && (
+            <div style={{ padding: '1rem', color: '#222', fontSize: 'small' }}>노래를 공유해주세요!</div>
+          )}
+        </MapMarker>
       </Map>
 
       <ControlButton state={state} setState={setState} currentLocation={currentLocation} mapRef={mapRef} />
       <Controlbar
         type="range"
-        defaultValue="5"
+        defaultValue="4"
         min="1"
-        max="10"
+        max="12"
         onChange={(e) => {
           mapRef.current.setLevel(e.currentTarget.value, { animate: true });
         }}

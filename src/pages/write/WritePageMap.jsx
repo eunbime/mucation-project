@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { StMapWrapper, StAddressBox } from './WritePageMap.styles';
+import { useLocation } from 'react-router-dom/dist';
 
 const { kakao } = window;
 const MapInfo = ({ setState, state }) => {
@@ -11,10 +12,11 @@ const MapInfo = ({ setState, state }) => {
   // const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
   const [address, setAddress] = useState('');
+  const location = useLocation();
+  const passedState = location.state;
 
   useEffect(() => {
-    // 지도 초기 위치 설정 (현재 위치로 고정)
-    // TODO: 메인페이지에서 값 가져올 시 초기값으로 지정
+    // 지도 초기 위치 설정
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 현재 위치 얻기
       navigator.geolocation.getCurrentPosition(
@@ -28,14 +30,26 @@ const MapInfo = ({ setState, state }) => {
           setCurrentLocation({ ...currentLocation, ...location });
 
           // 위치 초기 설정
-          setState((prev) => ({
-            ...prev,
-            center: { ...location },
-            // 지도 위치 변경시 panto 이용할 지
-            isPanto: false,
-            level: 5,
-            isLoading: false
-          }));
+          // 메인 페이지에서 전달된 위치가 존재한다면
+          if (passedState) {
+            setState((prev) => ({
+              ...prev,
+              center: { lat: passedState.lat, lng: passedState.lng },
+              isPanto: false,
+              level: 5,
+              isLoading: false
+            }));
+          } else {
+            // 전달값이 없다면 기본적으로 현재 위치 설정
+            setState((prev) => ({
+              ...prev,
+              center: { ...location },
+              // 지도 위치 변경시 panto 이용할 지
+              isPanto: false,
+              level: 5,
+              isLoading: false
+            }));
+          }
         },
         (err) => {
           setState((prev) => ({
