@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useAuth } from 'hooks/useAuth';
 
 const Profile = () => {
-  const { isEditingUserProfile } = useSelector((state) => state.auth);
+  const { isEditingUserProfile } = useSelector((state) => state.profileSlice);
 
   const { checkAuth } = useAuth();
   useEffect(() => {
