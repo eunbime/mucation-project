@@ -2,6 +2,7 @@ import { addDoc, collection, doc, updateDoc, deleteDoc, getDocs } from 'firebase
 import { db, auth } from '../firebase.js';
 import {
   createUserWithEmailAndPassword,
+  GithubAuthProvider,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -58,17 +59,21 @@ export const logout = async () => {
   return response;
 };
 
-export const authDataCheck = async () => {};
-
-// 구글 소셜 로그인
-export const loginGoogle = async () => {
-  try {
-    const provider = new GoogleAuthProvider();
-    const response = await signInWithPopup(auth, provider);
-    console.log(response.user);
-  } catch (err) {
-    console.log(err);
+// 소셜 로그인
+export const socialLogin = async (mode) => {
+  let provider;
+  switch (mode) {
+    case 'google':
+      provider = new GoogleAuthProvider();
+      break;
+    case 'github':
+      provider = new GithubAuthProvider();
+      break;
+    default:
+      break;
   }
+  const response = await signInWithPopup(auth, provider);
+  console.log(response.user);
 };
 
 // 사용자 프로필 불러오기 => 로그인 기능 완료되면 수정 해야할수도 있어요!
