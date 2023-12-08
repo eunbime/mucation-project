@@ -3,12 +3,25 @@ import PostItem from './PostItem';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
 import { StPostSection, StPostListWrapper } from './PostList.styles';
+import { useSelector } from 'react-redux';
 
 // 메인화면, 마이페이지에서 사용
 const PostList = () => {
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
+  const { lat, lng } = useSelector((state) => state.mapSlice.location);
 
-  console.log(posts);
+  // 해당 범위 안의 게시물
+  const filteredPosts = posts?.filter((post) => {
+    const latBounds = lat - post.location.lat;
+    const lngBounds = lng - post.location.lng;
+
+    // 마커 위치로부터 약 1km 차이의 범위
+    if (-0.01 < latBounds && latBounds < 0.01) {
+      if (-0.01 < lngBounds && lngBounds < 0.01) {
+        return true;
+      }
+    }
+  });
 
   if (isLoading) return <p>loading...</p>;
 
@@ -17,10 +30,10 @@ const PostList = () => {
   return (
     <StPostSection>
       <StPostListWrapper>
-        {posts.length > 0 ? (
-          posts.map((item) => <PostItem key={item.id} post={item} />)
+        {filteredPosts?.length > 0 ? (
+          filteredPosts.map((item) => <PostItem key={item.id} post={item} />)
         ) : (
-          <div>현재 게시물이 등록되어 있지 않습니다.</div>
+          <div>현재 위치에 게시물이 등록되어 있지 않습니다.</div>
         )}
       </StPostListWrapper>
     </StPostSection>
