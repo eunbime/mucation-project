@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({ text, handler }) => {
+const Button = ({ text, handler, mode }) => {
   const buttonClickEventHandler = () => {
     handler();
   };
-  return <StButton onClick={buttonClickEventHandler}>{text}</StButton>;
+  return (
+    <StButton mode={mode} onClick={buttonClickEventHandler}>
+      {text}
+    </StButton>
+  );
 };
 
 // 공통 버튼 스타일 지정 필요, 디폴트 데이터
@@ -14,8 +18,16 @@ const StButton = styled.button`
   padding: 0.5625rem 2.125rem;
   font-weight: bold;
   border-radius: 5px;
-  background: var(--mainOrange);
-  color: var(--mainWhite);
+  border: 0.15rem solid var(--mainOrange);
+  background: ${(props) => (props.mode === 'black' ? 'transparent' : '#FF683B')};
+  color: ${(props) => (props.mode === 'black' ? '#FF683B' : '#fff')};
+  transition: 0.3s;
+
+  &:hover {
+    background: var(--mainOrange);
+    color: var(--mainWhite);
+    border-color: var(--mainWhite);
+  }
 `;
 
 export default Button;

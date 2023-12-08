@@ -1,3 +1,4 @@
+import Button from 'components/common/Button';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -13,8 +14,8 @@ const HeaderNav = () => {
   };
   return (
     <Container>
-      <button onClick={goToLoginPage}>로그인</button>
-      <button>로그아웃</button>
+      <Button text="로그인" handler={goToLoginPage} />
+      <Button text="로그아웃" mode="black" />
       <button onClick={goToProfilePage}>프로필</button>
     </Container>
   );
@@ -24,5 +25,7 @@ const Container = styled.div`
   display: flex;
   gap: 1rem;
 `;
+
+const StLoginButton = styled.button``;
 
 export default HeaderNav;

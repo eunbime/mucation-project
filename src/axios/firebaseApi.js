@@ -1,6 +1,15 @@
-import { addDoc, collection, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, updateDoc, deleteDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebase.js';
 import { getAuth } from 'firebase/auth';
+
+// POSTS 가져오기
+export const getPosts = async () => {
+  const querySnapshot = await getDocs(collection(db, 'music'));
+  querySnapshot.forEach((doc) => {
+    console.log(doc.data());
+    return doc.data();
+  });
+};
 
 // POST 추가하기
 export const addPost = async ({ ...posts }) => {
