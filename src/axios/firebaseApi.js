@@ -1,6 +1,12 @@
 import { addDoc, collection, doc, updateDoc, deleteDoc, getDocs } from 'firebase/firestore';
 import { db, auth } from '../firebase.js';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut
+} from 'firebase/auth';
 
 // POSTS 가져오기
 export const getUser = async () => {
