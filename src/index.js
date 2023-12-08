@@ -5,11 +5,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import store from './redux/config/configStore';
 
-// import { ReactQueryDevtools } from 'react-query-devtools';
-// import { Provider } from 'react-redux';
-// import store from 'redux/config/configStore';
-
-
 const queryClient = new QueryClient({
   defaultOptions: {
     staleTime: 0,
@@ -25,4 +20,4 @@ root.render(
     </Provider>
     {/* <ReactQueryDevtools initialIsOpen={false} /> */}
   </QueryClientProvider>
-)
+);
