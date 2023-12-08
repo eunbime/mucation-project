@@ -9,6 +9,7 @@ import { addPost } from '../../axios/firebaseApi.js';
 import WriteModal from './WriteModal';
 import { StWriteContainer, StWriteBtnArea } from './write.styles';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../../firebase';
 
 const Write = () => {
   const navigate = useNavigate();
@@ -51,6 +52,11 @@ const Write = () => {
     navigate('/');
   };
 
+// auth.current 정보 가져오기
+const nickname = auth.currentUser
+console.log('write',nickname);
+
+
   // 작성 완료 이벤트
   const postWriteHandler = () => {
     // 새로운 데이터 묶음
@@ -64,7 +70,8 @@ const Write = () => {
       uid: 'BwccmAjZk7VOb4oi0FUYr7jPeps1',
       title: inputValue.title,
       context: inputValue.context,
-      thumbnail: selectVideo.thumbnail
+      thumbnail: selectVideo.thumbnail,
+      nickname : nickname,
     };
 
     addPost(newMusicPost);

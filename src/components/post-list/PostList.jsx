@@ -13,29 +13,29 @@ const PostList = () => {
   if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
 
   return (
-    <PostSection>
-      <PostListWrapper>
+    <StPostSection>
+      <StPostListWrapper>
         {posts.map((item) => (
           <PostItem key={item.id} post={item} />
         ))}
-      </PostListWrapper>
-    </PostSection>
+      </StPostListWrapper>
+    </StPostSection>
   );
 };
 
-const PostSection = styled.section`
-  border: 1px solid #222;
-  width: 100%;
-  margin: 0 auto;
-`;
+// const PostSection = styled.section`
+//   border: 1px solid #222;
+//   width: 100%;
+//   margin: 0 auto;
+// `;
 
-const PostListWrapper = styled.ul`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  gap: 1rem;
-  overflow-y: auto;
-`;
+// const PostListWrapper = styled.ul`
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   height: 100%;
+//   gap: 1rem;
+//   overflow-y: auto;
+// `;
 
 export default PostList;
