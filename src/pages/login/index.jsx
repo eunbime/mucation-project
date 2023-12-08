@@ -86,7 +86,7 @@ const Login = () => {
   const signUpSubmitHandler = (e) => {
     e.preventDefault();
     if (!signUpInputValidation()) return;
-    signUpHandler({ email, password });
+    signUpHandler({ email, password, nickname });
   };
 
   const LOGIN_PAGE_MODE = {
