@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 import { auth } from './firebase';
 import { setSuccessLogin } from './redux/modules/authSlice';
 import { useDispatch } from 'react-redux';
+import { QueryClient } from 'react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
   const dispatch = useDispatch();
@@ -31,10 +34,12 @@ function App() {
   return (
     <>
    
+     
+     
       <GlobalStyles />
-      {/* <QueryClientProvider client={queryClient}> */}
+      <QueryClientProvider client={queryClient}>
       <Router />
-      {/* </QueryClientProvider> */}
+      </QueryClientProvider>
     </>
   );
 }

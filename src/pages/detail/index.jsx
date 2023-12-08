@@ -8,29 +8,30 @@ import { getPosts } from 'api/posts';
 import { useSelector } from 'react-redux';
 
 const Detail = () => {
-  const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
-  const inform = useSelector((state) => state.seletcedVideoSlice
-  );
-  if (isLoading) return <p>loading...</p>;
+  // const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
+  const inform = useSelector((state) => state.seletcedVideoSlice);
+  const datas = useSelector((state) => state.currentVideoSlice);
+//  console.log('디테일인폼',datas);
 
-  if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
+  // if (isLoading) return <p>loading...</p>;
+
+  // if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
 
 
-  console.log('detail', inform);
+ 
   return (
     <StDetailPageWrapper>
       <DetailPageVideoArea inform={inform} />
       <StSubLineWrapper>
-        <h3>OO에서 듣기 좋은 음악 </h3>
+        <h3>{datas.title} </h3>
         <div>
-          <span>2023-10-10</span>
+          <span>{datas.date}</span>
           <DetailPageHeart />
         </div>
       </StSubLineWrapper>
       <DetailPageUserInfo />
       <StContextP>
-        Lorem ipsum dolor sit amet consectetur. Vulputate sit turpis ac vel amet. Amet nisl nunc eget nunc. Et
-        ullamcorper ut pretium consectetur consequat diam felis eget ut. Rhoncus urna placerat sit pulvinar.
+      {datas.context}
       </StContextP>
     </StDetailPageWrapper>
   );

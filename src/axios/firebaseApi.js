@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, updateDoc, deleteDoc, getDocs } from 'firebase/firestore';
+import { addDoc, collection, doc, updateDoc, deleteDoc, getDocs, setDoc, getDoc } from 'firebase/firestore';
 import { db, auth } from '../firebase.js';
 import {
   createUserWithEmailAndPassword,
@@ -6,7 +6,8 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
-  signOut
+  signOut,
+  updateProfile
 } from 'firebase/auth';
 
 // POST 추가하기
@@ -33,9 +34,11 @@ export const deletePost = async (id) => {
 };
 
 // 회원가입
-export const signUpEmail = async ({ email, password }) => {
+export const signUpEmail = async ({ email, password, nickname }) => {
+  console.log(email, password, nickname);
   const response = await createUserWithEmailAndPassword(auth, email, password);
-  return response;
+  console.log(response, nickname);
+  return { response, nickname };
 };
 
 // 로그인
@@ -64,7 +67,32 @@ export const socialLogin = async (mode) => {
       break;
   }
   const response = await signInWithPopup(auth, provider);
-  console.log(response.user);
+  return response;
+};
+
+// userProfile 업데이트
+export const profileUpdate = async (nickname) => {
+  await updateProfile(auth.currentUser, {
+    displayName: nickname
+  });
+};
+
+// profile 정보
+// 회원가입시 유저 uid로 firestore doc 추가
+export const setUserData = async (uid) => {
+  const docSnap = await getDoc(doc(db, 'user', uid));
+  if (!docSnap.data()) return;
+  await setDoc(doc(db, 'user', uid), {
+    genre: [],
+    introduce: ''
+  });
+};
+
+// 유저 member 데이터 가져오기 (firestore)
+export const getUserData = async (uid) => {
+  const docSnap = await getDoc(doc(db, 'user', uid));
+  // console.log(docSnap.data());
+  return docSnap.data();
 };
 
 // USER 정보 가져오기

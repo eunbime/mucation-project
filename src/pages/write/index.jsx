@@ -62,6 +62,7 @@ const Write = () => {
     // TODO : 데이터 변경 필요
     // uid 데이터 추가 필요
     const newMusicPost = {
+      id : null ,
       date: new Date().getTime(),
       location: state.center,
       videoId: selectVideo.videoId,

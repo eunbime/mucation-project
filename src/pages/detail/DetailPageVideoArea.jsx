@@ -3,10 +3,12 @@ import YouTube from 'react-youtube';
 import styled from 'styled-components';
 import { ReactComponent as Prev } from '../../styles/img/detailPage/arrow-left.svg';
 import { ReactComponent as Next } from '../../styles/img/detailPage/arrow-right.svg';
-import { useAuth } from 'hooks/useAuth';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
 import { useDispatch } from 'react-redux';
+import { currentVideoData } from '../../redux/modules/currentVideoSlice';
+
+
 const DetailPageVideoArea = ({ inform }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -14,15 +16,18 @@ const DetailPageVideoArea = ({ inform }) => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    // 'inform.id'를 기반으로 초기 'currentIndex' 설정
+    const initialIndex = posts.findIndex((post) => post.id === inform.id);
+       setCurrentIndex(initialIndex >= 0 ? initialIndex : 0);
+    dispatch(currentVideoData(currentVideoId))
+  }, [inform.id,posts]);
+
   if (isLoading) return <p>loading...</p>;
 
   if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
 
-  useEffect(() => {
-    // 'inform.id'를 기반으로 초기 'currentIndex' 설정
-    const initialIndex = posts.findIndex((post) => post.id === inform.id);
-    setCurrentIndex(initialIndex >= 0 ? initialIndex : 0);
-  }, [inform.id]);
+
 
   const prevBtnClickHandler = () => {
     // TODO : 이전버튼 클릭시 재생목록의 이전노래 나오기
@@ -42,6 +47,8 @@ const DetailPageVideoArea = ({ inform }) => {
   };
 
   const currentVideoId = posts[currentIndex];
+  // console.log('posts',currentVideoId)
+  
 
   return (
     <StVideoSection>

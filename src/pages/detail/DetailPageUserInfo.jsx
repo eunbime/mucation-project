@@ -1,13 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const DetailPageUserInfo = () => {
+  const datas = useSelector((state) => state.currentVideoSlice);
   return (
     <StUserInfoSection>
       <figure>
         <img src="https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png" />
       </figure>
-      <span>Nickname</span>
+      <span>{datas.nickname}</span>
     </StUserInfoSection>
   );
 };

@@ -1,15 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  id: '',      
-  date:'',
-  location: '',
-  videoId: '',
-  uid: '',
-  title: '',
-  context: '',
-  thumbnail: '',
-  nickname: '',
+  id: ''
 };
 
 const seletcedVideoSlice = createSlice({
@@ -17,15 +9,12 @@ const seletcedVideoSlice = createSlice({
   initialState,
   reducers: {
     selectedvideo: (state, action) => {
-      console.log(action);
+      // console.log('액션',action);
       state.id = action.payload;
-    },
-    currentVideo: (state, action) => {
-     return {...state, action}
     }
   }
 });
 
-export const { selectedvideo ,currentVideo} = seletcedVideoSlice.actions;
+export const { selectedvideo } = seletcedVideoSlice.actions;
 
 export default seletcedVideoSlice.reducer;

@@ -37,14 +37,56 @@ const Login = () => {
     { text: '비밀번호', type: 'password', value: password, setValue: setPassword }
   ];
 
+  // input validation check
+  const emailReg = new RegExp('[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}');
+  const pwReg = new RegExp('(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{8,}');
+
+  const signUpInputValidation = () => {
+    if (!email || !password || !passwordCheck || !nickname) {
+      alert('모두 입력해주세요.');
+      return;
+    }
+    if (!emailReg.test(email)) {
+      alert('정확한 이메일을 입력하세요');
+      return false;
+    }
+    if (!pwReg.test(password)) {
+      alert('비밀번호는 8자 이상 문자열, 하나이상 숫자, 문자, 특수문자로 구성하세요');
+      return false;
+    }
+    if (password !== passwordCheck) {
+      alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+      return false;
+    }
+    if (nickname.length > 10) {
+      alert('닉네임의 길이는 10자 이하입니다.');
+      return false;
+    }
+    return true;
+  };
+
+  const loginInputValidation = () => {
+    if (!email || !password) {
+      alert('모두 입력해주세요.');
+      return;
+    }
+    if (!emailReg.test(email)) {
+      alert('정확한 이메일을 입력하세요');
+      return false;
+    }
+    return true;
+  };
+
   const loginSubmitHandler = (e) => {
     e.preventDefault();
+    if (!loginInputValidation()) return;
     loginHandler({ email, password });
   };
 
   const signUpSubmitHandler = (e) => {
     e.preventDefault();
-    signUpHandler({ email, password });
+    if (!signUpInputValidation()) return;
+    signUpHandler({ email, password, nickname });
   };
 
   const LOGIN_PAGE_MODE = {
