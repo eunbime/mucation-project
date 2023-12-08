@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   StUserProfileEditModalContainer,
   StUserProfileEditModalForm,
@@ -22,6 +22,8 @@ const EditProfileModal = () => {
   const [editUserIntroduction, setEditUserIntroduction] = useState('');
   const [editNickname, setEditNickname] = useState('');
   const [editUserInterest, setEditUserInterest] = useState('');
+  // const [selectedImg, setSelectedImg] = useState(user.avatar);
+  // const [file, setFile] = useState(null);
   const dispatch = useDispatch();
   const currentUser = useAuth().currentUser;
 
@@ -43,9 +45,8 @@ const EditProfileModal = () => {
   };
 
   // 업데이트 사용자 프로필
-  const onClickEditProfile = async (id) => {
+  const editProfile = async (id) => {
     const docRef = doc(db, 'user', id);
-
     await updateDoc(docRef, {
       nickname: editNickname,
       introduce: editUserIntroduction,
@@ -53,8 +54,7 @@ const EditProfileModal = () => {
       avatar: currentUser.photoURL,
       email: currentUser.email
     });
-    await userProfileUpdate(editNickname, currentUser.photoURL);
-
+    await userProfileUpdate(editNickname);
     dispatch(isEditingUserProfile(false));
   };
 
@@ -65,21 +65,34 @@ const EditProfileModal = () => {
     });
   };
 
+  // const inputRef = useRef(null);
+  // const previewImg = (event) => {
+  //   const imgFile = event.target.files[0];
+  //   if (imgFile.size > 1024 * 1024) {
+  //     return alert('최대 1MB까지 업로드 가능합니다.');
+  //   }
+  //   setFile(imgFile);
+  //   const imgUrl = URL.createObjectURL(imgFile);
+  //   setSelectedImg(imgUrl);
+  // };
+  // const onClickImage = () => {
+  //   inputRef.current?.click();
+  // };
+
   return (
     <StUserProfileEditModalContainer>
       {user?.map((member) => {
         return (
           <>
             <StUserProfileEditModalForm>
-              <StUserProfilePhoto
-                src={
-                  member.avatar ? member.avatar : 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png'
-                }
-              ></StUserProfilePhoto>
+              {/* <StUserProfilePhoto size="large" src={selectedImg} onClick={onClickImage} />
+              <input hidden type="file" onChange={previewImg} accept="image/jpg, image/png" ref={inputRef} /> */}
 
               <StLabel htmlFor=""></StLabel>
               <StInput
                 type="text"
+                id="nickname"
+                name="nickname"
                 placeholder="닉네임(최대 5-10 글자)"
                 defaultValue={member.nickname}
                 onChange={onChangeNickname}
@@ -103,6 +116,7 @@ const EditProfileModal = () => {
                 />
               </div>
             </StUserProfileEditModalForm>
+
             {user?.map((member) => {
               const interestarr = Array.from(member.interest);
               return (
@@ -120,7 +134,7 @@ const EditProfileModal = () => {
               );
             })}
             <button onClick={cancelEditProfile}>취소</button>
-            <button onClick={() => onClickEditProfile(member.id)}>수정완료</button>
+            <button onClick={() => editProfile(member.id)}>수정완료</button>
           </>
         );
       })}

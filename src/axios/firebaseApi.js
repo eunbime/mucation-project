@@ -7,11 +7,9 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  getAuth,
   updateProfile
 } from 'firebase/auth';
-import { useAuth } from 'hooks/useAuth.js';
-import { current } from '@reduxjs/toolkit';
+import { getStorage, ref } from 'firebase/storage';
 
 // POST 추가하기
 export const addPost = async ({ ...posts }) => {
@@ -73,7 +71,7 @@ export const socialLogin = async (mode) => {
 
 // 현재 사용자의 포스트만 가져오기
 export const getCurrentUserPost = async () => {
-  const q = query(collection(db, 'posts').whereField('uid', '==', auth.currentUser.uid));
+  const q = query(collection(db, 'posts'));
   const querySnapshot = await getDocs(q);
   const initialPosts = [];
   querySnapshot.forEach((post) => {
@@ -90,7 +88,6 @@ export const getUserInfo = async () => {
   querySnapshot.forEach((doc) => {
     userDate.push({ id: doc.id, ...doc.data() });
   });
-
   return userDate;
 };
 

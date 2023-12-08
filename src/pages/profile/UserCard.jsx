@@ -7,7 +7,7 @@ import {
   StFavoriteGenre,
   StUserInteresteWrapper
 } from './profile.styles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { isEditingUserProfile } from '../../redux/modules/profileSlice.js';
 import Button from 'components/common/Button';
 import { getUserInfo } from '../../axios/firebaseApi.js';
