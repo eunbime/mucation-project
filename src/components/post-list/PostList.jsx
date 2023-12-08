@@ -1,5 +1,5 @@
 import React from 'react';
-import PostItem from './post-item/PostItem';
+import PostItem from './PostItem';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
 import { StPostSection, StPostListWrapper } from './PostList.styles';
@@ -7,6 +7,8 @@ import { StPostSection, StPostListWrapper } from './PostList.styles';
 // 메인화면, 마이페이지에서 사용
 const PostList = () => {
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
+
+  console.log(posts);
 
   if (isLoading) return <p>loading...</p>;
 
