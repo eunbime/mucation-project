@@ -4,6 +4,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { StHeaderButtonContainer, StHeaderProfile } from '../Header.styles';
 
 const HeaderNav = () => {
   const navigate = useNavigate();
@@ -28,25 +29,27 @@ const HeaderNav = () => {
     logoutHandler();
   };
 
+  const { currentUser } = useAuth();
+
   return (
-    <Container>
+    <StHeaderButtonContainer>
       {!isLogin && <Button text="로그인" handler={goToLoginPage} />}
       {isLogin && (
         <>
           <Button text="로그아웃" mode="black" handler={logoutBtnHandler} />
-          <button onClick={goToWritePage}>작성</button>
-          <button onClick={goToProfilePage}>프로필</button>
+          <Button text="작성" handler={goToWritePage} />
+          <StHeaderProfile onClick={goToProfilePage}>
+            <figure>
+              <img
+                src={currentUser.photoURL || 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png'}
+              ></img>
+            </figure>
+            <span>내정보</span>
+          </StHeaderProfile>
         </>
       )}
-    </Container>
+    </StHeaderButtonContainer>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
-
-const StLoginButton = styled.button``;
 
 export default HeaderNav;
