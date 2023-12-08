@@ -25,7 +25,7 @@ const Write = () => {
   // 위치정보
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
 
-  const { checkAuth } = useAuth();
+  const { checkAuth, currentUser } = useAuth();
   useEffect(() => {
     checkAuth();
   }, []);
@@ -56,10 +56,6 @@ const Write = () => {
     navigate('/');
   };
 
-// auth.current 정보 가져오기
-const {currentUser } = useAuth();
-
-
   // 작성 완료 이벤트
   const postWriteHandler = () => {
     // 새로운 데이터 묶음
@@ -73,7 +69,7 @@ const {currentUser } = useAuth();
       title: inputValue.title,
       context: inputValue.context,
       thumbnail: selectVideo.thumbnail,
-      nickname : currentUser.nickname,
+      nickname: currentUser.nickname
     };
 
     addPost(newMusicPost);

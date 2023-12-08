@@ -3,11 +3,23 @@ import DetailPageVideoArea from './DetailPageVideoArea';
 import styled from 'styled-components';
 import DetailPageUserInfo from './DetailPageUserInfo';
 import DetailPageHeart from './DetailPageHeart';
+import { useQuery } from 'react-query';
+import { getPosts } from 'api/posts';
+import { useSelector } from 'react-redux';
 
 const Detail = () => {
+  const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
+  const inform = useSelector((state) => state.seletcedVideoSlice
+  );
+  if (isLoading) return <p>loading...</p>;
+
+  if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
+
+
+  console.log('detail', inform);
   return (
     <StDetailPageWrapper>
-      <DetailPageVideoArea />
+      <DetailPageVideoArea inform={inform} />
       <StSubLineWrapper>
         <h3>OO에서 듣기 좋은 음악 </h3>
         <div>
