@@ -6,7 +6,7 @@ import EditProfileModal from './EditProfileModal';
 import { useSelector } from 'react-redux';
 
 const Profile = () => {
-  const { isEditingUserProfile } = useSelector((state) => state.auth);
+  const { isEditingUserProfile } = useSelector((state) => state.profileSlice);
 
   return (
     <>
