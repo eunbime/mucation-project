@@ -11,6 +11,15 @@ export const getUser = async () => {
   });
 };
 
+// POSTS 가져오기
+export const getPosts = async () => {
+  const querySnapshot = await getDocs(collection(db, 'music'));
+  querySnapshot.forEach((doc) => {
+    console.log(doc.data());
+    return doc.data();
+  });
+};
+
 // POST 추가하기
 export const addPost = async ({ ...posts }) => {
   const docRef = await addDoc(collection(db, 'music'), {

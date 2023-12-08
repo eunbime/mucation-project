@@ -1,8 +1,6 @@
-import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
-
 
   /* http://meyerweb.com/eric/tools/css/reset/ 
     v2.0 | 20110126
@@ -54,9 +52,6 @@ const GlobalStyles = createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
-  * {
-    box-sizing: border-box ;
-  }
 
   :root {
     --mainWhite: #fff;
@@ -77,12 +72,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   * {
-        box-sizing: border-box;
-    }
+    box-sizing: border-box;
+  }
 
   a {
-      text-decoration: none;
-      color: black;
+    text-decoration: none;
   }
 
   button {
