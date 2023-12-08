@@ -4,7 +4,6 @@ import App from './App';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import store from './redux/config/configStore';
-// import { ReactQueryDevtools } from 'react-query-devtools';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,10 +14,10 @@ const queryClient = new QueryClient({
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+  <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <App />
-    </QueryClientProvider>
-  </Provider>
+    </Provider>
+    {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+  </QueryClientProvider>
 );
