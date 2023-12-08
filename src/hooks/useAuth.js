@@ -2,7 +2,7 @@ import { auth } from '../firebase';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout, loginEmail, signUpEmail, socialLogin } from '../axios/firebaseApi';
+import { logout, loginEmail, signUpEmail, socialLogin, setUserData, profileUpdate } from '../axios/firebaseApi';
 import { setSuccessLogin, setSuccessLogout } from '../redux/modules/authSlice';
 
 export const useAuth = () => {
@@ -29,7 +29,11 @@ export const useAuth = () => {
   });
 
   const signUpMutate = useMutation(signUpEmail, {
-    onSuccess: () => {
+    onSuccess: async ({ response, nickname }) => {
+      console.log(nickname, response.user);
+      await setUserData(response.user.uid);
+      await profileUpdate(nickname);
+      console.log(response.user);
       alert('회원가입 성공!!! 즉시 로그인 합니다.');
       dispatch(setSuccessLogin());
       navigate('/');
@@ -40,7 +44,9 @@ export const useAuth = () => {
   });
 
   const socialLoginMutate = useMutation(socialLogin, {
-    onSuccess: () => {
+    onSuccess: async (data) => {
+      console.log(data);
+      await setUserData(data.user.uid);
       dispatch(setSuccessLogin());
       alert('소셜 로그인 성공!!!');
       navigate('/');
