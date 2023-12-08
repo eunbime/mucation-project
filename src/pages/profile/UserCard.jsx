@@ -4,40 +4,36 @@ import {
   StNickname,
   StEmail,
   StIntroduce,
-  StFavoriteGenre,
   StUserInteresteWrapper
 } from './profile.styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { isEditingUserProfile } from '../../redux/module/auth.js';
+import { isEditingUserProfile } from '../../redux/modules/profileSlice.js';
 import Button from 'components/common/Button';
+import { auth } from '../../firebase.js';
 
 const UserCard = () => {
   const dispatch = useDispatch();
-  const { nickname, email, avatar, uid, userIntro, userInterest } = useSelector((state) => state.auth);
-  const userInterestArr = Array.from(userInterest); //
-
   const showEditProfileModal = () => {
     // 프로필 수정 모달 열기
     dispatch(isEditingUserProfile(true));
-
-    // 파이어베이스 데이터 업데이트 자리
   };
 
+  const user = auth.currentUser;
+
   return (
-    <StUserInfoContainer key={uid}>
+    <StUserInfoContainer>
       <StAvatar
-        src={avatar === null ? 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png' : avatar}
+        src={user.photoURL ? user.photoURL : 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png'}
       ></StAvatar>
-      <StNickname>{nickname === null ? '이름없음' : nickname}</StNickname>
-      <StEmail>{email}</StEmail>
-      <StIntroduce>{userIntro}</StIntroduce>
-      <StUserInteresteWrapper>
+      <StNickname>{user.displayName ? user.displayName : '이름없음'} </StNickname>
+      <StEmail>{user.email}</StEmail>
+      {/* <StIntroduce>{userIntro}</StIntroduce> */}
+      {/* <StUserInteresteWrapper>
         {userInterestArr.map((item) => {
           return <StFavoriteGenre>{item}</StFavoriteGenre>;
         })}
-      </StUserInteresteWrapper>
-
-      <Button text="프로필 수정" handler={() => showEditProfileModal(uid)} />
+       </StUserInteresteWrapper> */}
+      <Button text="프로필 수정" handler={showEditProfileModal} />
     </StUserInfoContainer>
   );
 };
