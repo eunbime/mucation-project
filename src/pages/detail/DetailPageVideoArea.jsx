@@ -3,6 +3,9 @@ import YouTube from 'react-youtube';
 import styled from 'styled-components';
 import { ReactComponent as Prev } from '../../styles/img/detailPage/arrow-left.svg';
 import { ReactComponent as Next } from '../../styles/img/detailPage/arrow-right.svg';
+import { useAuth } from 'hooks/useAuth';
+import { useQuery } from 'react-query';
+import { getPosts } from 'api/posts';
 const DetailPageVideoArea = () => {
 
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);

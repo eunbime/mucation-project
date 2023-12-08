@@ -2,20 +2,12 @@ import { addDoc, collection, doc, updateDoc, deleteDoc, getDocs } from 'firebase
 import { db, auth } from '../firebase.js';
 import {
   createUserWithEmailAndPassword,
+  GithubAuthProvider,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut
 } from 'firebase/auth';
-
-// POSTS 가져오기
-export const getUser = async () => {
-  const querySnapshot = await getDocs(collection(db, 'user'));
-  querySnapshot.forEach((doc) => {
-    console.log(doc.data());
-    return doc.data();
-  });
-};
 
 // POST 추가하기
 export const addPost = async ({ ...posts }) => {
@@ -58,31 +50,41 @@ export const logout = async () => {
   return response;
 };
 
-export const authDataCheck = async () => {};
-
-// 구글 소셜 로그인
-export const loginGoogle = async () => {
-  try {
-    const provider = new GoogleAuthProvider();
-    const response = await signInWithPopup(auth, provider);
-    console.log(response.user);
-  } catch (err) {
-    console.log(err);
+// 소셜 로그인
+export const socialLogin = async (mode) => {
+  let provider;
+  switch (mode) {
+    case 'google':
+      provider = new GoogleAuthProvider();
+      break;
+    case 'github':
+      provider = new GithubAuthProvider();
+      break;
+    default:
+      break;
   }
+  const response = await signInWithPopup(auth, provider);
+  console.log(response.user);
 };
 
-// 사용자 프로필 불러오기 => 로그인 기능 완료되면 수정 해야할수도 있어요!
-// 로그인 후 현재 사용자 정보 로컬에 저장
+// USER 정보 가져오기
 const user = auth.currentUser;
-if (user !== null) {
-  const nickname = user.displayName;
-  const email = user.email;
-  const photoURL = user.photoURL;
-  const uid = user.uid;
-  const accessToken = user.accessToken;
-  localStorage.setItem('nickname', nickname);
-  localStorage.setItem('email', email);
-  localStorage.setItem('avatar', photoURL);
-  localStorage.setItem('uid', uid);
-  localStorage.setItem('accessToken', accessToken);
-}
+
+export const getUser = async () => {
+  const querySnapshot = await getDocs(collection(db, 'user'));
+  querySnapshot.forEach((doc) => {
+    return doc.data();
+  });
+};
+
+// USER 정보 업데이트
+export const updateUser = async () => {
+  const docRef = await addDoc(collection(db, 'user'), {
+    // Data
+    avatar: user.photoURL,
+    email: user.email,
+    nickname: user.displayName,
+    uid: user.uid
+  });
+  console.log(docRef.id);
+};

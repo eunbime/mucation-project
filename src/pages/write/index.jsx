@@ -10,6 +10,7 @@ import WriteModal from './WriteModal';
 import { StWriteContainer, StWriteBtnArea } from './write.styles';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
+import { useAuth } from 'hooks/useAuth';
 
 const Write = () => {
   const navigate = useNavigate();
@@ -53,8 +54,7 @@ const Write = () => {
   };
 
 // auth.current 정보 가져오기
-const loginUserInfo = auth.currentUser
-// console.log('write',nickname);
+const {currentUser } = useAuth();
 
 
   // 작성 완료 이벤트
@@ -67,11 +67,11 @@ const loginUserInfo = auth.currentUser
       date: new Date().getTime(),
       location: state.center,
       videoId: selectVideo.videoId,
-      uid: loginUserInfo?.uid,
+      uid: currentUser?.uid,
       title: inputValue.title,
       context: inputValue.context,
       thumbnail: selectVideo.thumbnail,
-      nickname : loginUserInfo?.nickname,
+      nickname : currentUser?.nickname,
     };
 
     addPost(newMusicPost);

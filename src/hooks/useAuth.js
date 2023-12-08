@@ -2,8 +2,8 @@ import { auth } from '../firebase';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout, loginEmail, signUpEmail, loginGoogle } from '../axios/firebaseApi';
-import { setSuccessLogin } from '../redux/modules/authSlice';
+import { logout, loginEmail, signUpEmail, socialLogin } from '../axios/firebaseApi';
+import { setSuccessLogin, setSuccessLogout } from '../redux/modules/authSlice';
 
 export const useAuth = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ export const useAuth = () => {
   const logoutMutate = useMutation(logout, {
     onSuccess: () => {
       alert('로그아웃 성공!');
-      dispatch(setSuccessLogin());
+      dispatch(setSuccessLogout());
       navigate('/');
     }
   });
@@ -39,8 +39,28 @@ export const useAuth = () => {
     }
   });
 
+  const socialLoginMutate = useMutation(socialLogin, {
+    onSuccess: () => {
+      dispatch(setSuccessLogin());
+      alert('소셜 로그인 성공!!!');
+      navigate('/');
+    },
+    onError: (error) => {
+      console.error('회원가입 실패>>>>', error.message);
+    }
+  });
+
+  // 현재 user 정보
+  const currentUser = auth.currentUser;
+
+  // 회원가입
   const signUpHandler = (signUpInfo) => {
     signUpMutate.mutate(signUpInfo);
+  };
+
+  // 소셜로그인
+  const socialLoginHandler = (mode) => {
+    socialLoginMutate.mutate(mode);
   };
 
   // 일반 로그인
@@ -57,20 +77,24 @@ export const useAuth = () => {
   const checkAuth = () => {
     const currentDate = new Date().getTime();
     auth.onAuthStateChanged((user) => {
+      if (!user) {
+        console.log('토큰이 없습니다.');
+        return;
+      }
       if (currentDate > user?.stsTokenManager.expirationTime) {
         // console.log('현재시간', currentDate);
         // console.log('만료시간', user?.stsTokenManager.expirationTime);
         // console.log('유효한 토큰이니?>', currentDate <= user?.stsTokenManager.expirationTime);
         console.log('유효하지 않은 토큰입니다.');
-        logoutHandler();
       } else {
         // console.log('현재시간', currentDate);
         // console.log('만료시간', user?.stsTokenManager.expirationTime);
         // console.log('유효한 토큰이니?>', currentDate <= user?.stsTokenManager.expirationTime);
         console.log('유효한 토큰입니다.');
+        dispatch(setSuccessLogin());
       }
     });
   };
 
-  return { logoutHandler, checkAuth, loginHandler, signUpHandler };
+  return { logoutHandler, checkAuth, loginHandler, signUpHandler, socialLoginHandler, currentUser };
 };
