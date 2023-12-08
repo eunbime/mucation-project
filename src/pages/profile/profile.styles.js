@@ -4,8 +4,8 @@ import styled from 'styled-components';
 const StUserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   padding: 2rem;
   gap: 1rem;
 `;
@@ -36,6 +36,8 @@ const StIntroduce = styled.p`
 const StUserInteresteWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
 `;
 
@@ -43,8 +45,13 @@ const StFavoriteGenre = styled.span`
   color: var(--violetColor);
   border: 1px solid var(--violetColor);
   padding: 0.4rem 0.8rem;
-  border-radius: 5rem;
+  border-radius: 3rem;
   /* border color  */
+
+  & button {
+    color: var(--violetColor);
+    background-color: transparent;
+  }
 `;
 
 // 사용자 게시물 부분

@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { query, collection, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase.js';
+import React, { useEffect } from 'react';
 import {
   StUserSharedPostsContainer,
   StPostCard,
@@ -9,40 +7,23 @@ import {
   StPostTitle,
   StPostContent
 } from './profile.styles';
-import { deletePost } from '../../axios/firebaseApi.js';
+
+import { useAuth } from 'hooks/useAuth.js';
+import { useQuery } from 'react-query';
+import { getCurrentUserPost } from '../../axios/firebaseApi.js';
+import { useNavigate } from 'react-router-dom';
+import Button from 'components/common/Button';
 
 const UserPostCard = () => {
-  const [userPost, setUserPosts] = useState([]);
-  const firebaseUID = localStorage.getItem('uid');
+  const currentUser = useAuth().currentUser.uid;
+  const { isLoading, isError, data: posts } = useQuery('posts', getCurrentUserPost);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchPostData = async () => {
-      try {
-        const q = query(collection(db, 'music'));
-        const querySnapshot = await getDocs(q);
-
-        const initialPosts = [];
-        querySnapshot.forEach((post) => {
-          const data = { id: post.id, ...post.data() };
-          initialPosts.push(data);
-        });
-
-        setUserPosts(initialPosts?.filter((el) => el.uid === firebaseUID));
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchPostData();
-  }, []);
-
-  const onClickDeletePost = (id) => {
-    // 삭제 후 리랜더링 필요
-    deletePost(id);
-  };
+  const navigateToDetaile = (e) => {};
 
   return (
     <StUserSharedPostsContainer>
-      {userPost.map((post) => {
+      {posts.map((post) => {
         return (
           <StPostCard key={post.id}>
             <StThumnail></StThumnail>
@@ -51,8 +32,7 @@ const UserPostCard = () => {
               <StPostContent>{post.context}</StPostContent>
               <p>{post.date}</p>
             </StPostInfoWrapper>
-            <button>상세보기</button>
-            <button onClick={() => onClickDeletePost(post.id)}>삭제</button>
+            <Button text={'상세보기'}></Button>
           </StPostCard>
         );
       })}
