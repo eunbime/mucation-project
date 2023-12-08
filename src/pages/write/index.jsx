@@ -67,11 +67,11 @@ const {currentUser } = useAuth();
       date: new Date().getTime(),
       location: state.center,
       videoId: selectVideo.videoId,
-      uid: currentUser?.uid,
+      uid: currentUser.uid,
       title: inputValue.title,
       context: inputValue.context,
       thumbnail: selectVideo.thumbnail,
-      nickname : currentUser?.nickname,
+      nickname : currentUser.nickname,
     };
 
     addPost(newMusicPost);
