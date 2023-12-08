@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const useInput = () => {
   // 2. value는 useState로 관리하고,
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   // 3. 핸들러 로직도 구현합니다.
   const handler = (e) => {
