@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { StMapWrapper, Controlbar } from './Location.styles';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
-import ControlButton from './ControlButton';
+import ControlButton from '../map-control-button/MapControlButton';
 
 const Location = () => {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import ControlButton from 'components/location/ControlButton';
+import ControlButton from 'components/map-control-button/MapControlButton';
 import { useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';

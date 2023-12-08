@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { StMapButtonBox, StSearchForm, StButton } from './ControlButton.styles';
+import { StMapButtonBox, StSearchForm, StButton } from './MapControlButton.styles';
 import { MdOutlineSearch, MdMyLocation } from 'react-icons/md';
 
 const { kakao } = window;
 
-const ControlButton = ({ state, setState, currentLocation, mapRef }) => {
+const MapControlButton = ({ state, setState, currentLocation, mapRef }) => {
   const listRef = useRef();
   const [searchInput, setSearchInput] = useState('');
   const [isOpenInput, setIsOpenInput] = useState(false);
@@ -67,4 +67,4 @@ const ControlButton = ({ state, setState, currentLocation, mapRef }) => {
   );
 };
 
-export default ControlButton;
+export default MapControlButton;
