@@ -4,6 +4,15 @@ import styled from 'styled-components';
 import { ReactComponent as Prev } from '../../styles/img/detailPage/arrow-left.svg';
 import { ReactComponent as Next } from '../../styles/img/detailPage/arrow-right.svg';
 const DetailPageVideoArea = () => {
+
+  const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
+
+  if (isLoading) return <p>loading...</p>;
+
+  if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
+
+
+
   const prevBtnClickHandler = () => {
     // TODO : 이전버튼 클릭시 재생목록의 이전노래 나오기
     alert('이번버튼 클릭');

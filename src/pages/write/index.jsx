@@ -53,8 +53,8 @@ const Write = () => {
   };
 
 // auth.current 정보 가져오기
-const nickname = auth.currentUser
-console.log('write',nickname);
+const loginUserInfo = auth.currentUser
+// console.log('write',nickname);
 
 
   // 작성 완료 이벤트
@@ -67,11 +67,11 @@ console.log('write',nickname);
       date: new Date().getTime(),
       location: state.center,
       videoId: selectVideo.videoId,
-      uid: 'BwccmAjZk7VOb4oi0FUYr7jPeps1',
+      uid: loginUserInfo?.uid,
       title: inputValue.title,
       context: inputValue.context,
       thumbnail: selectVideo.thumbnail,
-      nickname : nickname,
+      nickname : loginUserInfo?.nickname,
     };
 
     addPost(newMusicPost);

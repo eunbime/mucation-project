@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import youtubeApi from '../../axios/youtubeApi';
 import useInput from 'hooks/useInput';
 import axios from 'axios';
-import { StWriteModalImg, StWriteModalNonSearch, StWriteModalSearch, StWriteModalSearchInput,StWriteModalSectionBorder } from './WriteModalSearch.stlye.js';
+import {
+  StWriteModalImg,
+  StWriteModalNonSearch,
+  StWriteModalSearch,
+  StWriteModalSearchInput,
+  StWriteModalSectionBorder
+} from './WriteModalSearch.stlye.js';
 
 const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
   const [value, handler] = useInput('');

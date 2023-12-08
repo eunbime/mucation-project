@@ -1,5 +1,5 @@
 import React from 'react';
-import PostItem from './post-item/PostItem';
+import PostItem from './Post-Item/PostItem';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
 import { StPostSection, StPostListWrapper } from './PostList.styles';
@@ -23,19 +23,6 @@ const PostList = () => {
   );
 };
 
-// const PostSection = styled.section`
-//   border: 1px solid #222;
-//   width: 100%;
-//   margin: 0 auto;
-// `;
 
-// const PostListWrapper = styled.ul`
-//   display: flex;
-//   flex-direction: column;
-//   width: 100%;
-//   height: 100%;
-//   gap: 1rem;
-//   overflow-y: auto;
-// `;
 
 export default PostList;
