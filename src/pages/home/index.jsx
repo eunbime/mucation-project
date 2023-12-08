@@ -3,9 +3,11 @@ import PostList from 'components/post-list/PostList';
 import Location from 'components/location/Location';
 import { useAuth } from 'hooks/useAuth';
 import { StHomeContainer } from './Home.styles';
+import { useState } from 'react';
 
 const Home = () => {
   const { checkAuth } = useAuth();
+  const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
 
   useEffect(() => {
     checkAuth();

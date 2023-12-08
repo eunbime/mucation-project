@@ -8,6 +8,8 @@ import { StPostSection, StPostListWrapper } from './PostList.styles';
 const PostList = () => {
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
 
+  console.log(posts);
+
   if (isLoading) return <p>loading...</p>;
 
   if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
