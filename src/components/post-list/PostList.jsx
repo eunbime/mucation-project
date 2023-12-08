@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
-import PostItem from './Post-Item/PostItem';
+import PostItem from './post-item/PostItem';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
+import { StPostSection, StPostListWrapper } from './PostList.styles';
 
 // 메인화면, 마이페이지에서 사용
 const PostList = () => {
@@ -10,7 +10,7 @@ const PostList = () => {
 
   if (isLoading) return <p>loading...</p>;
 
-  if (isError) return <p>{'오류가 발생했습니다:('}</p>;
+  if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
 
   return (
     <PostSection>
