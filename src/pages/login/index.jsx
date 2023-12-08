@@ -4,14 +4,13 @@ import Button from 'components/common/Button';
 import { Link, useParams } from 'react-router-dom';
 import LoginInputSection from './LoginInputSection';
 import useInput from 'hooks/useInput';
-import { loginGoogle } from '../../axios/firebaseApi';
 import { useAuth } from 'hooks/useAuth';
 
 const Login = () => {
   const params = useParams();
   const currentLoginPageMode = params.mode;
 
-  const { loginHandler, signUpHandler } = useAuth();
+  const { loginHandler, signUpHandler, socialLoginHandler } = useAuth();
 
   const [email, setEmail] = useInput();
   const [password, setPassword] = useInput();
@@ -80,9 +79,8 @@ const Login = () => {
       </Link>
 
       <section>
-        <button onClick={loginGoogle}>Google</button>
-        <button onClick={loginGoogle}>Google</button>
-        <button onClick={loginGoogle}>Google</button>
+        <button onClick={() => socialLoginHandler('google')}>Google</button>
+        <button onClick={() => socialLoginHandler('github')}>GitHub</button>
       </section>
     </StLoginPageContainer>
   );
