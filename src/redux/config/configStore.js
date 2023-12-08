@@ -1,8 +1,9 @@
 import authSlice from '../modules/authSlice';
-import profileSlice from '../modules/profileSlice';
+import mapSlice from '../modules/mapSlice';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import profileSlice from '../modules/profileSlice';
 
-const rootReducer = combineReducers({ authSlice, profileSlice });
+const rootReducer = combineReducers({ authSlice, mapSlice, profileSlice });
 
 const store = configureStore({
   reducer: rootReducer
