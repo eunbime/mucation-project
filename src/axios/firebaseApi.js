@@ -1,6 +1,15 @@
 import { addDoc, collection, doc, updateDoc, deleteDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebase.js';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+
+// POSTS 가져오기
+export const getUser = async () => {
+  const querySnapshot = await getDocs(collection(db, 'user'));
+  querySnapshot.forEach((doc) => {
+    console.log(doc.data());
+    return doc.data();
+  });
+};
 
 // POSTS 가져오기
 export const getPosts = async () => {
@@ -39,14 +48,25 @@ export const deletePost = async (id) => {
 const auth = getAuth();
 const user = auth.currentUser;
 if (user !== null) {
-  const displayName = user.displayName;
+  const nickname = user.displayName;
   const email = user.email;
   const photoURL = user.photoURL;
   const uid = user.uid;
   const accessToken = user.accessToken;
-  localStorage.setItem('displayName', displayName);
+  localStorage.setItem('nickname', nickname);
   localStorage.setItem('email', email);
-  localStorage.setItem('photoURL', photoURL);
+  localStorage.setItem('avatar', photoURL);
   localStorage.setItem('uid', uid);
   localStorage.setItem('accessToken', accessToken);
 }
+
+// signInWithEmailAndPassword(auth, 'test2@test2.com', '123456789')
+//   .then((userCredential) => {
+//     // Signed in
+//     const user = userCredential.user;
+//     // ...
+//   })
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//   });
