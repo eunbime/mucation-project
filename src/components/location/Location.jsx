@@ -17,7 +17,8 @@ const Location = () => {
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
   const [isOpenWindow, setIsOpenWindow] = useState(false);
-
+  const defaultLevel = 4;
+  const [level, setLevel] = useState(defaultLevel);
   useEffect(() => {
     // 지도 초기 위치 설정 (현재 위치로 고정)
     if (navigator.geolocation) {
@@ -38,7 +39,7 @@ const Location = () => {
             center: { ...location },
             // 지도 위치 변경시 panto 이용할 지
             isPanto: false,
-            level: 4,
+            level,
             isLoading: false
           }));
         },
@@ -69,6 +70,8 @@ const Location = () => {
     };
   });
 
+  console.log(mapRef.current?.getLevel());
+
   for (var i = 0; i < positions?.length; i++) {
     // 마커 이미지 설정
     var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
@@ -93,12 +96,14 @@ const Location = () => {
       content: iwContent // 인포윈도우에 표시할 내용
     });
 
-    console.log(infowindow.getContent());
-
     // 클릭 이벤트
     kakao.maps.event.addListener(marker, 'click', function () {
+      const bounds = mapRef.current?.getBounds();
+      console.log(bounds);
       alert('디테일 페이지로 이동!');
-      navigate('/detail');
+      navigate('/detail', {
+        state: bounds
+      });
     });
 
     // 마우스 오버 이벤트
@@ -116,12 +121,10 @@ const Location = () => {
   }
 
   const handleToCreatePost = () => {
-    console.log(state.center);
-    // TODO: window confirm
     const answer = window.confirm('작성 페이지로 이동하시겠습니까?');
     if (!answer) return;
 
-    // TODO: 클릭 시 작성 페이지로 현재 좌표 값 갖고 이동
+    // 클릭 시 작성 페이지로 현재 좌표 값 갖고 이동
     navigate('/write', {
       state: { ...state.center }
     });
@@ -136,9 +139,6 @@ const Location = () => {
     // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
     map.setLevel(level, { anchor: cluster.getCenter() });
   };
-
-  console.log(mapRef.current?.getBounds());
-  console.log(posts);
 
   if (loading || isLoading) return <div>loading...</div>;
   if (error || isError) return <div>오류가 발생했습니다. 🥲</div>;
@@ -165,39 +165,41 @@ const Location = () => {
         }
         // onCreate={setMap}
       >
-        <MarkerClusterer
-          averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-          minLevel={15} // 클러스터 할 최소 지도 레벨
-          disableClickZoom={true}
-          onClusterclick={onClusterclick}
-        >
-          {positions?.map((pos, idx) => {
-            console.log('pos', pos.latlng.Ma);
-            return (
-              <CustomOverlayMap
-                key={`${pos.latlng.Ma}-${pos.latlng.La}`}
-                position={{
-                  lat: pos.latlng.Ma,
-                  lng: pos.latlng.La
-                }}
-              >
-                <div
-                  style={{
-                    color: 'black',
-                    textAlign: 'center',
-                    background: 'white',
-                    width: '2rem',
-                    height: '2rem',
-                    borderRadius: '50%',
-                    backgroundColor: 'orange'
+        {mapRef.current?.getLevel() > 8 && (
+          <MarkerClusterer
+            averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+            minLevel={8} // 클러스터 할 최소 지도 레벨
+            disableClickZoom={true}
+            onClusterclick={onClusterclick}
+          >
+            {positions?.map((pos, idx) => {
+              console.log('pos', pos.latlng.Ma);
+              return (
+                <CustomOverlayMap
+                  key={`${pos.latlng.Ma}-${pos.latlng.La}`}
+                  position={{
+                    lat: pos.latlng.Ma,
+                    lng: pos.latlng.La
                   }}
                 >
-                  {idx}
-                </div>
-              </CustomOverlayMap>
-            );
-          })}
-        </MarkerClusterer>
+                  <div
+                    style={{
+                      color: 'black',
+                      textAlign: 'center',
+                      background: 'white',
+                      width: '2rem',
+                      height: '2rem',
+                      borderRadius: '50%',
+                      backgroundColor: 'orange'
+                    }}
+                  >
+                    {idx}
+                  </div>
+                </CustomOverlayMap>
+              );
+            })}
+          </MarkerClusterer>
+        )}
         <MapMarker
           position={state.center}
           clickable={true} // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정
@@ -219,6 +221,7 @@ const Location = () => {
         max="12"
         onChange={(e) => {
           mapRef.current.setLevel(e.currentTarget.value, { animate: true });
+          setLevel(mapRef.current.getLevel());
         }}
       />
     </StMapWrapper>

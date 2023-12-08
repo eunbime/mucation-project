@@ -24,8 +24,9 @@ const StButton = styled.button`
   transition: 0.3s;
 
   &:hover {
-    background: ${(props) => (props.mode === 'black' ? '#FF683B' : '#222')};
-    color: ${(props) => (props.mode === 'black' ? '#fff' : '#FF683B')};
+    background: var(--mainOrange);
+    color: var(--mainWhite);
+    border-color: var(--mainWhite);
   }
 `;
 
