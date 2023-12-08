@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useEffect, useState } from 'react';
 import WritePageTitle from './WritePageTitle';
 import WritePageContext from './WritePageContext';
 import WritePageMap from './WritePageMap';
@@ -9,7 +8,6 @@ import { addPost } from '../../axios/firebaseApi.js';
 import WriteModal from './WriteModal';
 import { StWriteContainer, StWriteBtnArea } from './write.styles';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebase';
 import { useAuth } from 'hooks/useAuth';
 
 const Write = () => {
@@ -26,6 +24,11 @@ const Write = () => {
 
   // 위치정보
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
+
+  const { checkAuth } = useAuth();
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   // 동영상 선택 모달 토글
   const toggleModal = () => {
@@ -63,7 +66,6 @@ const {currentUser } = useAuth();
     // TODO : 데이터 변경 필요
     // uid 데이터 추가 필요
     const newMusicPost = {
-      // id: uuidv4(),
       date: new Date().getTime(),
       location: state.center,
       videoId: selectVideo.videoId,
