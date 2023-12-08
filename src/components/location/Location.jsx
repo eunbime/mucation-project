@@ -7,6 +7,8 @@ import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
 import ControlButton from '../map-control-button/MapControlButton';
 
+const { kakao } = window;
+
 const Location = () => {
   const navigate = useNavigate();
   const mapRef = useRef(null);
@@ -61,21 +63,21 @@ const Location = () => {
   var positions = posts?.map((post) => {
     return {
       title: post.title,
-      latlng: new window.kakao.maps.LatLng(post.location._lat, post.location._long)
+      latlng: new kakao.maps.LatLng(post.location._lat, post.location._long)
     };
   });
 
   for (var i = 0; i < positions?.length; i++) {
     // 마커 이미지 설정
     var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-      imageSize = new window.kakao.maps.Size(24, 35),
-      imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+      imageSize = new kakao.maps.Size(24, 35),
+      imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
     // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-    var markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
     // 마커 생성
-    var marker = new window.kakao.maps.Marker({
+    var marker = new kakao.maps.Marker({
       map: mapRef.current, // 마커를 표시할 지도
       position: positions[i].latlng, // 마커를 표시할 위치
       title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시 됨
@@ -83,14 +85,14 @@ const Location = () => {
     });
 
     // 인포 윈도우 생성
-    var infowindow = new window.kakao.maps.InfoWindow({
+    var infowindow = new kakao.maps.InfoWindow({
       content: positions[i].title // 인포윈도우에 표시할 내용
     });
 
     // console.log(infowindow.getContent());
 
     // 클릭 이벤트
-    window.kakao.maps.event.addListener(marker, 'click', function () {
+    kakao.maps.event.addListener(marker, 'click', function () {
       alert('디테일 페이지로 이동!');
       navigate('/detail');
     });
@@ -98,12 +100,12 @@ const Location = () => {
     // 마우스 오버 이벤트
     (function (marker, infowindow) {
       // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다
-      window.kakao.maps.event.addListener(marker, 'mouseover', function () {
+      kakao.maps.event.addListener(marker, 'mouseover', function () {
         infowindow.open(mapRef.current, marker);
       });
 
       // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
-      window.kakao.maps.event.addListener(marker, 'mouseout', function () {
+      kakao.maps.event.addListener(marker, 'mouseout', function () {
         infowindow.close();
       });
     })(marker, infowindow);
