@@ -1,5 +1,5 @@
 import React from 'react';
-import PostItem from './Post-Item/PostItem';
+import PostItem from './post-item/PostItem';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
 import { StPostSection, StPostListWrapper } from './PostList.styles';
