@@ -4,7 +4,7 @@ import { getAuth } from 'firebase/auth';
 
 // POST 추가하기
 export const addPost = async ({ ...posts }) => {
-  const docRef = await addDoc(collection(db, 'music'), {
+  const docRef = await addDoc(collection(db, 'posts'), {
     // Data
     ...posts
   });
@@ -13,7 +13,7 @@ export const addPost = async ({ ...posts }) => {
 
 // POST 수정하기
 export const editPost = async (id) => {
-  const selectedPost = doc(db, 'music', id);
+  const selectedPost = doc(db, 'posts', id);
   await updateDoc(selectedPost, {
     // Data
   });
@@ -21,7 +21,7 @@ export const editPost = async (id) => {
 
 // POST 삭제하기
 export const deletePost = async (id) => {
-  const selectedPost = doc(db, 'music', id);
+  const selectedPost = doc(db, 'posts', id);
   await deleteDoc(selectedPost);
 };
 

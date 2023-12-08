@@ -35,6 +35,7 @@ const PostListWrapper = styled.ul`
   width: 100%;
   height: 100%;
   gap: 1rem;
+  overflow-y: auto;
 `;
 
 export default PostList;
