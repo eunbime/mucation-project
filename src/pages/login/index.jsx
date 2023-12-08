@@ -1,21 +1,17 @@
 import React from 'react';
 import { StLoginPageContainer, StLoginPageInputForm } from './Login.styles';
 import Button from 'components/common/Button';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import LoginInputSection from './LoginInputSection';
 import useInput from 'hooks/useInput';
-import { loginEmail, loginGoogle, signUpEmail } from '../../axios/firebaseApi';
-import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
-import { setUserInfo } from '../../redux/modules/authSlice';
+import { loginGoogle } from '../../axios/firebaseApi';
+import { useAuth } from 'hooks/useAuth';
 
 const Login = () => {
-  const dispatch = useDispatch();
-
   const params = useParams();
   const currentLoginPageMode = params.mode;
 
-  const navigate = useNavigate();
+  const { loginHandler, signUpHandler } = useAuth();
 
   const [email, setEmail] = useInput();
   const [password, setPassword] = useInput();
@@ -34,38 +30,14 @@ const Login = () => {
     { text: '비밀번호', type: 'password', value: password, setValue: setPassword }
   ];
 
-  // react-query를 이용한 로그인 로직
-  const loginMutate = useMutation(loginEmail, {
-    onSuccess: (data) => {
-      localStorage.setItem('token', data.user.accessToken);
-      dispatch(setUserInfo(data.user));
-      console.log('로그인 성공!!!');
-      navigate('/');
-    },
-    onError: (error) => {
-      console.error('로그인 실패>>>>', error.message);
-    }
-  });
-
   const loginSubmitHandler = (e) => {
     e.preventDefault();
-    loginMutate.mutate({ email, password });
+    loginHandler({ email, password });
   };
-
-  // react-query를 이용한 회원가입 로직
-  const signUpMutate = useMutation(signUpEmail, {
-    onSuccess: (data) => {
-      console.log('회원가입 성공!!!', data);
-      navigate('/login/login');
-    },
-    onError: (error) => {
-      console.error('회원가입 실패>>>>', error.message);
-    }
-  });
 
   const signUpSubmitHandler = (e) => {
     e.preventDefault();
-    signUpMutate.mutate({ email, password });
+    signUpHandler({ email, password });
   };
 
   const LOGIN_PAGE_MODE = {
