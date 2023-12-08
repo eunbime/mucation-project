@@ -26,12 +26,12 @@ const UserPostCard = () => {
           const data = { id: post.id, ...post.data() };
           initialPosts.push(data);
         });
+
         setUserPosts(initialPosts?.filter((el) => el.uid === firebaseUID));
       } catch (err) {
         console.log(err);
       }
     };
-
     fetchPostData();
   }, []);
 
@@ -44,15 +44,15 @@ const UserPostCard = () => {
     <StUserSharedPostsContainer>
       {userPost.map((post) => {
         return (
-          <StPostCard>
+          <StPostCard key={post.id}>
             <StThumnail></StThumnail>
             <StPostInfoWrapper>
               <StPostTitle>{post.title}</StPostTitle>
               <StPostContent>{post.context}</StPostContent>
               <p>{post.date}</p>
             </StPostInfoWrapper>
+            <button>상세보기</button>
             <button onClick={() => onClickDeletePost(post.id)}>삭제</button>
-            <button>수정</button>
           </StPostCard>
         );
       })}
