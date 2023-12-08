@@ -6,19 +6,22 @@ import { StMapWrapper, Controlbar } from './Location.styles';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
 import ControlButton from '../map-control-button/MapControlButton';
+import { useDispatch } from 'react-redux';
+import { getLocation } from '../../redux/modules/mapSlice';
 
 const { kakao } = window;
 
 const Location = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const mapRef = useRef(null);
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
   const [isOpenWindow, setIsOpenWindow] = useState(false);
-  const defaultLevel = 4;
-  const [level, setLevel] = useState(defaultLevel);
+  const [level, setLevel] = useState(4);
+
   useEffect(() => {
     // 지도 초기 위치 설정 (현재 위치로 고정)
     if (navigator.geolocation) {
@@ -61,6 +64,10 @@ const Location = () => {
     }
   }, []);
 
+  useEffect(() => {
+    dispatch(getLocation(state.center));
+  }, [state.center]);
+
   // 게시물에서 필요한 값 추출
   var positions = posts?.map((post) => {
     return {
@@ -69,8 +76,6 @@ const Location = () => {
       latlng: new kakao.maps.LatLng(post?.location?.lat, post?.location?.lng)
     };
   });
-
-  console.log(mapRef.current?.getLevel());
 
   for (var i = 0; i < positions?.length; i++) {
     // 마커 이미지 설정
@@ -165,41 +170,24 @@ const Location = () => {
         }
         // onCreate={setMap}
       >
-        {mapRef.current?.getLevel() > 8 && (
-          <MarkerClusterer
-            averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-            minLevel={8} // 클러스터 할 최소 지도 레벨
-            disableClickZoom={true}
-            onClusterclick={onClusterclick}
-          >
-            {positions?.map((pos, idx) => {
-              console.log('pos', pos.latlng.Ma);
-              return (
-                <CustomOverlayMap
-                  key={`${pos.latlng.Ma}-${pos.latlng.La}`}
-                  position={{
-                    lat: pos.latlng.Ma,
-                    lng: pos.latlng.La
-                  }}
-                >
-                  <div
-                    style={{
-                      color: 'black',
-                      textAlign: 'center',
-                      background: 'white',
-                      width: '2rem',
-                      height: '2rem',
-                      borderRadius: '50%',
-                      backgroundColor: 'orange'
-                    }}
-                  >
-                    {idx}
-                  </div>
-                </CustomOverlayMap>
-              );
-            })}
-          </MarkerClusterer>
-        )}
+        <MarkerClusterer
+          averageCenter={true} // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+          minLevel={9} // 클러스터 할 최소 지도 레벨
+          disableClickZoom={true}
+          onClusterclick={onClusterclick}
+        >
+          {positions?.map((pos, idx) => {
+            return (
+              <CustomOverlayMap
+                key={`${pos.latlng.Ma}-${pos.latlng.La}`}
+                position={{
+                  lat: pos.latlng.Ma,
+                  lng: pos.latlng.La
+                }}
+              ></CustomOverlayMap>
+            );
+          })}
+        </MarkerClusterer>
         <MapMarker
           position={state.center}
           clickable={true} // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정
@@ -218,7 +206,7 @@ const Location = () => {
         type="range"
         defaultValue="4"
         min="1"
-        max="12"
+        max="8"
         onChange={(e) => {
           mapRef.current.setLevel(e.currentTarget.value, { animate: true });
           setLevel(mapRef.current.getLevel());

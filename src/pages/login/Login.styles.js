@@ -57,4 +57,11 @@ const StLoginPageInputSection = styled.section`
     margin-top: 2.875rem;
   }
 `;
-export { StLoginPageContainer, StLoginPageInputForm, StLoginPageInputSection };
+
+const StLoginSocialButtonArea = styled.section`
+  & button {
+    margin: 0 0.5rem;
+    background: none;
+  }
+`;
+export { StLoginPageContainer, StLoginPageInputForm, StLoginPageInputSection, StLoginSocialButtonArea };

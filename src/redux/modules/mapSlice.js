@@ -1,18 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit/dist';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  state: {},
-  bounds: {}
+  location: { lat: '', lng: '' }
 };
 
 const mapSlice = createSlice({
   name: 'mapSlice',
   initialState,
   reducers: {
-    getState: (state, action) => {},
-    getBounds: (state, action) => {}
+    getLocation: (state, action) => {
+      state.location.lat = action.payload.lat;
+      state.location.lng = action.payload.lng;
+    }
   }
 });
 
-export default mapSlice.Slice;
-export const { getState, getBounds } = mapSlice.actions;
+export default mapSlice.reducer;
+export const { getLocation, getBounds } = mapSlice.actions;

@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import youtubeApi from '../../axios/youtubeApi';
 import useInput from 'hooks/useInput';
 import axios from 'axios';
-import { StWriteModalImg, StWriteModalNonSearch, StWriteModalSearch, StWriteModalSearchInput,StWriteModalSectionBorder } from './WriteModalSearch.stlye.js';
+import {
+  StWriteModalImg,
+  StWriteModalNonSearch,
+  StWriteModalSearch,
+  StWriteModalSearchInput,
+  StWriteModalSectionBorder
+} from './WriteModalSearch.stlye.js';
 
 const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
   const [value, handler] = useInput('');
@@ -42,7 +48,7 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
           <section key={item.id.videoId}>
             <StWriteModalSectionBorder
               onClick={() =>
-                handleVideoSelect({ videoId: item.id.videoId, thumbnail: item.snippet.thumbnails.default.url })
+                handleVideoSelect({ videoId: item.id.videoId, thumbnail: item.snippet.thumbnails.high.url })
               }
             >
               <StWriteModalImg src={item.snippet.thumbnails.high.url} alt="앨범이미지" />

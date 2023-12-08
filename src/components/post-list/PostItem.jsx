@@ -1,15 +1,39 @@
 import React from 'react';
-import { StPostItemWrapper } from './PostItem.styles';
+import {
+  StPostItemWrapper,
+  StThumbnailBox,
+  StThumbnailImg,
+  StInfoBox,
+  StPostTitle,
+  StUserInfo,
+  UserProfile,
+  StNicknameAndDate
+} from './PostItem.styles';
 
 const PostItem = ({ post }) => {
-  // TODO: 디테일 페이지 이동 핸들러 (게시물 아이디 값 사용)
+  // date 변환
+  const number = parseInt(post.date);
+  const dateObject = new Date(number);
+  const formattedDateString = dateObject.toLocaleString();
 
-  console.log(post);
+  console.log(formattedDateString);
 
   return (
     <StPostItemWrapper>
-      <h3>{post.title}</h3>
-      <p>{post.context}</p>
+      <StThumbnailBox>
+        <StThumbnailImg src={post.thumbnail} alt="youtube thumbnail" />
+      </StThumbnailBox>
+      <StInfoBox>
+        <StPostTitle>{post.title}</StPostTitle>
+        <StUserInfo>
+          <UserProfile>
+            <img src="" alt="" />
+          </UserProfile>
+          <StNicknameAndDate>{post.nickname}</StNicknameAndDate>
+          <StNicknameAndDate>{formattedDateString}</StNicknameAndDate>
+        </StUserInfo>
+        <p>{post.context}</p>
+      </StInfoBox>
     </StPostItemWrapper>
   );
 };
