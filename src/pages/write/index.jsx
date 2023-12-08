@@ -9,9 +9,12 @@ import WriteModal from './WriteModal';
 import { StWriteContainer, StWriteBtnArea } from './write.styles';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
+import useAlert from 'hooks/useAlert';
 
 const Write = () => {
   const navigate = useNavigate();
+
+  const { alert, confirm } = useAlert();
 
   // 동영상 선택시 선택된 동영상 정보 저장
   const [selectVideo, setSelectVideo] = useState({ videoId: '', thumbnail: '' });
@@ -50,9 +53,9 @@ const Write = () => {
   };
 
   // 작성 취소 이벤트
-  const cancelWriteHandler = () => {
-    if (!window.confirm('정말 작성을 취소하시겠습니까?')) return;
-
+  const cancelWriteHandler = async () => {
+    const confirmValue = await confirm({ title: '작성취소', message: '작성을 취소하시겠습니까?' });
+    if (!confirmValue) return;
     navigate('/');
   };
 
@@ -72,7 +75,7 @@ const Write = () => {
     };
 
     addPost(newMusicPost);
-
+    alert({ title: '작성완료', message: '작성이 완료되었습니다.' });
     navigate('/');
   };
 

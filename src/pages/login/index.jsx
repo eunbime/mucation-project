@@ -6,6 +6,8 @@ import LoginInputSection from './LoginInputSection';
 import useInput from 'hooks/useInput';
 import { useAuth } from 'hooks/useAuth';
 import LoginSocialLoginSection from './LoginSocialLoginSection';
+import useAlert from 'hooks/useAlert';
+import AlertModal from 'components/alertModal/AlertModal';
 
 const Login = () => {
   const params = useParams();
@@ -41,25 +43,27 @@ const Login = () => {
   const emailReg = new RegExp('[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}');
   const pwReg = new RegExp('(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{8,}');
 
+  const { alert } = useAlert();
+
   const signUpInputValidation = () => {
     if (!email || !password || !passwordCheck || !nickname) {
-      alert('모두 입력해주세요.');
+      alert({ title: '입력오류', message: '모든 값을 입력하세요.' });
       return;
     }
     if (!emailReg.test(email)) {
-      alert('정확한 이메일을 입력하세요');
+      alert({ title: '입력오류', message: '정확한 이메일을 입력하세요.' });
       return false;
     }
     if (!pwReg.test(password)) {
-      alert('비밀번호는 8자 이상 문자열, 하나이상 숫자, 문자, 특수문자로 구성하세요');
+      alert({ title: '입력오류', message: '비밀번호는 8자 이상, 하나 이상의 숫자, 문자, 특수문자로 구성하세요.' });
       return false;
     }
     if (password !== passwordCheck) {
-      alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+      alert({ title: '입력오류', message: '비밀번호가 일치하지 않습니다.' });
       return false;
     }
     if (nickname.length > 10) {
-      alert('닉네임의 길이는 10자 이하입니다.');
+      alert({ title: '입력오류', message: '닉네임은 10자 이하로 구성하세요.' });
       return false;
     }
     return true;
@@ -67,11 +71,11 @@ const Login = () => {
 
   const loginInputValidation = () => {
     if (!email || !password) {
-      alert('모두 입력해주세요.');
+      alert({ title: '입력오류', message: '모든 값을 입력하세요.' });
       return;
     }
     if (!emailReg.test(email)) {
-      alert('정확한 이메일을 입력하세요');
+      alert({ title: '입력오류', message: '이메일을 확인하세요.' });
       return false;
     }
     return true;

@@ -61,6 +61,7 @@ const GlobalStyles = createGlobalStyle`
     --subColor: #252525;
     --neonColor: #D9FD79;
     --violetColor: #7270FF;
+    --darkGrayColor: #2B2B2B;
   }
 
   body {
