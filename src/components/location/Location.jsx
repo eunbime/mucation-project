@@ -66,7 +66,7 @@ const Location = () => {
     return {
       id: post.id,
       title: post.title,
-      latlng: new kakao.maps.LatLng(post?.location?._lat, post?.location?._long)
+      latlng: new kakao.maps.LatLng(post?.location?.lat, post?.location?.lng)
     };
   });
 
