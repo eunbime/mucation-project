@@ -18,7 +18,7 @@ const Router = () => {
           <Route index path="/" element={<Home />} />
           <Route path="/login/:mode" element={isLogin ? <Navigate to="/" /> : <Login />} />
           <Route path="/detail" element={<Detail />} />
-          <Route path="/write" element={isLogin ? <Write /> : <Navigate to="/login/login" />} />
+          <Route path="/write/:mode" element={isLogin ? <Write /> : <Navigate to="/login/login" />} />
           <Route path="/profile" element={isLogin ? <Profile /> : <Navigate to="/login/login" />} />
         </Route>
       </Routes>

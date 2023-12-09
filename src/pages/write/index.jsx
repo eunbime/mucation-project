@@ -4,19 +4,26 @@ import WritePageContext from './WritePageContext';
 import WritePageMap from './WritePageMap';
 import Button from 'components/common/Button';
 import WritePageVideoArea from './WritePageVideoArea';
-import { addPost } from '../../axios/firebaseApi.js';
+import { addPost, editPost } from '../../axios/firebaseApi.js';
 import WriteModal from './WriteModal';
 import { StWriteContainer, StWriteBtnArea } from './write.styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 import useAlert from 'hooks/useAlert';
 
 const Write = () => {
   const navigate = useNavigate();
 
+  const [query, setQuery] = useSearchParams();
+
   const { alert, confirm } = useAlert();
 
   const { currentUser } = useAuth();
+
+  const params = useParams();
+
+  const mode = params.mode;
+
   // 동영상 선택시 선택된 동영상 정보 저장
   const [selectVideo, setSelectVideo] = useState({ videoId: '', thumbnail: '' });
 
@@ -82,13 +89,40 @@ const Write = () => {
     navigate('/');
   };
 
-  // 작성 버튼 생성
-  const WRITE_PAGE_BUTTON = [
+  // 업데이트시
+  const postEditHandler = () => {
+    const updateData = {
+      location: state.center,
+      videoId: selectVideo.videoId,
+      title: inputValue.title,
+      context: inputValue.context,
+      thumbnail: selectVideo.thumbnail,
+      userPhoto: currentUser.photoURL || 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png',
+      nickname: currentUser.displayName
+    };
+
+    editPost({ id: query.id, data: updateData });
+    alert({ title: '수정완료', message: '수정이 완료되었습니다.' });
+    navigate('/');
+  };
+
+  // write 모드일 때 버튼 생성
+  const WRITE_PAGE_WRITE_MODE_BUTTON = [
     { text: '취소하기', handler: cancelWriteHandler },
     { text: '등록하기', handler: postWriteHandler }
   ];
 
-  const writePageButton = WRITE_PAGE_BUTTON.map((button, index) => (
+  // edit mode 일 떄 버튼
+  const WRITE_PAGE_EDIT_MODE_BUTTON = [
+    { text: '취소하기', handler: cancelWriteHandler },
+    { text: '게시물 수정하기', handler: postEditHandler }
+  ];
+
+  const writeModeButton = WRITE_PAGE_WRITE_MODE_BUTTON.map((button, index) => (
+    <Button key={index} text={button.text} handler={button.handler} />
+  ));
+
+  const editModeButton = WRITE_PAGE_EDIT_MODE_BUTTON.map((button, index) => (
     <Button key={index} text={button.text} handler={button.handler} />
   ));
 
@@ -99,7 +133,10 @@ const Write = () => {
       <WritePageTitle titleValue={inputValue.title} setTitleValue={setTitleValue} />
       <WritePageContext contextValue={inputValue.context} setContextValue={setContextValue} />
       <WritePageMap setState={setState} state={state} />
-      <StWriteBtnArea>{writePageButton}</StWriteBtnArea>
+      <StWriteBtnArea>
+        {mode === 'write' && writeModeButton}
+        {mode === 'edit' && editModeButton}
+      </StWriteBtnArea>
     </StWriteContainer>
   );
 };

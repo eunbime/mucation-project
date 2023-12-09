@@ -34,11 +34,9 @@ export const addPost = async ({ ...posts }) => {
 };
 
 // POST 수정하기
-export const editPost = async (id) => {
+export const editPost = async ({ id, data }) => {
   const selectedPost = doc(db, 'posts', id);
-  await updateDoc(selectedPost, {
-    // Data
-  });
+  await updateDoc(selectedPost, data);
 };
 
 // POST 삭제하기
