@@ -40,18 +40,12 @@ const UserCard = () => {
       <StNickname>{currentUser.displayName ? currentUser.displayName : '이름없음'} </StNickname>
       <StEmail>{currentUser.email}</StEmail>
 
-      {user?.map((member) => {
-        return (
-          <>
-            <StIntroduce>{member.introduce}</StIntroduce>
-            <StUserInteresteWrapper>
-              {Array.from(member.interest).map((item) => {
-                return <StFavoriteGenre>{item}</StFavoriteGenre>;
-              })}
-            </StUserInteresteWrapper>
-          </>
-        );
-      })}
+      <StIntroduce>{user?.introduce}</StIntroduce>
+      <StUserInteresteWrapper>
+        {user?.genre.map((item) => (
+          <StFavoriteGenre>{item}</StFavoriteGenre>
+        ))}
+      </StUserInteresteWrapper>
 
       <Button text="프로필 수정" handler={showEditProfileModal} />
     </StUserInfoContainer>
