@@ -37,9 +37,9 @@ function App() {
      
      
       <GlobalStyles />
-      <QueryClientProvider client={queryClient}>
+      {/* <QueryClientProvider client={queryClient}> */}
       <Router />
-      </QueryClientProvider>
+      {/* </QueryClientProvider> */}
     </>
   );
 }
