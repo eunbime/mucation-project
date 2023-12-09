@@ -18,8 +18,6 @@ const Write = () => {
 
   const { alert, confirm } = useAlert();
 
-  const { currentUser } = useAuth();
-
   const params = useParams();
 
   const mode = params.mode;
@@ -36,7 +34,7 @@ const Write = () => {
   // 위치정보
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
 
-  const { checkAuth } = useAuth();
+  const { checkAuth, currentUser } = useAuth();
   useEffect(() => {
     checkAuth();
   }, []);
