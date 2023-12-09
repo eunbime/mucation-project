@@ -67,16 +67,23 @@ const StPostCard = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 1.5rem;
-  gap: 3rem;
-  width: 50rem;
+  gap: 2.5rem;
+  width: 63rem;
   background-color: var(--mainBlack);
   border-radius: 1rem;
 `;
 
+const StThumnailAndInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+`;
+
 const StThumnail = styled.img`
   background-color: orange;
-  height: 10rem;
-  width: 18rem;
+  height: 14rem;
+  width: 22rem;
   border-radius: 0.8rem;
 `;
 
@@ -114,5 +121,6 @@ export {
   StPostInfoWrapper,
   StPostTitle,
   StPostContent,
-  StUserInteresteWrapper
+  StUserInteresteWrapper,
+  StThumnailAndInfo
 };
