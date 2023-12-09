@@ -9,8 +9,8 @@ const seletcedVideoSlice = createSlice({
   initialState,
   reducers: {
     selectedvideo: (state, action) => {
-      // console.log('액션',action);
-      state.id = action.payload;
+
+     return state = action.payload;
     }
   }
 });

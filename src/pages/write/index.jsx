@@ -16,6 +16,7 @@ const Write = () => {
 
   const { alert, confirm } = useAlert();
 
+  // const { currentUser } = useAuth();
   // 동영상 선택시 선택된 동영상 정보 저장
   const [selectVideo, setSelectVideo] = useState({ videoId: '', thumbnail: '' });
 
@@ -68,11 +69,12 @@ const Write = () => {
       date: new Date().getTime(), //serverTimestamp(),
       location: state.center,
       videoId: selectVideo.videoId,
-      uid: currentUser.uid,
       title: inputValue.title,
       context: inputValue.context,
       thumbnail: selectVideo.thumbnail,
-      nickname: currentUser.nickname
+      uid: currentUser.uid,
+      userPhoto: currentUser.photoURL || 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png',
+      nickname: currentUser.displayName
     };
 
     addPost(newMusicPost);

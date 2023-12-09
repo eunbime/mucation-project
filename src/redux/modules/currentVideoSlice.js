@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-
+videoInfo : {},
 };
 
 
@@ -12,7 +12,7 @@ const currentVideoSlice = createSlice({
   reducers: {
     currentVideoData: (state, action) => {
       // console.log('커랜트 맞나 ', action);
-      return state = action.payload;
+           state.videoInfo = action.payload;
     }
   }
 });

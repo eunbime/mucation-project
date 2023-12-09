@@ -3,25 +3,35 @@ import DetailPageVideoArea from './DetailPageVideoArea';
 import styled from 'styled-components';
 import DetailPageUserInfo from './DetailPageUserInfo';
 import DetailPageHeart from './DetailPageHeart';
-import { useQuery } from 'react-query';
-import { getPosts } from 'api/posts';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { addPost, getPosts } from 'api/posts';
 import { useSelector } from 'react-redux';
 
 const Detail = () => {
   // const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
-  const inform = useSelector((state) => state.seletcedVideoSlice);
-  const datas = useSelector((state) => state.currentVideoSlice);
-//  console.log('디테일인폼',datas);
+  
+  // console.log('선택정보', inform);
+  const datas = useSelector((state) => state.currentVideoSlice.videoInfo);
+  console.log('같이랜더링', datas);
 
   // if (isLoading) return <p>loading...</p>;
 
   // if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
 
+  // const queryClient = useQueryClient();
+  // const mutation = useMutation(addPost, {
+  //   onSuccess: () => {
 
- 
+  //     queryClient.invalidateQueries("posts")
+  //     console.log("성공")
+  //   },
+  // });
+
+  // mutation.mutate(datas);
+// console.log('같이랜더링',datas.title);
   return (
     <StDetailPageWrapper>
-      <DetailPageVideoArea inform={inform} />
+      <DetailPageVideoArea  />
       <StSubLineWrapper>
         <h3>{datas.title} </h3>
         <div>
@@ -30,9 +40,7 @@ const Detail = () => {
         </div>
       </StSubLineWrapper>
       <DetailPageUserInfo />
-      <StContextP>
-      {datas.context}
-      </StContextP>
+      <StContextP>{datas.context}</StContextP>
     </StDetailPageWrapper>
   );
 };

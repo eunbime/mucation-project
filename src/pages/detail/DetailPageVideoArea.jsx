@@ -5,29 +5,26 @@ import { ReactComponent as Prev } from '../../styles/img/detailPage/arrow-left.s
 import { ReactComponent as Next } from '../../styles/img/detailPage/arrow-right.svg';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { currentVideoData } from '../../redux/modules/currentVideoSlice';
 
-
-const DetailPageVideoArea = ({ inform }) => {
+const DetailPageVideoArea = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
-
+  const inform = useSelector((state) => state.seletcedVideoSlice);
   const dispatch = useDispatch();
 
   useEffect(() => {
     // 'inform.id'를 기반으로 초기 'currentIndex' 설정
     const initialIndex = posts.findIndex((post) => post.id === inform.id);
-       setCurrentIndex(initialIndex >= 0 ? initialIndex : 0);
-    dispatch(currentVideoData(currentVideoId))
-  }, [inform.id,posts]);
+    setCurrentIndex(initialIndex >= 0 ? initialIndex : 0);
+    dispatch(currentVideoData(posts[currentIndex]));
+  }, [inform.id, posts]);
 
   if (isLoading) return <p>loading...</p>;
 
   if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
-
-
 
   const prevBtnClickHandler = () => {
     // TODO : 이전버튼 클릭시 재생목록의 이전노래 나오기
@@ -46,14 +43,12 @@ const DetailPageVideoArea = ({ inform }) => {
     setCurrentIndex(newIndex);
   };
 
-  const currentVideoId = posts[currentIndex];
   // console.log('posts',currentVideoId)
-  
 
   return (
     <StVideoSection>
       {/* video Id에 값 변경 시 영상 변경 */}
-      <YouTube videoId={`${currentVideoId.videoId}`} style={{ width: '100%' }} opts={{ width: '100%' }} />
+      <YouTube videoId={`${posts[currentIndex].videoId}`} style={{ width: '100%' }} opts={{ width: '100%' }} />
       <button onClick={prevBtnClickHandler}>
         <Prev />
       </button>
