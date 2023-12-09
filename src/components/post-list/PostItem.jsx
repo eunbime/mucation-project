@@ -19,23 +19,18 @@ const PostItem = ({ post }) => {
   const dateObject = new Date(number);
   const formattedDateString = dateObject.toLocaleString();
 
-
   const dispatch = useDispatch();
-
   const navigation = useNavigate();
 
-  const selectedMovieToDatail = (video) => {
-    // console.log('비디오', video);
-    dispatch(selectedvideo(video));
+  const selectedMovieToDatail = (post) => {
+    // console.log('비디오', po);
+    dispatch(selectedvideo(post));
 
     navigation('/detail');
   };
 
-  console.log(formattedDateString);
-
-
   return (
-    <StPostItemWrapper onClick={()=>selectedMovieToDatail(post)}>
+    <StPostItemWrapper onClick={() => selectedMovieToDatail(post)}>
       <StThumbnailBox>
         <StThumbnailImg src={post.thumbnail} alt="youtube thumbnail" />
       </StThumbnailBox>
