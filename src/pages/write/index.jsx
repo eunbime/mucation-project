@@ -4,19 +4,28 @@ import WritePageContext from './WritePageContext';
 import WritePageMap from './WritePageMap';
 import Button from 'components/common/Button';
 import WritePageVideoArea from './WritePageVideoArea';
-import { addPost } from '../../axios/firebaseApi.js';
+import { addPost, editPost } from '../../axios/firebaseApi.js';
 import WriteModal from './WriteModal';
 import { StWriteContainer, StWriteBtnArea } from './write.styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 import useAlert from 'hooks/useAlert';
+import { useMutation, useQueryClient } from 'react-query';
 
 const Write = () => {
   const navigate = useNavigate();
 
   const { alert, confirm } = useAlert();
 
-  // const { currentUser } = useAuth();
+  const params = useParams();
+
+  // 모드 선택 : write(글작성) / edit(수정)
+  const mode = params.mode;
+
+  // 수정모드 : 쿼리스트링을 통한 아이디값 가져오기
+  // 형태> /write/edit?id=게시물 아이디
+  const [query] = useSearchParams();
+
   // 동영상 선택시 선택된 동영상 정보 저장
   const [selectVideo, setSelectVideo] = useState({ videoId: '', thumbnail: '' });
 
@@ -28,6 +37,11 @@ const Write = () => {
 
   // 위치정보
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
+
+  const queryClient = useQueryClient();
+
+  const { mutate: addMutate } = useMutation({ mutationFn: addPost });
+  const { mutate: editMutate } = useMutation({ mutationFn: editPost });
 
   const { checkAuth, currentUser } = useAuth();
   useEffect(() => {
@@ -76,19 +90,54 @@ const Write = () => {
       userPhoto: currentUser.photoURL || 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png',
       nickname: currentUser.displayName
     };
-
-    addPost(newMusicPost);
-    alert({ title: '작성완료', message: '작성이 완료되었습니다.' });
-    navigate('/');
+    addMutate(newMusicPost, {
+      onSuccess: () => {
+        alert({ title: '작성완료', message: '작성이 완료되었습니다.' });
+        navigate('/');
+      }
+    });
   };
 
-  // 작성 버튼 생성
-  const WRITE_PAGE_BUTTON = [
+  // 업데이트시
+  const postEditHandler = () => {
+    const updateData = {
+      location: state.center,
+      videoId: selectVideo.videoId,
+      title: inputValue.title,
+      context: inputValue.context,
+      thumbnail: selectVideo.thumbnail,
+      userPhoto: currentUser.photoURL || 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png',
+      nickname: currentUser.displayName
+    };
+
+    editMutate(
+      { id: query.id, data: updateData },
+      {
+        onSuccess: () => {
+          alert({ title: '수정완료', message: '수정이 완료되었습니다.' });
+          navigate('/');
+        }
+      }
+    );
+  };
+
+  // write 모드일 때 버튼 생성
+  const WRITE_PAGE_WRITE_MODE_BUTTON = [
     { text: '취소하기', handler: cancelWriteHandler },
     { text: '등록하기', handler: postWriteHandler }
   ];
 
-  const writePageButton = WRITE_PAGE_BUTTON.map((button, index) => (
+  // edit mode 일 떄 버튼
+  const WRITE_PAGE_EDIT_MODE_BUTTON = [
+    { text: '취소하기', handler: cancelWriteHandler },
+    { text: '게시물 수정하기', handler: postEditHandler }
+  ];
+
+  const writeModeButton = WRITE_PAGE_WRITE_MODE_BUTTON.map((button, index) => (
+    <Button key={index} text={button.text} handler={button.handler} />
+  ));
+
+  const editModeButton = WRITE_PAGE_EDIT_MODE_BUTTON.map((button, index) => (
     <Button key={index} text={button.text} handler={button.handler} />
   ));
 
@@ -99,7 +148,10 @@ const Write = () => {
       <WritePageTitle titleValue={inputValue.title} setTitleValue={setTitleValue} />
       <WritePageContext contextValue={inputValue.context} setContextValue={setContextValue} />
       <WritePageMap setState={setState} state={state} />
-      <StWriteBtnArea>{writePageButton}</StWriteBtnArea>
+      <StWriteBtnArea>
+        {mode === 'write' && writeModeButton}
+        {mode === 'edit' && editModeButton}
+      </StWriteBtnArea>
     </StWriteContainer>
   );
 };

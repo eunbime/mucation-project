@@ -23,7 +23,7 @@ const HeaderNav = () => {
   };
 
   const goToWritePage = () => {
-    navigate('/write');
+    navigate('/write/write');
   };
 
   const logoutBtnHandler = async () => {
