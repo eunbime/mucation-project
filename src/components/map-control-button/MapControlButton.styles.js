@@ -10,23 +10,6 @@ const StMapButtonBox = styled.div`
   z-index: 10;
 `;
 
-const StSearchForm = styled.form`
-  display: flex;
-  position: relative;
-
-  > input {
-    position: absolute;
-    width: 20rem;
-    height: 100%;
-    z-index: -1;
-    border-radius: 2rem;
-    border: none;
-    outline: none;
-    padding-left: 4rem;
-    font-size: 1rem;
-  }
-`;
-
 const StButton = styled.button`
   display: flex;
   justify-content: center;
@@ -39,4 +22,4 @@ const StButton = styled.button`
   font-size: 2rem;
 `;
 
-export { StMapButtonBox, StSearchForm, StButton };
+export { StMapButtonBox, StButton };

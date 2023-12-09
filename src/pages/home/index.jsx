@@ -4,6 +4,7 @@ import Location from 'components/location/Location';
 import { StHomeContainer } from './Home.styles';
 
 import { useAuth } from 'hooks/useAuth';
+import AlertModal from 'components/alertModal/AlertModal';
 
 const Home = () => {
   const { checkAuth } = useAuth();
@@ -14,6 +15,7 @@ const Home = () => {
 
   return (
     <StHomeContainer>
+      <AlertModal />
       <Location />
       <PostList />
     </StHomeContainer>

@@ -2,15 +2,15 @@ import styled from 'styled-components';
 
 const StPostItemWrapper = styled.li`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 3rem;
   width: 100%;
   background-color: var(--subColor);
   padding: 1.25rem;
   transition: all 0.3s ease-in-out;
 
-  @media (min-width: 650px) {
-    height: 330px;
+  @media (min-width: 800px) {
+    flex-direction: row;
   }
 `;
 
@@ -18,8 +18,13 @@ const StThumbnailBox = styled.div`
   width: 100%;
   transition: all 0.3s ease-in-out;
 
-  @media (min-width: 650px) {
-    height: 100%;
+  @media (min-width: 800px) {
+    height: 200px;
+    width: 300px;
+  }
+
+  @media (min-width: 1050px) {
+    height: 330px;
     width: 520px;
   }
 `;
