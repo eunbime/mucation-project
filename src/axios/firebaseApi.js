@@ -95,7 +95,7 @@ export const profileUpdate = async (nickname) => {
 // 회원가입시 유저 uid로 firestore doc 추가
 export const setUserData = async (uid) => {
   const docSnap = await getDoc(doc(db, 'user', uid));
-  if (!docSnap.data()) return;
+  if (docSnap.data()) return;
   await setDoc(doc(db, 'user', uid), {
     genre: [],
     introduce: ''
