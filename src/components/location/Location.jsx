@@ -1,28 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
-import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useNavigate } from 'react-router-dom';
-import {
-  StMapWrapper,
-  Controlbar,
-  StCustomOverlay,
-  StCustomOverlayButton,
-  StCustomOverlayThumbnail,
-  StCustomOverlayInfo
-} from './Location.styles';
+import { StMapWrapper } from './Location.styles';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
 import { useDispatch } from 'react-redux';
 import { getLocation } from '../../redux/modules/mapSlice';
 import ControlButton from '../map-control-button/MapControlButton';
 import MapMarkerClusterer from './MapMarkerClusterer';
+import CustomOverlay from './CustomOverlay';
+import CustomMarker from './CustomMarker';
+import CustomControlBar from '../map-control-button/CustomControlBar';
 
 const { kakao } = window;
 
 const Location = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const mapRef = useRef(null);
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
@@ -31,6 +24,9 @@ const Location = () => {
   const [isOpenOverlay, setIsOpenOverlay] = useState(false);
   const [level, setLevel] = useState(4);
   const [markerId, setMarkerId] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const mapRef = useRef(null);
 
   useEffect(() => {
     // 지도 초기 위치 설정 (현재 위치로 고정)
@@ -57,14 +53,19 @@ const Location = () => {
           }));
         },
 
+        // 사용자가 위치 허용을 하지 않았을 때
         (err) => {
+          console.log(err.message);
+          alert('위치를 허용하지 않아 현재 위치가 기본 위치로 표시됩니다.');
           setState((prev) => ({
             ...prev,
             errMsg: err.message,
+            center: { lat: 33.450701, lng: 126.570667 },
             isLoading: false
           }));
         }
       );
+      // 위치를 가져오는데 실패했을 때
     } else {
       setState((prev) => ({
         ...prev,
@@ -74,6 +75,7 @@ const Location = () => {
     }
   }, []);
 
+  // 지도 상 실시간 위치 데이터 저장
   useEffect(() => {
     dispatch(getLocation(state.center));
   }, [state.center]);
@@ -85,9 +87,9 @@ const Location = () => {
       title: post.title,
       content: post.context,
       thumbnail: post.thumbnail,
-      latlng: new kakao.maps.LatLng(post?.location?.lat, post?.location?.lng),
       lat: post?.location?.lat,
-      lng: post?.location?.lng
+      lng: post?.location?.lng,
+      latlng: new kakao.maps.LatLng(post?.location?.lat, post?.location?.lng)
     };
   });
 
@@ -102,26 +104,12 @@ const Location = () => {
     });
   };
 
-  const handleToDetailPage = () => {
-    const bounds = mapRef.current?.getBounds();
-    console.log(bounds);
-    alert('디테일 페이지로 이동!');
-    navigate('/detail', {
-      state: bounds
-    });
-  };
-
-  const handleCustomOverlay = (id) => {
-    setMarkerId(id);
-    setIsOpenOverlay(true);
-  };
-
   const filteredPosition = positions?.filter((position) => {
     return position.id === markerId;
   });
 
-  if (loading && isLoading) return <div>loading...</div>;
-  if (error && isError) return <div>오류가 발생했습니다... 🥲</div>;
+  if (loading && isLoading) return <div>지도를 로딩 중입니다...</div>;
+  if (error && isError) return <div>지도 오류가 발생했습니다 🥲</div>;
 
   return (
     <StMapWrapper>
@@ -156,61 +144,20 @@ const Location = () => {
           )}
         </MapMarker>
         {positions?.map((item, index) => (
-          <MapMarker
-            key={`${item.title}-${item.latlng}`}
-            position={{ lat: item.lat, lng: item.lng }}
-            image={{
-              src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 마커이미지의 주소입니다
-              size: {
-                width: 24,
-                height: 35
-              } // 마커이미지의 크기입니다
-            }}
-            title={item.title} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-            onClick={() => handleCustomOverlay(item.id)}
-          />
+          <CustomMarker key={item.id} item={item} setIsOpenOverlay={setIsOpenOverlay} setMarkerId={setMarkerId} />
         ))}
 
         <MapMarkerClusterer mapRef={mapRef} positions={positions} />
         {filteredPosition?.map((item) => {
           return (
             isOpenOverlay && (
-              <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
-                // 커스텀 오버레이가 표시될 위치입니다
-                position={{ lat: item.lat, lng: item.lng }}
-                xAnchor={-0.15}
-                yAnchor={0.9}
-              >
-                {/* 커스텀 오버레이에 표시할 내용입니다 */}
-                <StCustomOverlay style={{ backgroundColor: 'white', color: '#000' }}>
-                  <StCustomOverlayThumbnail img={item.thumbnail}>
-                    {/* <img src={item.thumbnail} alt="thumbnail" /> */}
-                  </StCustomOverlayThumbnail>
-                  <StCustomOverlayInfo>
-                    <span>{item.title}</span>
-                    <pre>{item.content}</pre>
-                  </StCustomOverlayInfo>
-                  <StCustomOverlayButton>
-                    <button onClick={handleToDetailPage}>바로가기</button>
-                    <button onClick={() => setIsOpenOverlay(false)}>닫기</button>
-                  </StCustomOverlayButton>
-                </StCustomOverlay>
-              </CustomOverlayMap>
+              <CustomOverlay key={item.id} item={item} setIsOpenOverlay={setIsOpenOverlay} mapRef={mapRef} />
             )
           );
         })}
       </Map>
       <ControlButton state={state} setState={setState} currentLocation={currentLocation} mapRef={mapRef} />
-      <Controlbar
-        type="range"
-        defaultValue="4"
-        min="1"
-        max="8"
-        onChange={(e) => {
-          mapRef.current.setLevel(e.currentTarget.value, { animate: true });
-          setLevel(mapRef.current.getLevel());
-        }}
-      />
+      <CustomControlBar mapRef={mapRef} setLevel={setLevel} />
     </StMapWrapper>
   );
 };
