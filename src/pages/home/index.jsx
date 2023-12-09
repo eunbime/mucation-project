@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PostList from 'components/post-list/PostList';
 import Location from 'components/location/Location';
 import { StHomeContainer } from './Home.styles';
+
 import { useAuth } from 'hooks/useAuth';
 
 const Home = () => {

@@ -48,7 +48,7 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
           <section key={item.id.videoId}>
             <StWriteModalSectionBorder
               onClick={() =>
-                handleVideoSelect({ videoId: item.id.videoId, thumbnail: item.snippet.thumbnails.default.url })
+                handleVideoSelect({ videoId: item.id.videoId, thumbnail: item.snippet.thumbnails.high.url })
               }
             >
               <StWriteModalImg src={item.snippet.thumbnails.high.url} alt="앨범이미지" />

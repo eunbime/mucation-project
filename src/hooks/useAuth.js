@@ -4,14 +4,16 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout, loginEmail, signUpEmail, socialLogin, setUserData, profileUpdate } from '../axios/firebaseApi';
 import { setSuccessLogin, setSuccessLogout } from '../redux/modules/authSlice';
+import useAlert from './useAlert';
 
 export const useAuth = () => {
+  const { alert } = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const logoutMutate = useMutation(logout, {
     onSuccess: () => {
-      alert('로그아웃 성공!');
+      alert({ title: '로그아웃', message: '성공적으로 로그아웃 되었습니다.' });
       dispatch(setSuccessLogout());
       navigate('/');
     }
@@ -20,7 +22,7 @@ export const useAuth = () => {
   const loginMutate = useMutation(loginEmail, {
     onSuccess: () => {
       dispatch(setSuccessLogin());
-      alert('로그인 성공!!!');
+      alert({ title: '로그인', message: '성공적으로 로그인하였습니다.' });
       navigate('/');
     },
     onError: (error) => {
@@ -30,11 +32,9 @@ export const useAuth = () => {
 
   const signUpMutate = useMutation(signUpEmail, {
     onSuccess: async ({ response, nickname }) => {
-      console.log(nickname, response.user);
       await setUserData(response.user.uid);
       await profileUpdate(nickname);
-      console.log(response.user);
-      alert('회원가입 성공!!! 즉시 로그인 합니다.');
+      alert({ title: '회원가입', message: '성공적으로 회원가입하였습니다.' });
       dispatch(setSuccessLogin());
       navigate('/');
     },
@@ -45,14 +45,13 @@ export const useAuth = () => {
 
   const socialLoginMutate = useMutation(socialLogin, {
     onSuccess: async (data) => {
-      console.log(data);
       await setUserData(data.user.uid);
+      alert({ title: '로그인', message: '성공적으로 로그인하였습니다.' });
       dispatch(setSuccessLogin());
-      alert('소셜 로그인 성공!!!');
       navigate('/');
     },
     onError: (error) => {
-      console.error('회원가입 실패>>>>', error.message);
+      console.error('소셜로그인 실패>>>>', error.message);
     }
   });
 
