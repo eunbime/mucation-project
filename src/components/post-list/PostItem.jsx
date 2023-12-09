@@ -16,8 +16,6 @@ const PostItem = ({ post }) => {
   const dateObject = new Date(number);
   const formattedDateString = dateObject.toLocaleString();
 
-  console.log(formattedDateString);
-
   return (
     <StPostItemWrapper>
       <StThumbnailBox>

@@ -43,6 +43,7 @@ const MapControlButton = ({ state, setState, currentLocation, mapRef }) => {
       }
     });
 
+    setSearchInput('');
     setIsOpenInput(false);
   };
 
