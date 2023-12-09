@@ -6,12 +6,17 @@ const useAlert = () => {
   const alertInfo = useSelector((state) => state.alertSlice);
   const dispatch = useDispatch();
 
-  // confirm
+  // confirm 사용시
   const confirm = ({ title, message }) => {
     dispatch(confirmOpen({ title, message }));
     return new Promise((resolve) => {
       dispatch(setResolveFunc({ func: resolve }));
     });
+  };
+
+  // alert 사용시
+  const alert = ({ title, message }) => {
+    dispatch(alertOpen({ title, message }));
   };
 
   const onConfirm = () => {
@@ -22,11 +27,6 @@ const useAlert = () => {
   const onCancel = () => {
     alertInfo.resolveFunc(false);
     dispatch(closeModal());
-  };
-
-  // alert
-  const alert = ({ title, message }) => {
-    dispatch(alertOpen({ title, message }));
   };
 
   const onAlertClose = () => {
