@@ -10,17 +10,21 @@ import { StWriteContainer, StWriteBtnArea } from './write.styles';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 import useAlert from 'hooks/useAlert';
+import { useMutation, useQueryClient } from 'react-query';
 
 const Write = () => {
   const navigate = useNavigate();
-
-  const [query, setQuery] = useSearchParams();
 
   const { alert, confirm } = useAlert();
 
   const params = useParams();
 
+  // 모드 선택 : write(글작성) / edit(수정)
   const mode = params.mode;
+
+  // 수정모드 : 쿼리스트링을 통한 아이디값 가져오기
+  // 형태> /write/edit?id=게시물 아이디
+  const [query] = useSearchParams();
 
   // 동영상 선택시 선택된 동영상 정보 저장
   const [selectVideo, setSelectVideo] = useState({ videoId: '', thumbnail: '' });
@@ -33,6 +37,11 @@ const Write = () => {
 
   // 위치정보
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
+
+  const queryClient = useQueryClient();
+
+  const { mutate: addMutate } = useMutation({ mutationFn: addPost });
+  const { mutate: editMutate } = useMutation({ mutationFn: editPost });
 
   const { checkAuth, currentUser } = useAuth();
   useEffect(() => {
@@ -81,10 +90,12 @@ const Write = () => {
       userPhoto: currentUser.photoURL || 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png',
       nickname: currentUser.displayName
     };
-
-    addPost(newMusicPost);
-    alert({ title: '작성완료', message: '작성이 완료되었습니다.' });
-    navigate('/');
+    addMutate(newMusicPost, {
+      onSuccess: () => {
+        alert({ title: '작성완료', message: '작성이 완료되었습니다.' });
+        navigate('/');
+      }
+    });
   };
 
   // 업데이트시
@@ -99,9 +110,15 @@ const Write = () => {
       nickname: currentUser.displayName
     };
 
-    editPost({ id: query.id, data: updateData });
-    alert({ title: '수정완료', message: '수정이 완료되었습니다.' });
-    navigate('/');
+    editMutate(
+      { id: query.id, data: updateData },
+      {
+        onSuccess: () => {
+          alert({ title: '수정완료', message: '수정이 완료되었습니다.' });
+          navigate('/');
+        }
+      }
+    );
   };
 
   // write 모드일 때 버튼 생성

@@ -6,11 +6,11 @@ import Detail from 'pages/detail';
 import Write from 'pages/write';
 import Profile from 'pages/profile';
 import Login from 'pages/login';
-import AuthLayout from './Layout/AuthLayout';
 import { useSelector } from 'react-redux';
 
 const Router = () => {
   const isLogin = useSelector((state) => state.authSlice.isLogin);
+  console.log(isLogin);
   return (
     <BrowserRouter>
       <Routes>
