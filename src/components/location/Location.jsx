@@ -12,6 +12,7 @@ import MapMarkerClusterer from './MapMarkerClusterer';
 import CustomOverlay from './CustomOverlay';
 import CustomMarker from './CustomMarker';
 import CustomControlBar from '../map-control-button/CustomControlBar';
+import useDebounce from 'hooks/useDebounce';
 
 const { kakao } = window;
 
@@ -22,11 +23,12 @@ const Location = () => {
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
   const [isOpenWindow, setIsOpenWindow] = useState(false);
   const [isOpenOverlay, setIsOpenOverlay] = useState(false);
-  const [level, setLevel] = useState(4);
+  const [level, setLevel] = useState(5);
   const [markerId, setMarkerId] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const mapRef = useRef(null);
+  const debouncedState = useDebounce(state.center, 200);
 
   useEffect(() => {
     // 지도 초기 위치 설정 (현재 위치로 고정)
@@ -77,8 +79,8 @@ const Location = () => {
 
   // 지도 상 실시간 위치 데이터 저장
   useEffect(() => {
-    dispatch(getLocation(state.center));
-  }, [state.center]);
+    dispatch(getLocation(debouncedState));
+  }, [debouncedState]);
 
   // 게시물에서 필요한 값 추출
   var positions = posts?.map((post) => {

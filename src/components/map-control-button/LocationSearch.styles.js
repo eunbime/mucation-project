@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const StSearchForm = styled.form`
   display: flex;
   position: relative;
+  margin-bottom: 1rem;
 
   > input {
     position: absolute;

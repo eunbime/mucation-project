@@ -3,44 +3,31 @@ import DetailPageVideoArea from './DetailPageVideoArea';
 import styled from 'styled-components';
 import DetailPageUserInfo from './DetailPageUserInfo';
 import DetailPageHeart from './DetailPageHeart';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { addPost, getPosts } from 'api/posts';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 const Detail = () => {
+  // 데이터 가져오기
+  const location = useLocation();
+  console.log(location.state);
   // const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
-  
+
   // console.log('선택정보', inform);
   const datas = useSelector((state) => state.currentVideoSlice.videoInfo);
   console.log('같이랜더링', datas);
 
-  // if (isLoading) return <p>loading...</p>;
-
-  // if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
-
-  // const queryClient = useQueryClient();
-  // const mutation = useMutation(addPost, {
-  //   onSuccess: () => {
-
-  //     queryClient.invalidateQueries("posts")
-  //     console.log("성공")
-  //   },
-  // });
-
-  // mutation.mutate(datas);
-// console.log('같이랜더링',datas.title);
   return (
     <StDetailPageWrapper>
-      <DetailPageVideoArea  />
+      <DetailPageVideoArea />
       <StSubLineWrapper>
-        <h3>{datas.title} </h3>
+        <h3>{datas?.title} </h3>
         <div>
-          <span>{datas.date}</span>
+          <span>{datas?.date}</span>
           <DetailPageHeart />
         </div>
       </StSubLineWrapper>
       <DetailPageUserInfo />
-      <StContextP>{datas.context}</StContextP>
+      <StContextP>{datas?.context}</StContextP>
     </StDetailPageWrapper>
   );
 };

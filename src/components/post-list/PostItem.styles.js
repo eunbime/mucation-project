@@ -9,7 +9,7 @@ const StPostItemWrapper = styled.li`
   padding: 1.25rem;
   transition: all 0.3s ease-in-out;
 
-  @media (min-width: 800px) {
+  @media (min-width: 650px) {
     flex-direction: row;
   }
 `;
@@ -18,14 +18,14 @@ const StThumbnailBox = styled.div`
   width: 100%;
   transition: all 0.3s ease-in-out;
 
-  @media (min-width: 800px) {
-    height: 200px;
+  @media (min-width: 650px) {
+    height: 170px;
     width: 300px;
   }
 
   @media (min-width: 1050px) {
-    height: 330px;
-    width: 520px;
+    height: 250px;
+    width: 450px;
   }
 `;
 
@@ -53,7 +53,15 @@ const StUserInfo = styled.section`
 `;
 
 const StPostTitle = styled.h3`
-  font-size: xx-large;
+  font-size: x-large;
+
+  @media (min-width: 650px) {
+    font-size: large;
+  }
+
+  @media (min-width: 1050px) {
+    font-size: x-large;
+  }
 `;
 
 const UserProfile = styled.div`
