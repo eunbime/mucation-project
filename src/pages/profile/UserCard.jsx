@@ -41,7 +41,7 @@ const UserCard = () => {
       <StEmail>{currentUser.email}</StEmail>
 
       <StIntroduce>{user?.introduce}</StIntroduce>
-      <StUserInteresteWrapper>
+      <StUserInteresteWrapper key={user?.uid}>
         {user?.genre.map((item) => (
           <StFavoriteGenre>{item}</StFavoriteGenre>
         ))}
