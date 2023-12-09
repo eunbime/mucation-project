@@ -9,11 +9,14 @@ import WriteModal from './WriteModal';
 import { StWriteContainer, StWriteBtnArea } from './write.styles';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
-import { serverTimestamp } from 'firebase/firestore';
+import useAlert from 'hooks/useAlert';
 
 const Write = () => {
   const navigate = useNavigate();
 
+  const { alert, confirm } = useAlert();
+
+  const { currentUser } = useAuth();
   // 동영상 선택시 선택된 동영상 정보 저장
   const [selectVideo, setSelectVideo] = useState({ videoId: '', thumbnail: '' });
 
@@ -51,9 +54,9 @@ const Write = () => {
   };
 
   // 작성 취소 이벤트
-  const cancelWriteHandler = () => {
-    if (!window.confirm('정말 작성을 취소하시겠습니까?')) return;
-
+  const cancelWriteHandler = async () => {
+    const confirmValue = await confirm({ title: '작성취소', message: '작성을 취소하시겠습니까?' });
+    if (!confirmValue) return;
     navigate('/');
   };
 
@@ -66,14 +69,16 @@ const Write = () => {
       date: new Date().getTime(), //serverTimestamp(),
       location: state.center,
       videoId: selectVideo.videoId,
-      uid: 'BwccmAjZk7VOb4oi0FUYr7jPeps1',
       title: inputValue.title,
       context: inputValue.context,
-      thumbnail: selectVideo.thumbnail
+      thumbnail: selectVideo.thumbnail,
+      uid: currentUser.uid,
+      userPhoto: currentUser.photoURL || 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png',
+      nickname: currentUser.displayName
     };
 
     addPost(newMusicPost);
-
+    alert({ title: '작성완료', message: '작성이 완료되었습니다.' });
     navigate('/');
   };
 

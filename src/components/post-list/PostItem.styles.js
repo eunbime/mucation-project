@@ -56,6 +56,11 @@ const UserProfile = styled.div`
   height: 3rem;
   background-color: gray;
   border-radius: 50%;
+  overflow: hidden;
+  & img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const StNicknameAndDate = styled.div`

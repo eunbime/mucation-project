@@ -4,8 +4,8 @@ import styled from 'styled-components';
 const StUserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   padding: 2rem;
   gap: 1rem;
 `;
@@ -36,6 +36,8 @@ const StIntroduce = styled.p`
 const StUserInteresteWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
 `;
 
@@ -43,8 +45,13 @@ const StFavoriteGenre = styled.span`
   color: var(--violetColor);
   border: 1px solid var(--violetColor);
   padding: 0.4rem 0.8rem;
-  border-radius: 5rem;
+  border-radius: 3rem;
   /* border color  */
+
+  & button {
+    color: var(--violetColor);
+    background-color: transparent;
+  }
 `;
 
 // 사용자 게시물 부분
@@ -52,34 +59,46 @@ const StUserSharedPostsContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  gap: 1rem;
 `;
 
 const StPostCard = styled.div`
   display: flex;
   align-items: center;
-  padding: 2rem;
-  gap: 1rem;
+  justify-content: space-around;
+  padding: 1.5rem;
+  gap: 3rem;
+  width: 50rem;
+  background-color: var(--mainBlack);
+  border-radius: 1rem;
 `;
 
 const StThumnail = styled.img`
   background-color: orange;
   height: 10rem;
-  width: 20rem;
+  width: 18rem;
+  border-radius: 0.8rem;
 `;
 
 const StPostInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: start;
+  gap: 0.875rem;
+
+  & span {
+    font-size: 0.875rem;
+  }
 `;
 
 const StPostTitle = styled.h2`
   color: var(--mainWhite);
-  font-size: 2.4rem;
+  font-size: 1.563rem;
 `;
 
 const StPostContent = styled.p`
   color: var(--mainWhite);
-  font-size: 1.4rem;
+  font-size: 1rem;
 `;
 
 // 수정 프로필 모달

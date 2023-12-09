@@ -9,6 +9,7 @@ import {
   UserProfile,
   StNicknameAndDate
 } from './PostItem.styles';
+import { useAuth } from 'hooks/useAuth';
 
 const PostItem = ({ post }) => {
   // date 변환
@@ -25,7 +26,7 @@ const PostItem = ({ post }) => {
         <StPostTitle>{post.title}</StPostTitle>
         <StUserInfo>
           <UserProfile>
-            <img src="" alt="" />
+            <img src={post.userPhoto} alt="" />
           </UserProfile>
           <StNicknameAndDate>{post.nickname}</StNicknameAndDate>
           <StNicknameAndDate>{formattedDateString}</StNicknameAndDate>

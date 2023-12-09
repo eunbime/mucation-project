@@ -3,11 +3,12 @@ import Button from 'components/common/Button';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { StHeaderButtonContainer, StHeaderProfile } from '../Header.styles';
+import useAlert from 'hooks/useAlert';
 
 const HeaderNav = () => {
   const navigate = useNavigate();
+  const { confirm } = useAlert();
 
   const isLogin = useSelector((state) => state.authSlice.isLogin);
 
@@ -25,8 +26,9 @@ const HeaderNav = () => {
     navigate('/write');
   };
 
-  const logoutBtnHandler = () => {
-    logoutHandler();
+  const logoutBtnHandler = async () => {
+    const isConfirmed = await confirm({ title: '로그아웃', message: '로그아웃 하시겠습니까?' });
+    if (isConfirmed) logoutHandler();
   };
 
   const { currentUser } = useAuth();
