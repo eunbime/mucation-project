@@ -29,6 +29,7 @@ export const addPost = async ({ ...posts }) => {
     // Data
     ...posts
   });
+
   console.log(docRef.id);
 };
 
