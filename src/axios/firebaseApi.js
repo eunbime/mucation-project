@@ -105,7 +105,6 @@ export const setUserData = async (uid) => {
 // 유저 member 데이터 가져오기 (firestore)
 export const getUserData = async (uid) => {
   const docSnap = await getDoc(doc(db, 'user', uid));
-  console.log(docSnap.data());
   return docSnap.data();
 };
 
@@ -122,13 +121,22 @@ export const getCurrentUserPost = async () => {
 };
 
 // 사용자정 정보 가져오기
-export const getUserInfo = async () => {
-  const querySnapshot = await getDocs(collection(db, 'user'));
-  const userDate = [];
-  querySnapshot.forEach((doc) => {
-    userDate.push({ id: doc.id, ...doc.data() });
-  });
-  return userDate;
+export const getUserInfo = async (uid) => {
+  const docRef = doc(db, 'user', uid);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    return null;
+  }
+
+  // const querySnapshot = await getDocs(collection(db, 'user'));
+  // const userDate = [];
+  // querySnapshot.forEach((doc) => {
+  //   userDate.push({ id: doc.id, ...doc.data() });
+  // });
+  // return docs;
 };
 
 // USER 정보 업데이트

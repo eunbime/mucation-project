@@ -18,7 +18,6 @@ const Controlbar = styled.input`
   outline: none;
   transition: 450ms ease-in;
   accent-color: var(--mainOrange);
-  /* -webkit-appearance: none; */
 `;
 
 export { StMapWrapper, Controlbar };

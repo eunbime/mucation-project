@@ -20,6 +20,7 @@ const PostItem = ({ post }) => {
   const dateObject = new Date(number);
   const formattedDateString = dateObject.toLocaleString();
 
+
   const dispatch = useDispatch();
 
   const navigation = useNavigate();
@@ -32,6 +33,7 @@ const PostItem = ({ post }) => {
   };
 
   console.log(formattedDateString);
+
 
   return (
     <StPostItemWrapper onClick={()=>selectedMovieToDatail(post)}>

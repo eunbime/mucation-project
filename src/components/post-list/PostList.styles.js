@@ -14,4 +14,14 @@ const StPostListWrapper = styled.ul`
   overflow-y: auto;
 `;
 
-export { StPostSection, StPostListWrapper };
+const NotFoundPost = styled.div`
+  background-color: var(--subColor);
+  padding: 3rem;
+
+  & p {
+    font-size: large;
+    text-align: center;
+  }
+`;
+
+export { StPostSection, StPostListWrapper, NotFoundPost };

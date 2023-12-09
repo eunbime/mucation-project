@@ -2,7 +2,7 @@ import React from 'react';
 import PostItem from './PostItem';
 import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
-import { StPostSection, StPostListWrapper } from './PostList.styles';
+import { StPostSection, StPostListWrapper, NotFoundPost } from './PostList.styles';
 import { useSelector } from 'react-redux';
 
 // 메인화면, 마이페이지에서 사용
@@ -22,8 +22,9 @@ const PostList = () => {
       }
     }
   });
+  console.log(!filteredPosts);
 
-  if (isLoading) return <p>loading...</p>;
+  if (isLoading && !filteredPosts) return <p>게시물을 로딩중입니다...</p>;
 
   if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
 
@@ -33,7 +34,9 @@ const PostList = () => {
         {filteredPosts?.length > 0 ? (
           filteredPosts.map((item) => <PostItem key={item.id} post={item} />)
         ) : (
-          <div>현재 위치에 게시물이 등록되어 있지 않습니다.</div>
+          <NotFoundPost>
+            <p>현재 위치에 게시물이 등록되어 있지 않습니다.</p>
+          </NotFoundPost>
         )}
       </StPostListWrapper>
     </StPostSection>
