@@ -8,7 +8,7 @@ import {
   StLabel,
   StInput,
   StUserInteresteWrapper
-} from './profile.styles';
+} from './EditProfileModal.styles';
 import { useDispatch } from 'react-redux';
 import { isEditingUserProfile } from '../../redux/modules/profileSlice.js';
 import { updateDoc, doc, arrayUnion, arrayRemove } from 'firebase/firestore';

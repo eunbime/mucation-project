@@ -15,9 +15,13 @@ import { useQuery } from 'react-query';
 import { useAuth } from 'hooks/useAuth';
 
 const UserCard = () => {
-  const { isLoading, isError, data: user } = useQuery('user', getUserInfo);
-  const currentUser = useAuth().currentUser;
   const dispatch = useDispatch();
+  const { currentUser } = useAuth();
+  const {
+    isLoading,
+    isError,
+    data: user
+  } = useQuery({ queryKey: ['user'], queryFn: () => getUserInfo(currentUser.uid) });
 
   // 프로필 수정 모달 열기
   const showEditProfileModal = () => {

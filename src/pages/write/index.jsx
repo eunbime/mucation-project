@@ -16,7 +16,7 @@ const Write = () => {
 
   const { alert, confirm } = useAlert();
 
-  const { currentUser } = useAuth();
+  // const { currentUser } = useAuth();
   // 동영상 선택시 선택된 동영상 정보 저장
   const [selectVideo, setSelectVideo] = useState({ videoId: '', thumbnail: '' });
 
@@ -29,7 +29,7 @@ const Write = () => {
   // 위치정보
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
 
-  const { checkAuth } = useAuth();
+  const { checkAuth, currentUser } = useAuth();
   useEffect(() => {
     checkAuth();
   }, []);

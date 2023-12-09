@@ -3,23 +3,44 @@ import DetailPageVideoArea from './DetailPageVideoArea';
 import styled from 'styled-components';
 import DetailPageUserInfo from './DetailPageUserInfo';
 import DetailPageHeart from './DetailPageHeart';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { addPost, getPosts } from 'api/posts';
+import { useSelector } from 'react-redux';
 
 const Detail = () => {
+  // const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
+  
+  // console.log('선택정보', inform);
+  const datas = useSelector((state) => state.currentVideoSlice.videoInfo);
+  console.log('같이랜더링', datas);
+
+  // if (isLoading) return <p>loading...</p>;
+
+  // if (isError) return <p>{'오류가 발생했습니다 :('}</p>;
+
+  // const queryClient = useQueryClient();
+  // const mutation = useMutation(addPost, {
+  //   onSuccess: () => {
+
+  //     queryClient.invalidateQueries("posts")
+  //     console.log("성공")
+  //   },
+  // });
+
+  // mutation.mutate(datas);
+// console.log('같이랜더링',datas.title);
   return (
     <StDetailPageWrapper>
-      <DetailPageVideoArea />
+      <DetailPageVideoArea  />
       <StSubLineWrapper>
-        <h3>OO에서 듣기 좋은 음악 </h3>
+        <h3>{datas.title} </h3>
         <div>
-          <span>2023-10-10</span>
+          <span>{datas.date}</span>
           <DetailPageHeart />
         </div>
       </StSubLineWrapper>
       <DetailPageUserInfo />
-      <StContextP>
-        Lorem ipsum dolor sit amet consectetur. Vulputate sit turpis ac vel amet. Amet nisl nunc eget nunc. Et
-        ullamcorper ut pretium consectetur consequat diam felis eget ut. Rhoncus urna placerat sit pulvinar.
-      </StContextP>
+      <StContextP>{datas.context}</StContextP>
     </StDetailPageWrapper>
   );
 };
