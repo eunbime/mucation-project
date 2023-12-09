@@ -9,23 +9,29 @@ import {
 } from './profile.styles';
 
 import { useQuery } from 'react-query';
-import { getCurrentUserPost, getUserData } from '../../axios/firebaseApi.js';
+import { getUserInfo } from '../../axios/firebaseApi.js';
 import { useNavigate } from 'react-router-dom';
 import Button from 'components/common/Button';
 import { useAuth } from 'hooks/useAuth';
 
 const UserPostCard = () => {
-  const userUid = useAuth().currentUser;
+  const { currentUser } = useAuth();
+
   const navigate = useNavigate();
-  const { isLoading, isError, data: posts } = useQuery('posts', getUserData);
-  const filteredPosts = posts.filter((post) => post.uid === userUid.uid);
+
+  const {
+    isLoading,
+    isError,
+    data: posts
+  } = useQuery({ queryKey: ['posts'], queryFn: () => getUserInfo(currentUser.uid) });
+  const filtered = posts?.filter((post) => post.uid === currentUser.uid);
 
   // 파이어베이스 날짜 변환
   const [formattedDate, setFormattedDate] = useState([]);
 
   useEffect(() => {
     const convertFirebaseNumberToDate = () => {
-      posts.map((num) => {
+      posts?.map((num) => {
         const number = parseInt(num.date);
         const dateObject = new Date(number);
         // 예시: "2023-01-01 12:34:56" 형식으로 표시
@@ -41,7 +47,7 @@ const UserPostCard = () => {
 
   return (
     <StUserSharedPostsContainer>
-      {filteredPosts.map((post) => {
+      {filtered?.map((post) => {
         return (
           <StPostCard key={post.id}>
             {/* 이미지 가져오기 */}
