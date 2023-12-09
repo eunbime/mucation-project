@@ -1,5 +1,15 @@
-
-import { addDoc, collection, doc, updateDoc, deleteDoc, getDocs, setDoc, getDoc, query, where } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  updateDoc,
+  deleteDoc,
+  getDocs,
+  setDoc,
+  getDoc,
+  query,
+  where
+} from 'firebase/firestore';
 
 import { db, auth } from '../firebase.js';
 import {
@@ -94,7 +104,7 @@ export const setUserData = async (uid) => {
 // 유저 member 데이터 가져오기 (firestore)
 export const getUserData = async (uid) => {
   const docSnap = await getDoc(doc(db, 'user', uid));
-  // console.log(docSnap.data());
+  console.log(docSnap.data());
   return docSnap.data();
 };
 

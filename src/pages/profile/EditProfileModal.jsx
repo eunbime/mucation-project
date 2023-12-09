@@ -15,7 +15,7 @@ import { updateDoc, doc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from '../../firebase.js';
 import { useAuth } from 'hooks/useAuth';
 import { useQuery } from 'react-query';
-import { getUserInfo, userProfileUpdate } from '../../axios/firebaseApi.js';
+import { getUserInfo, profileUpdate } from '../../axios/firebaseApi.js';
 
 const EditProfileModal = () => {
   const { isLoading, isError, data: user } = useQuery('user', getUserInfo);
@@ -54,7 +54,8 @@ const EditProfileModal = () => {
       avatar: currentUser.photoURL,
       email: currentUser.email
     });
-    await userProfileUpdate(editNickname);
+
+    await profileUpdate(editNickname);
     dispatch(isEditingUserProfile(false));
   };
 

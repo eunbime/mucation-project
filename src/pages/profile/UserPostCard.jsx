@@ -9,17 +9,19 @@ import {
 } from './profile.styles';
 
 import { useQuery } from 'react-query';
-import { getCurrentUserPost } from '../../axios/firebaseApi.js';
+import { getCurrentUserPost, getUserData } from '../../axios/firebaseApi.js';
 import { useNavigate } from 'react-router-dom';
 import Button from 'components/common/Button';
+import { useAuth } from 'hooks/useAuth';
 
 const UserPostCard = () => {
-  const { isLoading, isError, data: posts } = useQuery('posts', getCurrentUserPost);
+  const userUid = useAuth().currentUser;
   const navigate = useNavigate();
-
-  const [formattedDate, setFormattedDate] = useState([]);
+  const { isLoading, isError, data: posts } = useQuery('posts', getUserData);
+  const filteredPosts = posts.filter((post) => post.uid === userUid.uid);
 
   // 파이어베이스 날짜 변환
+  const [formattedDate, setFormattedDate] = useState([]);
 
   useEffect(() => {
     const convertFirebaseNumberToDate = () => {
@@ -34,11 +36,12 @@ const UserPostCard = () => {
     convertFirebaseNumberToDate();
   }, []);
 
+  //
   const navigateToDetaile = (e) => {};
 
   return (
     <StUserSharedPostsContainer>
-      {posts.map((post) => {
+      {filteredPosts.map((post) => {
         return (
           <StPostCard key={post.id}>
             {/* 이미지 가져오기 */}
