@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 // 수정 프로필 모달
 const StUserProfileEditModalContainer = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100%;
@@ -12,7 +12,7 @@ const StUserProfileEditModalContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 `;
 
 const StUserInteresteWrapper = styled.div`
@@ -51,18 +51,33 @@ const StUserProfilePhoto = styled.img`
   cursor: pointer;
 `;
 
-const StFileUploadInput = styled.input``;
-
 const StLabel = styled.label``;
+
+const StAddGenreWrapper = styled.div`
+  display: flex;
+  position: relative;
+
+  & button {
+    background-color: transparent;
+    color: var(--mainWhite);
+    position: absolute;
+    font-size: 1.2rem;
+    border: 1px solid var(--mainWhite);
+    border-radius: 2rem;
+    top: 0;
+    right: 0;
+  }
+`;
 
 const StInput = styled.input`
   background-color: transparent;
-  width: 100%;
+  width: 20rem;
   border: none;
   padding-bottom: 0.5625rem;
   border-bottom: 1px solid var(--mainWhite);
   outline: none;
   color: var(--mainWhite);
+  font-size: 1.3rem;
 
   &:focus {
     color: var(--mainOrange);
@@ -73,13 +88,19 @@ const StInput = styled.input`
   }
 `;
 
+const StButtonWrapper = styled.div`
+  display: flex;
+  gap: 0.8rem;
+`;
+
 export {
   StUserProfileEditModalContainer,
   StUserProfileEditModalForm,
   StUserProfilePhoto,
-  StFileUploadInput,
   StUserInteresteWrapper,
   StInput,
   StLabel,
-  StFavoriteGenre
+  StFavoriteGenre,
+  StAddGenreWrapper,
+  StButtonWrapper
 };
