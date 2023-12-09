@@ -7,20 +7,23 @@ import { useQuery } from 'react-query';
 import { getPosts } from 'api/posts';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentVideoData } from '../../redux/modules/currentVideoSlice';
+import { selectedvideo } from '../../redux/modules/seletcedVideoSlice';
 
 const DetailPageVideoArea = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
-  const inform = useSelector((state) => state.seletcedVideoSlice);
   const dispatch = useDispatch();
+  const inform = useSelector((state) => state.seletcedVideoSlice);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
 
   useEffect(() => {
     // 'inform.id'를 기반으로 초기 'currentIndex' 설정
-    const initialIndex = posts.findIndex((post) => post.id === inform.id);
+    const initialIndex = posts?.findIndex((post) => post.id === inform.id);
     setCurrentIndex(initialIndex >= 0 ? initialIndex : 0);
-    dispatch(currentVideoData(posts[currentIndex]));
   }, [inform.id, posts]);
+
+  useEffect(() => {
+    dispatch(currentVideoData(posts?.[currentIndex]));
+  }, [currentIndex]);
 
   if (isLoading) return <p>loading...</p>;
 
@@ -33,6 +36,7 @@ const DetailPageVideoArea = () => {
     const newIndex = currentIndex - 1 < 0 ? posts.length - 1 : currentIndex - 1;
     console.log('pre', newIndex);
     setCurrentIndex(newIndex);
+    dispatch(selectedvideo(posts[currentIndex - 1]));
   };
   const nextBtnClickHandler = () => {
     // TODO : 다음버튼 클릭시 재생목록의 다음노래 나오기
@@ -41,21 +45,22 @@ const DetailPageVideoArea = () => {
     const newIndex = (currentIndex + 1) % posts.length;
     console.log('next', newIndex);
     setCurrentIndex(newIndex);
+    dispatch(selectedvideo(posts[currentIndex + 1]));
   };
 
-  // console.log('posts',currentVideoId)
-
   return (
-    <StVideoSection>
-      {/* video Id에 값 변경 시 영상 변경 */}
-      <YouTube videoId={`${posts[currentIndex].videoId}`} style={{ width: '100%' }} opts={{ width: '100%' }} />
-      <button onClick={prevBtnClickHandler}>
-        <Prev />
-      </button>
-      <button onClick={nextBtnClickHandler}>
-        <Next />
-      </button>
-    </StVideoSection>
+    <>
+      <StVideoSection>
+        {/* video Id에 값 변경 시 영상 변경 */}
+        <YouTube videoId={`${posts[currentIndex].videoId}`} style={{ width: '100%' }} opts={{ width: '100%' }} />
+        <button onClick={prevBtnClickHandler}>
+          <Prev />
+        </button>
+        <button onClick={nextBtnClickHandler}>
+          <Next />
+        </button>
+      </StVideoSection>
+    </>
   );
 };
 

@@ -14,8 +14,8 @@ const Button = ({ text, handler, mode }) => {
 
 // 공통 버튼 스타일 지정 필요, 디폴트 데이터
 const StButton = styled.button`
-  font-size: 1.25rem;
-  padding: 0.5625rem 2.125rem;
+  font-size: medium;
+  padding: 0.65rem 1.25rem;
   font-weight: bold;
   border-radius: 5px;
   border: 0.15rem solid var(--mainOrange);

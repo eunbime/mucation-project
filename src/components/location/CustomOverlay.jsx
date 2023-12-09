@@ -7,17 +7,25 @@ import {
   StCustomOverlayInfo,
   StCustomOverlayButton
 } from './CustomOverlay.styles';
+import { selectedvideo } from '../../redux/modules/seletcedVideoSlice';
+import { useDispatch } from 'react-redux';
 
 const CustomOverlay = ({ item, setIsOpenOverlay, mapRef }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleToDetailPage = () => {
     const bounds = mapRef.current?.getBounds();
     console.log(bounds);
+
     alert('디테일 페이지로 이동!');
     navigate('/detail', {
       state: bounds
     });
+
+    dispatch(selectedvideo(item));
+
+    navigate('/detail');
   };
 
   return (

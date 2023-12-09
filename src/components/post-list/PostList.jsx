@@ -16,13 +16,12 @@ const PostList = () => {
     const lngBounds = lng - post.location.lng;
 
     // 마커 위치로부터 약 1km 차이의 범위
-    if (-0.01 < latBounds && latBounds < 0.01) {
-      if (-0.01 < lngBounds && lngBounds < 0.01) {
+    if (-0.009 < latBounds && latBounds < 0.009) {
+      if (-0.011 < lngBounds && lngBounds < 0.011) {
         return true;
       }
     }
   });
-  console.log(!filteredPosts);
 
   if (isLoading && !filteredPosts) return <p>게시물을 로딩중입니다...</p>;
 

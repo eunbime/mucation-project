@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StHeaderContainer = styled.div`
@@ -6,7 +7,7 @@ const StHeaderContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 5rem;
-  padding: 1rem;
+  padding: 1rem 1.65rem;
   position: fixed;
   left: 0;
   top: 0;
@@ -15,6 +16,12 @@ const StHeaderContainer = styled.div`
   h1 {
     color: var(--mainWhite);
   }
+`;
+
+const StHeaderTitle = styled(Link)`
+  text-decoration: none;
+  font-weight: bold;
+  font-size: large;
 `;
 
 const StHeaderButtonContainer = styled.div`
@@ -59,4 +66,4 @@ const StHeaderProfile = styled.button`
   }
 `;
 
-export { StHeaderContainer, StHeaderButtonContainer, StHeaderProfile };
+export { StHeaderContainer, StHeaderButtonContainer, StHeaderProfile, StHeaderTitle };
