@@ -9,7 +9,6 @@ import {
   UserProfile,
   StNicknameAndDate
 } from './PostItem.styles';
-import { useAuth } from 'hooks/useAuth';
 
 const PostItem = ({ post }) => {
   // date 변환
