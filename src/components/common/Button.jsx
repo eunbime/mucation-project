@@ -34,7 +34,6 @@ const StButton = styled.button`
     font-size: medium;
     padding: 0.65rem 1.25rem;
     height: unset;
-    /* height: 100%; */
   }
 `;
 
