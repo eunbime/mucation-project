@@ -12,6 +12,9 @@ const StPostListWrapper = styled.ul`
   height: 500px;
   gap: 1rem;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 `;
 
 const NotFoundPost = styled.div`

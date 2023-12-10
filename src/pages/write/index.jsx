@@ -10,7 +10,8 @@ import { StWriteContainer, StWriteBtnArea } from './write.styles';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 import useAlert from 'hooks/useAlert';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
 
 const Write = () => {
   const navigate = useNavigate();
@@ -22,23 +23,27 @@ const Write = () => {
   // 모드 선택 : write(글작성) / edit(수정)
   const mode = params.mode;
 
+  const datas = useSelector((state) => state.currentVideoSlice.videoInfo);
+
   // 수정모드 : 쿼리스트링을 통한 아이디값 가져오기
   // 형태> /write/edit?id=게시물 아이디
   const [query] = useSearchParams();
 
   // 동영상 선택시 선택된 동영상 정보 저장
-  const [selectVideo, setSelectVideo] = useState({ videoId: '', thumbnail: '' });
+  const [selectVideo, setSelectVideo] = useState(
+    mode === 'edit' ? { videoId: datas?.videoId, thumbnail: datas?.thumbnail } : { videoId: '', thumbnail: '' }
+  );
 
   // 유저 입력 data
-  const [inputValue, setInputValue] = useState({ title: '', context: '' });
+  const [inputValue, setInputValue] = useState(
+    mode === 'edit' ? { title: datas?.title, context: datas?.context } : { title: '', context: '' }
+  );
 
   // 모달 토글 정보
   const [isOpen, setIsOpen] = useState(false);
 
   // 위치정보
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
-
-  const queryClient = useQueryClient();
 
   const { mutate: addMutate } = useMutation({ mutationFn: addPost });
   const { mutate: editMutate } = useMutation({ mutationFn: editPost });
@@ -111,7 +116,7 @@ const Write = () => {
     };
 
     editMutate(
-      { id: query.id, data: updateData },
+      { id: query.get('id'), data: updateData },
       {
         onSuccess: () => {
           alert({ title: '수정완료', message: '수정이 완료되었습니다.' });
@@ -147,7 +152,7 @@ const Write = () => {
       <WritePageVideoArea selectVideo={selectVideo.videoId} toggleModal={toggleModal} />
       <WritePageTitle titleValue={inputValue.title} setTitleValue={setTitleValue} />
       <WritePageContext contextValue={inputValue.context} setContextValue={setContextValue} />
-      <WritePageMap setState={setState} state={state} />
+      <WritePageMap mode={mode} setState={setState} state={state} />
       <StWriteBtnArea>
         {mode === 'write' && writeModeButton}
         {mode === 'edit' && editModeButton}

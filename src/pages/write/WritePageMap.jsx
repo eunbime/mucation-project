@@ -4,9 +4,10 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useKakaoLoader } from 'react-kakao-maps-sdk';
 import { StMapWrapper, StAddressBox } from './WritePageMap.styles';
 import { useLocation } from 'react-router-dom/dist';
+import { useSelector } from 'react-redux';
 
 const { kakao } = window;
-const MapInfo = ({ setState, state }) => {
+const MapInfo = ({ setState, state, mode }) => {
   const mapRef = useRef();
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });
   // const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
@@ -14,6 +15,7 @@ const MapInfo = ({ setState, state }) => {
   const [address, setAddress] = useState('');
   const location = useLocation();
   const passedState = location.state;
+  const datas = useSelector((state) => state.currentVideoSlice.videoInfo);
 
   useEffect(() => {
     // 지도 초기 위치 설정
@@ -25,7 +27,6 @@ const MapInfo = ({ setState, state }) => {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-
           // 현재 위치 저장
           setCurrentLocation({ ...currentLocation, ...location });
 
@@ -43,7 +44,7 @@ const MapInfo = ({ setState, state }) => {
             // 전달값이 없다면 기본적으로 현재 위치 설정
             setState((prev) => ({
               ...prev,
-              center: { ...location },
+              center: mode === 'edit' ? datas?.location : { ...location },
               // 지도 위치 변경시 panto 이용할 지
               isPanto: false,
               level: 5,
