@@ -14,8 +14,12 @@ import { getCurrentUserPost } from '../../axios/firebaseApi.js';
 import { useNavigate } from 'react-router-dom';
 import Button from 'components/common/Button';
 import { useAuth } from 'hooks/useAuth';
+import { useDispatch } from 'react-redux';
+import { selectedvideo } from '../../redux/modules/seletcedVideoSlice';
 
 const UserPostCard = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { currentUser } = useAuth();
   const { isLoading, isError, data: posts } = useQuery(['posts'], getCurrentUserPost);
   const filtered = posts?.filter((post) => post.uid === currentUser.uid);
@@ -36,6 +40,12 @@ const UserPostCard = () => {
     convertFirebaseNumberToDate();
   }, []);
 
+  const handleToDetailPage = (post) => {
+    dispatch(selectedvideo(post));
+
+    navigate('/detail');
+  };
+
   return (
     <StUserSharedPostsContainer>
       {filtered?.map((post) => {
@@ -49,7 +59,12 @@ const UserPostCard = () => {
                 <span>{formattedDate}</span>
               </StPostInfoWrapper>
             </StThumnailAndInfo>
-            <Button text={'상세보기'}></Button>
+            <Button
+              text={'상세보기'}
+              handler={() => {
+                handleToDetailPage(post);
+              }}
+            ></Button>
           </StPostCard>
         );
       })}
