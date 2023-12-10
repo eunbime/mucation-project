@@ -16,7 +16,7 @@ console.log(icon);
 const Footer = () => {
   return (
     <StFooterContainer>
-      <StTeamTitle to={'/'}>Mutation</StTeamTitle>
+      <StTeamTitle to={'/'}>Mucation</StTeamTitle>
       <StLinkSection>
         <StVelogLinkUl>
           <StVelogLink to={'https://velog.io/@jihyun_j'}>@jihyun_j</StVelogLink>
@@ -25,7 +25,7 @@ const Footer = () => {
           <StVelogLink to={'https://velog.io/@eunbi'}>@eunbi</StVelogLink>
           <StVelogLink to={'https://audtjqxx.tistory.com/'}>@audtjqxx</StVelogLink>
         </StVelogLinkUl>
-        <StCopyright>Copyright ©2023 MUTATION. All rights reserved.</StCopyright>
+        <StCopyright>Copyright ©2023 MUCATION. All rights reserved.</StCopyright>
       </StLinkSection>
       <Link to={'https://github.com/eunbime/mucation-project'}>
         <Github />
