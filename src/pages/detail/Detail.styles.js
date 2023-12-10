@@ -1,4 +1,4 @@
-gitimport styled from 'styled-components';
+import styled from 'styled-components';
 
 const StDetailPageWrapper = styled.div`
   max-width: 65.625rem;
