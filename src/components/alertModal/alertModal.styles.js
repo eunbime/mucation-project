@@ -18,7 +18,7 @@ const StAlertModalContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 37.5rem;
+  width: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,6 +52,10 @@ const StAlertModalContainer = styled.div`
   & p {
     font-size: 1.3rem;
     color: var(--mainWhite);
+    width: 100%;
+    padding: 0 1.5rem;
+    word-break: break-all;
+    line-height: 2rem;
   }
 
   & > section {
@@ -62,6 +66,10 @@ const StAlertModalContainer = styled.div`
   & > section > button {
     font-size: 1.1rem;
     margin: 0 1.8125rem;
+  }
+
+  @media (max-width: 1050px) {
+    width: 85%;
   }
 `;
 
