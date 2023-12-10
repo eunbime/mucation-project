@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StLoginPageContainer = styled.div`
-  margin-top: 11.9375rem;
+  padding-top: 11.9375rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,6 +27,9 @@ const StLoginPageInputForm = styled.form`
   flex-direction: column;
   & button {
     margin-top: 2.875rem;
+  }
+  @media (max-width: 650px) {
+    width: 90%;
   }
 `;
 
