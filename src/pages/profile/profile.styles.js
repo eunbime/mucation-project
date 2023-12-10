@@ -59,7 +59,15 @@ const StUserSharedPostsContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 1rem;
+  gap: 3rem;
+
+  @media (max-width: 1050px) {
+    width: 90%;
+  }
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const StPostCard = styled.div`
@@ -68,9 +76,13 @@ const StPostCard = styled.div`
   justify-content: space-around;
   padding: 1.5rem;
   gap: 2.5rem;
-  width: 63rem;
+  width: 100%;
   background-color: var(--mainBlack);
   border-radius: 1rem;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const StThumnailAndInfo = styled.div`
@@ -78,6 +90,10 @@ const StThumnailAndInfo = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const StThumnail = styled.img`
@@ -85,6 +101,35 @@ const StThumnail = styled.img`
   height: 14rem;
   width: 22rem;
   border-radius: 0.8rem;
+
+  @media (max-width: 768px) {
+    width: 39rem;
+    height: 22rem;
+  }
+  @media (max-width: 732px) {
+    width: 35rem;
+    height: 20rem;
+  }
+  @media (max-width: 625px) {
+    width: 30rem;
+    height: 20rem;
+  }
+  @media (max-width: 580px) {
+    width: 28rem;
+    height: 20rem;
+  }
+  @media (max-width: 540px) {
+    width: 26rem;
+    height: 20rem;
+  }
+  @media (max-width: 414px) {
+    width: 21rem;
+    height: 15rem;
+  }
+  @media (max-width: 390px) {
+    width: 19rem;
+    height: 13rem;
+  }
 `;
 
 const StPostInfoWrapper = styled.div`
@@ -92,15 +137,25 @@ const StPostInfoWrapper = styled.div`
   flex-direction: column;
   align-items: start;
   gap: 0.875rem;
+  @media (max-width: 768px) {
+    width: 80%;
+    align-items: center;
+  }
 
   & span {
     font-size: 0.875rem;
+    @media (max-width: 768px) {
+      font-size: 0.7rem;
+    }
   }
 `;
 
 const StPostTitle = styled.h2`
   color: var(--mainWhite);
   font-size: 1.563rem;
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const StPostContent = styled.p`

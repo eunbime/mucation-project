@@ -15,21 +15,28 @@ const Profile = () => {
   }, []);
 
   return (
-    <>
-      <ProfileContainer>
-        <UserCard />
-        <UserPostCard />
-      </ProfileContainer>
+    <ProfileContainer>
+      <UserCard />
+      <UserPostCard />
       {isEditingUserProfile ? <EditProfileModal /> : null}
-    </>
+    </ProfileContainer>
   );
 };
 
 export default Profile;
 
 const ProfileContainer = styled.div`
+  max-width: 1050px;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
   padding-top: 8rem;
+  margin: 0 auto;
+  @media (max-width: 1050px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 `;
