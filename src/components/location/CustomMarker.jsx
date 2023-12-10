@@ -10,10 +10,11 @@ const CustomMarker = ({ item, setIsOpenOverlay, setMarkerId }) => {
     <MapMarker
       key={`${item.title}-${item.latlng}`}
       position={{ lat: item.lat, lng: item.lng }}
+      // <a href="https://www.flaticon.com/kr/free-icons/-" title="지리적 위치 화 아이콘">지리적 위치 화 아이콘  제작자: SBTS2018 - Flaticon</a>
       image={{
-        src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 마커이미지의 주소입니다
+        src: 'marker.png', // 마커이미지의 주소입니다
         size: {
-          width: 24,
+          width: 33,
           height: 35
         } // 마커이미지의 크기입니다
       }}

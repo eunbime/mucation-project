@@ -8,6 +8,12 @@ const StPostItemWrapper = styled.li`
   background-color: var(--subColor);
   padding: 1.25rem;
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.01);
+    background-color: #4a4a4a;
+  }
 
   @media (min-width: 650px) {
     flex-direction: row;
@@ -39,7 +45,7 @@ const StThumbnailImg = styled.img`
 const StInfoBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   padding: 1rem 0;
   transition: all 0.3s ease-in-out;
 

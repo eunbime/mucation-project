@@ -14,18 +14,15 @@ const CustomOverlay = ({ item, setIsOpenOverlay, mapRef }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleToDetailPage = () => {
+  const handleToDetailPage = async () => {
     const bounds = mapRef.current?.getBounds();
     console.log(bounds);
 
-    alert('디테일 페이지로 이동!');
+    dispatch(selectedvideo(item));
+
     navigate('/detail', {
       state: bounds
     });
-
-    dispatch(selectedvideo(item));
-
-    navigate('/detail');
   };
 
   return (
@@ -36,7 +33,6 @@ const CustomOverlay = ({ item, setIsOpenOverlay, mapRef }) => {
       xAnchor={-0.15}
       yAnchor={0.9}
     >
-      {/* 커스텀 오버레이에 표시할 내용입니다 */}
       <StCustomOverlay style={{ backgroundColor: 'white', color: '#000' }}>
         <StCustomOverlayThumbnail img={item.thumbnail}>
           {/* <img src={item.thumbnail} alt="thumbnail" /> */}
