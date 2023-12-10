@@ -7,6 +7,7 @@ import useInput from 'hooks/useInput';
 import { useAuth } from 'hooks/useAuth';
 import LoginSocialLoginSection from './LoginSocialLoginSection';
 import useAlert from 'hooks/useAlert';
+import { ReactComponent as Home } from 'styles/img/loginPage/home.svg';
 
 const Login = () => {
   const params = useParams();
@@ -113,6 +114,10 @@ const Login = () => {
 
   return (
     <StLoginPageContainer>
+      <Link to="/">
+        <Home />
+        <span>홈으로</span>
+      </Link>
       <h1>{currentModeInfo.text}</h1>
       <StLoginPageInputForm onSubmit={currentModeInfo.submitHandler}>
         {currentModeInfo.input.map((item, index) => (
