@@ -84,6 +84,12 @@ const Write = () => {
     // 새로운 데이터 묶음
     // TODO : 데이터 변경 필요
     // uid 데이터 추가 필요
+
+    if (!selectVideo.videoId || !inputValue.title || !inputValue.context) {
+      alert({ title: '입력오류', message: '모든 값을 입력해주세요' });
+      return;
+    }
+
     const newMusicPost = {
       date: new Date().getTime(), //serverTimestamp(),
       location: state.center,
@@ -95,6 +101,7 @@ const Write = () => {
       userPhoto: currentUser.photoURL || 'https://weimaracademy.org/wp-content/uploads/2021/08/dummy-user.png',
       nickname: currentUser.displayName
     };
+
     addMutate(newMusicPost, {
       onSuccess: () => {
         alert({ title: '작성완료', message: '작성이 완료되었습니다.' });
@@ -105,6 +112,21 @@ const Write = () => {
 
   // 업데이트시
   const postEditHandler = () => {
+    if (!selectVideo.videoId || !inputValue.title || !inputValue.context) {
+      alert({ title: '입력오류', message: '모든 값을 입력해주세요' });
+      return;
+    }
+
+    if (
+      selectVideo.videoId === datas?.videoId &&
+      inputValue.title === datas?.title &&
+      inputValue.context === datas?.context &&
+      state.center === datas?.location
+    ) {
+      alert({ title: '수정오류', message: '변경된 값이 없습니다.' });
+      return;
+    }
+
     const updateData = {
       location: state.center,
       videoId: selectVideo.videoId,
