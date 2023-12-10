@@ -36,9 +36,6 @@ const UserPostCard = () => {
     convertFirebaseNumberToDate();
   }, []);
 
-  //
-  const navigateToDetaile = (e) => {};
-
   return (
     <StUserSharedPostsContainer>
       {filtered?.map((post) => {
