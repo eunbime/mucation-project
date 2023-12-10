@@ -62,7 +62,7 @@ const EditProfileModal = () => {
     const docRef = doc(db, 'user', String(id));
 
     // 수정된 닉네임과 소개글 모두 없으면
-    if (!editNickname && !editUserIntroduction && !imageUpload) {
+    if (!editNickname && !editUserIntroduction && !imageUpload && !editInterestGenre) {
       alert({ title: '프로필 수정', message: '수정 사항이 없습니다.' });
       dispatch(isEditingUserProfile(false));
       // 원래 저장되어 있던 닉네임도 유지함
@@ -157,6 +157,7 @@ const EditProfileModal = () => {
 
   // 관심 장르 추가 버튼
   const handleAdd = (id) => {
+    setEditInterestGenre('');
     addGenreMutaition.mutate(addInterestGenre(id));
   };
 
@@ -262,7 +263,7 @@ const EditProfileModal = () => {
           <StInput
             type="text"
             placeholder="좋아하는 장르 (최대 5개)"
-            defaultValue={editInterestGenre}
+            value={editInterestGenre}
             onChange={userInterestGenreOnChange}
           />
           <button onClick={() => handleAdd(currentUser.uid)}>+</button>
