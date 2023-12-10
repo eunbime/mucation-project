@@ -36,7 +36,7 @@ const DetailPageVideoArea = () => {
     const newIndex = currentIndex - 1 < 0 ? posts.length - 1 : currentIndex - 1;
     console.log('pre', newIndex);
     setCurrentIndex(newIndex);
-    dispatch(selectedvideo(posts[currentIndex - 1]));
+    dispatch(selectedvideo(posts[newIndex]));
   };
   const nextBtnClickHandler = () => {
     // TODO : 다음버튼 클릭시 재생목록의 다음노래 나오기
@@ -45,7 +45,7 @@ const DetailPageVideoArea = () => {
     const newIndex = (currentIndex + 1) % posts.length;
     console.log('next', newIndex);
     setCurrentIndex(newIndex);
-    dispatch(selectedvideo(posts[currentIndex + 1]));
+    dispatch(selectedvideo(posts[newIndex]));
   };
 
   return (

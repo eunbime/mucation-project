@@ -7,7 +7,6 @@ import useInput from 'hooks/useInput';
 import { useAuth } from 'hooks/useAuth';
 import LoginSocialLoginSection from './LoginSocialLoginSection';
 import useAlert from 'hooks/useAlert';
-import AlertModal from 'components/alertModal/AlertModal';
 
 const Login = () => {
   const params = useParams();
@@ -41,7 +40,7 @@ const Login = () => {
 
   // input validation check
   const emailReg = new RegExp('[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}');
-  const pwReg = new RegExp('(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{8,}');
+  const pwReg = new RegExp('(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}');
 
   const { alert } = useAlert();
 
