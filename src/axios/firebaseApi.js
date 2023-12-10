@@ -127,9 +127,10 @@ export const userProfileUpdate = async (nickname, photoURL) => {
 };
 
 // 파이어베이스 posts안에 nickname & userPhoto 업데이트
-export const updatePostsData = async (id, nickname) => {
+export const updatePostsData = async (id, nickname, photoURL) => {
   const docRef = doc(db, 'posts', id);
   await updateDoc(docRef, {
-    nickname
+    nickname,
+    photoURL
   });
 };
