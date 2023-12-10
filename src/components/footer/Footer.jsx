@@ -17,11 +17,15 @@ const Footer = () => {
 };
 
 const Container = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 6rem;
-  margin-top: 2rem;
+  transform: translate(0, 120%);
 `;
 
 export default Footer;

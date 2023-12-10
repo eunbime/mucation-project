@@ -8,6 +8,7 @@ import { getPosts } from 'api/posts';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentVideoData } from '../../redux/modules/currentVideoSlice';
 import { selectedvideo } from '../../redux/modules/seletcedVideoSlice';
+import { StVideoSection } from './Detail.styles';
 
 const DetailPageVideoArea = () => {
   const dispatch = useDispatch();
@@ -63,37 +64,5 @@ const DetailPageVideoArea = () => {
     </>
   );
 };
-
-const StVideoSection = styled.section`
-  position: relative;
-  width: 100%;
-  height: 25.5625rem;
-
-  & iframe {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  & button {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    bottom: 0;
-    left: -1.8rem;
-    background: none;
-    transform: translate(-100%, 0);
-    color: #ff683b;
-    padding: unset;
-  }
-
-  & button:last-child {
-    left: unset;
-    right: -1.8rem;
-    transform: translate(100%, 0);
-  }
-`;
 
 export default DetailPageVideoArea;

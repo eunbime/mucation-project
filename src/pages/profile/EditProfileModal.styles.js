@@ -23,6 +23,32 @@ const StUserInteresteWrapper = styled.div`
   gap: 0.5rem;
 `;
 
+const StImageUploadContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const StImageButtonValue = styled.div`
+  cursor: pointer;
+  border: 1px solid var(--mainOrange);
+  color: var(--mainOrange);
+  padding: 0.5rem;
+  border-radius: 5px;
+`;
+
+const StImageUploadInput = styled.input`
+  display: none;
+`;
+
+const StImageUploadButton = styled.button`
+  cursor: pointer;
+  border: 1px solid var(--mainOrange);
+  color: var(--mainWhite);
+  background-color: var(--mainOrange);
+  padding: 0.5rem;
+  border-radius: 5px;
+`;
+
 const StUserProfileEditModalForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -45,10 +71,12 @@ const StFavoriteGenre = styled.span`
 `;
 
 const StUserProfilePhoto = styled.img`
-  width: 6rem;
-  height: 6rem;
+  width: 9rem;
+  height: 9rem;
   border-radius: 50%;
   cursor: pointer;
+  background-color: #fff;
+  margin-bottom: 1rem;
 `;
 
 const StLabel = styled.label``;
@@ -102,5 +130,9 @@ export {
   StLabel,
   StFavoriteGenre,
   StAddGenreWrapper,
-  StButtonWrapper
+  StButtonWrapper,
+  StImageUploadInput,
+  StImageButtonValue,
+  StImageUploadContainer,
+  StImageUploadButton
 };

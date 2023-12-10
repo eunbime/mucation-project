@@ -43,6 +43,16 @@ const GlobalStyles = createGlobalStyle`
   blockquote, q {
     quotes: none;
   }
+  html{
+    &::-webkit-scrollbar {
+    width: 0;
+  }
+  html,body{
+    position: relative;
+    min-height: 100%;
+    height: auto;
+  }
+  }
   blockquote:before, blockquote:after,
   q:before, q:after {
     content: '';
