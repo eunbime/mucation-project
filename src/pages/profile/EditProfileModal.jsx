@@ -15,7 +15,7 @@ import { isEditingUserProfile } from '../../redux/modules/profileSlice.js';
 import { updateDoc, doc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from '../../firebase.js';
 import { useAuth } from 'hooks/useAuth';
-import { getUserInfo, profileUpdate } from '../../axios/firebaseApi.js';
+import { getUserInfo, userProfileUpdate } from '../../axios/firebaseApi.js';
 import Button from 'components/common/Button';
 import AlertModal from 'components/alertModal/AlertModal';
 import useAlert from 'hooks/useAlert';
@@ -25,12 +25,15 @@ import { useQueryClient, useQuery, useMutation } from 'react-query';
 const EditProfileModal = () => {
   const { currentUser } = useAuth();
 
+  console.log(currentUser.displayName);
+
   const {
     isLoading,
     isError,
     data: user
   } = useQuery({ queryKey: ['user'], queryFn: () => getUserInfo(currentUser.uid) });
 
+  console.log();
   const queryClient = useQueryClient();
   const [editUserIntroduction, setEditUserIntroduction] = useState('');
   const [editNickname, setEditNickname] = useState('');
@@ -58,16 +61,53 @@ const EditProfileModal = () => {
   // 업데이트 사용자 프로필
   const editProfile = async (id) => {
     const docRef = doc(db, 'user', String(id));
-    try {
-      await updateDoc(docRef, {
-        introduce: editUserIntroduction
-      });
-    } catch (err) {
-      console.log(err);
-    }
 
-    await profileUpdate(editNickname);
-    dispatch(isEditingUserProfile(false));
+    // 수정된 닉네임과 소개글 모두 없으면
+    if (!editNickname && !editUserIntroduction) {
+      alert({ title: '입력오류', message: '수정 사항이 없습니다.' });
+      dispatch(isEditingUserProfile(false));
+      // 원래 저장되어 있던 닉네임도 유지함
+      setEditNickname(currentUser.displayName);
+      // 원래 저장되어 있던 소개글을 유지함
+      setEditUserIntroduction(user.introduce);
+      return;
+    }
+    // 닉네임만 수정되고 소개들이 수정되지 않았을 때
+    if (editNickname && !editUserIntroduction) {
+      await userProfileUpdate(editNickname);
+      alert({ title: '수정완료', message: '닉네임이 수정되었습니다.' });
+      dispatch(isEditingUserProfile(false));
+      setEditNickname(editNickname);
+      setEditUserIntroduction(user.introduce);
+    }
+    // 닉네임은 바뀌지 않고 소개글만 수정되었을 때
+    if (!editNickname && editUserIntroduction) {
+      alert({ title: '수정완료', message: '한줄 소개가 수정되었습니다.' });
+      dispatch(isEditingUserProfile(false));
+      setEditNickname(currentUser.displayName);
+      setEditUserIntroduction(editUserIntroduction);
+      try {
+        await updateDoc(docRef, {
+          introduce: editUserIntroduction
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (editNickname && editUserIntroduction) {
+      alert({ title: '수정완료', message: '프로필이 성공적으로 수정되었습니다.' });
+      dispatch(isEditingUserProfile(false));
+      setEditNickname(editNickname);
+      setEditUserIntroduction(editUserIntroduction);
+      try {
+        await userProfileUpdate(editNickname);
+        await updateDoc(docRef, {
+          introduce: editUserIntroduction
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   // 업데이트 사용자 프로필(react-query)
