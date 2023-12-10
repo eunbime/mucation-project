@@ -106,6 +106,7 @@ const UserProfile = styled.div`
 
 const StNicknameAndDate = styled.div`
   display: flex;
+  align-items: center;
   font-size: small;
   padding-left: 0.5rem;
   &::after {
@@ -113,7 +114,7 @@ const StNicknameAndDate = styled.div`
     float: right;
     display: block;
     color: #666;
-    padding-left: 0.5rem;
+    padding-left: 0.8rem;
   }
   &:last-child::after {
     content: '';
