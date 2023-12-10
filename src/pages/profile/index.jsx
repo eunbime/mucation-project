@@ -30,7 +30,7 @@ const ProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding-top: 8rem;
   margin: 0 auto;
   @media (max-width: 1050px) {
