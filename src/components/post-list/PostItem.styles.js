@@ -113,11 +113,15 @@ const StNicknameAndDate = styled.div`
     content: '|';
     float: right;
     display: block;
-    color: #666;
+    color: #444;
     padding-left: 0.8rem;
   }
-  &:last-child::after {
-    content: '';
+  &:last-child {
+    font-size: 0.8rem;
+    color: #999;
+    &::after {
+      content: '';
+    }
   }
 
   @media (min-width: 1050px) {
