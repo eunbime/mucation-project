@@ -21,6 +21,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 6rem;
+  margin-top: 2rem;
 `;
 
 export default Footer;
