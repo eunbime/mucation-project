@@ -3,7 +3,6 @@ import styled from 'styled-components';
 const StHomeContainer = styled.div`
   max-width: 1050px;
   margin: 0 auto;
-  border: 1px solid #222;
   display: flex;
   flex-direction: column;
   align-items: center;

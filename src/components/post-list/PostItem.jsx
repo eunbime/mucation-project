@@ -14,16 +14,16 @@ import {
 } from './PostItem.styles';
 
 const PostItem = ({ post }) => {
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
+
   // date 변환
   const number = parseInt(post.date);
   const dateObject = new Date(number);
   const formattedDateString = dateObject.toLocaleString();
 
-  const dispatch = useDispatch();
-  const navigation = useNavigate();
-
+  // 디테일 페이지로 이동
   const selectedMovieToDatail = (post) => {
-    // console.log('비디오', po);
     dispatch(selectedvideo(post));
 
     navigation('/detail');
