@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const StPostItemWrapper = styled.li`
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1rem;
   width: 100%;
   background-color: var(--subColor);
   padding: 1.25rem;
@@ -11,6 +11,7 @@ const StPostItemWrapper = styled.li`
 
   @media (min-width: 650px) {
     flex-direction: row;
+    gap: 3rem;
   }
 `;
 
@@ -19,8 +20,8 @@ const StThumbnailBox = styled.div`
   transition: all 0.3s ease-in-out;
 
   @media (min-width: 650px) {
-    height: 170px;
-    width: 300px;
+    height: 140px;
+    width: 250px;
   }
 
   @media (min-width: 1050px) {
@@ -38,11 +39,25 @@ const StThumbnailImg = styled.img`
 const StInfoBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 1rem 0;
+  transition: all 0.3s ease-in-out;
+
   > p {
-    font-size: small;
+    font-size: medium;
     padding: 0.5rem;
+
+    @media (min-width: 650px) {
+      font-size: small;
+    }
+
+    @media (min-width: 1050px) {
+      font-size: medium;
+    }
+  }
+
+  @media (min-width: 1050px) {
+    gap: 2rem;
   }
 `;
 
@@ -65,27 +80,41 @@ const StPostTitle = styled.h3`
 `;
 
 const UserProfile = styled.div`
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
   background-color: gray;
   border-radius: 50%;
   overflow: hidden;
+  transition: all 0.3s ease-in-out;
+
   & img {
     width: 100%;
     height: 100%;
   }
+
+  @media (min-width: 1050px) {
+    width: 3rem;
+    height: 3rem;
+  }
 `;
 
 const StNicknameAndDate = styled.div`
-  font-size: large;
+  display: flex;
+  font-size: small;
+  padding-left: 0.5rem;
   &::after {
     content: '|';
     float: right;
     display: block;
     color: #666;
+    padding-left: 0.5rem;
   }
   &:last-child::after {
     content: '';
+  }
+
+  @media (min-width: 1050px) {
+    font-size: large;
   }
 `;
 
