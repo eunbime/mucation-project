@@ -5,8 +5,12 @@ const StWriteContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 57.9375rem;
+  max-width: 65.625rem;
   margin: auto;
+
+  @media (max-width: 1050px) {
+    width: 90%;
+  }
 `;
 
 const StWriteBtnArea = styled.div`
@@ -30,9 +34,17 @@ const StContextSection = styled.section`
     height: 100%;
     resize: none;
     outline: none;
-    border: 1px solid #fff;
+    border: 1px solid var(--mainWhite);
     background-color: transparent;
-    color: #fff;
+    color: var(--mainWhite);
+    &:focus {
+      color: var(--mainOrange);
+      border-color: var(--mainOrange);
+    }
+  }
+
+  @media (max-width: 650px) {
+    font-size: 1rem;
   }
 `;
 
@@ -41,8 +53,8 @@ const StTitleSection = styled.section`
   width: 100%;
   height: 3.4375rem;
   margin: 2.625rem 0 2.125rem 0;
-  color: #ffffff;
-  border-bottom: 1px solid #ffffff;
+  color: var(--mainWhite);
+  border-bottom: 1px solid var(--mainWhite);
   font-size: 2.441rem;
 
   & label {
@@ -55,7 +67,6 @@ const StTitleSection = styled.section`
     height: 70%;
     transform: translate(0, -50%);
     background-color: transparent;
-    padding-bottom: 0.5rem;
   }
   & input {
     color: inherit;
@@ -66,6 +77,15 @@ const StTitleSection = styled.section`
     border: none;
     outline: none;
     background-color: transparent;
+  }
+
+  &:focus-within {
+    color: var(--mainOrange);
+    border-color: var(--mainOrange);
+  }
+
+  @media (max-width: 650px) {
+    font-size: 1.5rem;
   }
 `;
 
@@ -88,7 +108,7 @@ const StSelectVideoBtn = styled.button`
 const StVideoSection = styled.section`
   position: relative;
   width: 100%;
-  height: 25.5625rem;
+  padding-bottom: 45%;
 
   & button {
     position: absolute;
