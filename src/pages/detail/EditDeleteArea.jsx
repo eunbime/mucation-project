@@ -21,14 +21,14 @@ const EditDeleteArea = () => {
     navigate(`/write/edit?id=${datas?.id}`);
   };
 
-  const goToDeletePage = () => {
+  const goToDeletePage = async () => {
+    const confirmValue = await confirm({ title: '삭제', message: '해당 게시물을 삭제하시겠습니까?' });
+
+    if (!confirmValue) return;
+
     // 삭제로직
     deleteMutate(datas?.id, {
-      onSuccess: async () => {
-        const confirmValue = await confirm({ title: '삭제', message: '해당 게시물을 삭제하시겠습니까?' });
-
-        if (!confirmValue) return;
-
+      onSuccess: () => {
         alert({ title: '삭제완료', message: '삭제가 완료되었습니다.' });
         navigate('/');
       }
