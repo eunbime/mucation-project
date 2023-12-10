@@ -1,22 +1,14 @@
 import React from 'react';
 import HeaderNav from './nav/HeaderNav';
-import styled from 'styled-components';
+import { StHeaderContainer, StHeaderTitle } from './Header.styles';
 
 const Header = () => {
   return (
-    <Container>
-      <h1>logo</h1>
+    <StHeaderContainer>
+      <StHeaderTitle to={'/'}>Mucation</StHeaderTitle>
       <HeaderNav />
-    </Container>
+    </StHeaderContainer>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 4rem;
-  padding: 1rem;
-`;
 
 export default Header;

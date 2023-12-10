@@ -1,4 +1,3 @@
-import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
@@ -33,14 +32,26 @@ const GlobalStyles = createGlobalStyle`
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
-  body {
-    line-height: 1;
+
+  input, textarea{
+    box-sizing: border-box;
+
   }
   ol, ul {
     list-style: none;
   }
   blockquote, q {
     quotes: none;
+  }
+  html{
+    &::-webkit-scrollbar {
+    width: 0;
+  }
+  html,body{
+    position: relative;
+    min-height: 100%;
+    height: auto;
+  }
   }
   blockquote:before, blockquote:after,
   q:before, q:after {
@@ -50,6 +61,39 @@ const GlobalStyles = createGlobalStyle`
   table {
     border-collapse: collapse;
     border-spacing: 0;
+  }
+
+  :root {
+    --mainWhite: #fff;
+    --mainBlack: #222;
+    --mainOrange: #FF683B;
+    --bgColor: #171717;
+    --subColor: #252525;
+    --neonColor: #D9FD79;
+    --violetColor: #7270FF;
+    --darkGrayColor: #2B2B2B;
+  }
+
+  body {
+    line-height: 1;
+    font-size: 1rem;
+    background-color: var(--bgColor);
+    color: var(--mainWhite);
+    font-family: 'Roboto', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+  button {
+    cursor: pointer;
+    border: none;
   }
 
 `;

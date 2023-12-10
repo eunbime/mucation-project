@@ -1,22 +1,25 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './Layout/Layout';
 import Home from 'pages/home';
 import Detail from 'pages/detail';
 import Write from 'pages/write';
 import Profile from 'pages/profile';
 import Login from 'pages/login';
+import { useSelector } from 'react-redux';
 
 const Router = () => {
+  const isLogin = useSelector((state) => state.authSlice.isLogin);
+  console.log(isLogin);
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login/:mode" element={isLogin ? <Navigate to="/" /> : <Login />} />
         <Route path="/" element={<Layout />}>
           <Route index path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/detail" element={<Detail />} />
-          <Route path="/write" element={<Write />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/write/:mode" element={isLogin ? <Write /> : <Navigate to="/login/login" />} />
+          <Route path="/profile" element={isLogin ? <Profile /> : <Navigate to="/login/login" />} />
         </Route>
       </Routes>
     </BrowserRouter>
