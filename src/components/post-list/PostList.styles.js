@@ -10,7 +10,7 @@ const StPostListWrapper = styled.ul`
   flex-direction: column;
   width: 100%;
   height: auto;
-  max-height: 600px;
+  max-height: 1200px;
   gap: 1rem;
   overflow-y: auto;
   &::-webkit-scrollbar {

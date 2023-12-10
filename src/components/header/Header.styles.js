@@ -13,6 +13,7 @@ const StHeaderContainer = styled.div`
   top: 0;
   z-index: 100;
   background-color: var(--subColor);
+
   h1 {
     color: var(--mainWhite);
   }
@@ -20,8 +21,13 @@ const StHeaderContainer = styled.div`
 
 const StHeaderTitle = styled(Link)`
   text-decoration: none;
-  font-weight: bold;
-  font-size: large;
+  font-size: 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: var(--mainOrange);
+  }
 `;
 
 const StHeaderButtonContainer = styled.div`

@@ -106,17 +106,22 @@ const UserProfile = styled.div`
 
 const StNicknameAndDate = styled.div`
   display: flex;
+  align-items: center;
   font-size: small;
   padding-left: 0.5rem;
   &::after {
     content: '|';
     float: right;
     display: block;
-    color: #666;
-    padding-left: 0.5rem;
+    color: #444;
+    padding-left: 0.8rem;
   }
-  &:last-child::after {
-    content: '';
+  &:last-child {
+    font-size: 0.8rem;
+    color: #999;
+    &::after {
+      content: '';
+    }
   }
 
   @media (min-width: 1050px) {
