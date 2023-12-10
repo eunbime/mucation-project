@@ -47,6 +47,11 @@ const GlobalStyles = createGlobalStyle`
     &::-webkit-scrollbar {
     width: 0;
   }
+  html,body{
+    position: relative;
+    min-height: 100%;
+    height: auto;
+  }
   }
   blockquote:before, blockquote:after,
   q:before, q:after {

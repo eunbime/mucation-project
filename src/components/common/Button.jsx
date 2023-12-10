@@ -33,7 +33,7 @@ const StButton = styled.button`
   @media (min-width: 650px) {
     font-size: medium;
     padding: 0.65rem 1.25rem;
-    height: 100%;
+    height: unset;
   }
 `;
 

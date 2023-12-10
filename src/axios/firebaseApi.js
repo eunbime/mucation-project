@@ -1,6 +1,6 @@
 import { addDoc, collection, doc, updateDoc, deleteDoc, getDocs, setDoc, getDoc, query } from 'firebase/firestore';
 
-import { db, auth } from '../firebase.js';
+import { db, auth, storage } from '../firebase.js';
 import {
   createUserWithEmailAndPassword,
   GithubAuthProvider,
@@ -10,6 +10,7 @@ import {
   signOut,
   updateProfile
 } from 'firebase/auth';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
 // POST 추가하기
 export const addPost = async ({ ...posts }) => {
@@ -123,4 +124,12 @@ export const userProfileUpdate = async (nickname, photoURL) => {
     photoURL
   });
   return update;
+};
+
+// 파이어베이스 posts안에 nickname & userPhoto 업데이트
+export const updatePostsData = async (id, nickname) => {
+  const docRef = doc(db, 'posts', id);
+  await updateDoc(docRef, {
+    nickname
+  });
 };
