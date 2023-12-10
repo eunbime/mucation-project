@@ -114,13 +114,14 @@ const StSubLineWrapper = styled.div`
   border-bottom: 1px solid #ff683b;
   & h3 {
     font-size: 2.441rem;
-    max-width: 60%;
+    max-width: 55%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
   & span {
     font-size: 1.25rem;
+    text-align: right;
   }
   & > div {
     display: flex;
@@ -133,7 +134,7 @@ const StSubLineWrapper = styled.div`
       font-size: 1.5rem;
     }
     & span {
-      font-size: 1rem;
+      font-size: 0.8rem;
     }
     & > div {
       display: flex;

@@ -6,11 +6,10 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 import { StDetailPageWrapper, StSubLineWrapper, StContextP } from './Detail.styles';
+import EditDeleteArea from './EditDeleteArea';
 
 const Detail = () => {
-  // 데이터 가져오기
-  const location = useLocation();
-
+  const { currentUser } = useAuth();
   const [formattedDate, setFormattedDate] = useState([]);
   //현재 비디오 데이터
   const datas = useSelector((state) => state.currentVideoSlice.videoInfo);
@@ -34,7 +33,7 @@ const Detail = () => {
         <h3>{datas?.title} </h3>
         <div>
           <span>{formattedDate}</span>
-          {/* <DetailPageHeart /> */}
+          {currentUser.uid === datas.uid && <EditDeleteArea />}
         </div>
       </StSubLineWrapper>
       <DetailPageUserInfo />
