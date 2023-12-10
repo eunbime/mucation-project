@@ -34,11 +34,11 @@ St{기능}{스타일정보} 형식의 이름 컨벤션 맞추기 */
     width: 100vh;
     height: 70vh;
     overflow-y: auto;
-    border: 1px solid  #7270FF;
+    border: 1px solid  #FF683B;
     `
   
 const StModalClose = styled.span `
-    color: #D9FD79;
+    color: #FF683B;
     float: right;
     font-size: 28px;
     font-weight: bold;
