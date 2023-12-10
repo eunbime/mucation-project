@@ -5,9 +5,12 @@ import axios from 'axios';
 import {
   StWriteModalImg,
   StWriteModalNonSearch,
-  StWriteModalSearch,
+  StWriteModalSearchBtn,
   StWriteModalSearchInput,
-  StWriteModalSectionBorder
+  StWriteModalSectionBorder,
+  StThumbnailBox,
+  StPostTitle,
+  StInfoBox
 } from './WriteModalSearch.stlye.js';
 
 const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
@@ -41,7 +44,7 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
   return (
     <div>
       <StWriteModalSearchInput type="text" onChange={handler} onKeyDown={handleKeyPress} />
-      <StWriteModalSearch onClick={getSearchHandler}>찾기</StWriteModalSearch>
+      <StWriteModalSearchBtn onClick={getSearchHandler}>찾기</StWriteModalSearchBtn>
 
       {search.length > 0 ? (
         search.map((item) => (
@@ -51,9 +54,13 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
                 handleVideoSelect({ videoId: item.id.videoId, thumbnail: item.snippet.thumbnails.high.url })
               }
             >
-              <StWriteModalImg src={item.snippet.thumbnails.high.url} alt="앨범이미지" />
-              <div>타이틀: {item.snippet.title}</div>
-              <div id={item.id.videoId}></div>
+              <StThumbnailBox>
+                <StWriteModalImg src={item.snippet.thumbnails.high.url} alt="앨범이미지" />
+              </StThumbnailBox>
+              <StInfoBox>
+                <StPostTitle> {item.snippet.title}</StPostTitle>
+                <div id={item.id.videoId}></div>
+              </StInfoBox>
             </StWriteModalSectionBorder>
           </section>
         ))
