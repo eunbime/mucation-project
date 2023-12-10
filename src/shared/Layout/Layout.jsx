@@ -15,7 +15,9 @@ const Layout = () => {
 };
 
 const Container = styled.div`
-  height: 100vh;
+  position: relative;
+  height: auto;
+  min-height: calc(100vh - 6rem);
   width: 100vw;
 `;
 
