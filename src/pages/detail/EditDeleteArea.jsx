@@ -23,7 +23,7 @@ const EditDeleteArea = () => {
 
   const goToDeletePage = () => {
     // 삭제로직
-    deleteMutate(datas.id, {
+    deleteMutate(datas?.id, {
       onSuccess: async () => {
         const confirmValue = await confirm({ title: '삭제', message: '해당 게시물을 삭제하시겠습니까?' });
 

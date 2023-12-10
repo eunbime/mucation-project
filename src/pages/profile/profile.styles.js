@@ -122,6 +122,14 @@ const StThumnail = styled.img`
     width: 26rem;
     height: 20rem;
   }
+  @media (max-width: 510px) {
+    width: 24rem;
+    height: 15rem;
+  }
+  @media (max-width: 434px) {
+    width: 21rem;
+    height: 15rem;
+  }
   @media (max-width: 414px) {
     width: 21rem;
     height: 15rem;
