@@ -15,6 +15,7 @@ const DetailPageVideoArea = () => {
   const inform = useSelector((state) => state.seletcedVideoSlice);
   const [currentIndex, setCurrentIndex] = useState(0);
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
+  console.log(inform);
 
   useEffect(() => {
     // 'inform.id'를 기반으로 초기 'currentIndex' 설정
@@ -24,7 +25,7 @@ const DetailPageVideoArea = () => {
 
   useEffect(() => {
     dispatch(currentVideoData(posts?.[currentIndex]));
-  }, [currentIndex]);
+  }, [currentIndex, posts]);
 
   if (isLoading) return <p>loading...</p>;
 

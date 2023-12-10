@@ -33,7 +33,7 @@ const Detail = () => {
         <h3>{datas?.title} </h3>
         <div>
           <span>{formattedDate}</span>
-          {currentUser.uid === datas.uid && <EditDeleteArea />}
+          {currentUser?.uid === datas?.uid && <EditDeleteArea />}
         </div>
       </StSubLineWrapper>
       <DetailPageUserInfo />
