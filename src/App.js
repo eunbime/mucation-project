@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { auth } from './firebase';
 import { setSuccessLogin } from './redux/modules/authSlice';
 import { useDispatch } from 'react-redux';
+import AlertModal from 'components/alertModal/AlertModal';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <GlobalStyles />
+        <AlertModal />
         <Router />
       </QueryClientProvider>
     </>
