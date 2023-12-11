@@ -21,7 +21,7 @@
 
 시병택: https://github.com/BYEONGTAEK2023
 
-전지현: 
+전지현: https://github.com/jihyun-j
 
 ## 프로젝트 소개
 
