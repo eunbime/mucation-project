@@ -21,23 +21,29 @@ import { db, storage } from '../../firebase.js';
 import { useAuth } from 'hooks/useAuth';
 import { getUserInfo, userProfileUpdate } from '../../axios/firebaseApi.js';
 import Button from 'components/common/Button';
-import AlertModal from 'components/alertModal/AlertModal';
 import useAlert from 'hooks/useAlert';
 import { useQueryClient, useQuery, useMutation } from 'react-query';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const EditProfileModal = () => {
   const { currentUser } = useAuth();
+
   const { data: user } = useQuery({ queryKey: ['user'], queryFn: () => getUserInfo(currentUser.uid) });
 
   const queryClient = useQueryClient();
+
   const [editUserIntroduction, setEditUserIntroduction] = useState('');
+
   const [editNickname, setEditNickname] = useState('');
+
   const [editInterestGenre, setEditInterestGenre] = useState('');
+
   const [imageUpload, setImageUpload] = useState(null);
+
   const [image, setImage] = useState('');
 
   const dispatch = useDispatch();
+
   const { alert } = useAlert();
 
   const onChangeNickname = (e) => {
@@ -71,6 +77,7 @@ const EditProfileModal = () => {
       setEditUserIntroduction(user.introduce);
       return;
     }
+
     // 닉네임만 수정되고 소개들이 수정되지 않았을 때
     if (editNickname && !editUserIntroduction) {
       await userProfileUpdate(editNickname);
@@ -79,6 +86,7 @@ const EditProfileModal = () => {
       setEditNickname(editNickname);
       setEditUserIntroduction(user.introduce);
     }
+
     // 닉네임은 바뀌지 않고 소개글만 수정되었을 때
     if (!editNickname && editUserIntroduction) {
       alert({ title: '수정완료', message: '한줄 소개가 수정되었습니다.' });
@@ -90,9 +98,10 @@ const EditProfileModal = () => {
           introduce: editUserIntroduction
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
+
     if (editNickname && editUserIntroduction) {
       alert({ title: '수정완료', message: '프로필이 성공적으로 수정되었습니다.' });
       dispatch(isEditingUserProfile(false));
@@ -104,9 +113,10 @@ const EditProfileModal = () => {
           introduce: editUserIntroduction
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
+
     if (imageUpload) {
       alert({ title: '수정완료', message: '프로필이 성공적으로 수정되었습니다.' });
       dispatch(isEditingUserProfile(false));
@@ -117,20 +127,17 @@ const EditProfileModal = () => {
   const editMutaition = useMutation(editProfile, {
     onSuccess: () => {
       queryClient.invalidateQueries('user');
-      // console.log('성공');
     }
   });
 
   // 업데이트 사용자 프로필 버튼 클릭
   const onClickEdit = (id) => {
-    console.log(id);
     editMutaition.mutate(editProfile(String(id)));
   };
 
   // 관심 장르 추가
   const addInterestGenre = async (id) => {
     // 유효성 부분
-    console.log(id);
     if (!editInterestGenre) {
       alert({ title: '입력오류', message: '장르를 입력해 주세요.' });
       return;
@@ -142,8 +149,8 @@ const EditProfileModal = () => {
       await updateDoc(docRef, {
         genre: arrayUnion(editInterestGenre)
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -151,7 +158,6 @@ const EditProfileModal = () => {
   const addGenreMutaition = useMutation(addInterestGenre, {
     onSuccess: () => {
       queryClient.invalidateQueries('user');
-      // console.log('성공');
     }
   });
 
@@ -169,8 +175,8 @@ const EditProfileModal = () => {
       await updateDoc(docRef, {
         genre: arrayRemove(item)
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -178,13 +184,11 @@ const EditProfileModal = () => {
   const deleteMutation = useMutation(deleteInterestGenre, {
     onSuccess: () => {
       queryClient.invalidateQueries('user');
-      console.log('삭제성공');
     }
   });
 
   // 관심 장르 삭제 버튼
   const handleDelete = (id, item) => {
-    console.log(id);
     deleteMutation.mutate(deleteInterestGenre(id, item));
   };
 
@@ -195,7 +199,6 @@ const EditProfileModal = () => {
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         setImage(url);
-        console.log(url);
       });
     });
 
@@ -212,7 +215,6 @@ const EditProfileModal = () => {
         alert({ title: '업로드 성공', message: '프로필 사진이 성공적으로 업로드 되었습니다.' });
       });
     });
-
     userProfileUpdate(currentUser.displayName, image);
   };
 

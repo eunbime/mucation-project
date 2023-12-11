@@ -5,10 +5,8 @@ const MapMarkerClusterer = ({ mapRef, positions }) => {
   // 클러스터 클릭 이벤트
   const onClusterclick = (_target, cluster) => {
     const map = mapRef.current;
-
     // 현재 지도 레벨에서 1레벨 확대한 레벨
     const level = map.getLevel() - 1;
-
     // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대
     map.setLevel(level, { anchor: cluster.getCenter() });
   };

@@ -8,7 +8,6 @@ import { getPosts } from 'api/posts';
 import { useDispatch } from 'react-redux';
 import { getLocation } from '../../redux/modules/mapSlice';
 import ControlButton from '../map-control-button/MapControlButton';
-import MapMarkerClusterer from './MapMarkerClusterer';
 import CustomOverlay from './CustomOverlay';
 import CustomMarker from './CustomMarker';
 import CustomControlBar from '../map-control-button/CustomControlBar';
@@ -19,17 +18,29 @@ const { kakao } = window;
 
 const Location = () => {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });
+
   const { isLoading, isError, data: posts } = useQuery('posts', getPosts);
+
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
+
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
+
   const [isOpenWindow, setIsOpenWindow] = useState(false);
+
   const [isOpenOverlay, setIsOpenOverlay] = useState(false);
+
   const [level, setLevel] = useState(5);
+
   const [markerId, setMarkerId] = useState('');
+
   const mapRef = useRef(null);
+
   const debouncedState = useDebounce(state.center, 200);
+
   const { alert, confirm } = useAlert();
 
   useEffect(() => {
@@ -59,7 +70,6 @@ const Location = () => {
 
         // 사용자가 위치 허용을 하지 않았을 때
         (err) => {
-          console.log(err.message);
           alert({ title: '알림', message: '위치 동의가 허용되지 않아 현재 위치가 기본 위치로 표시됩니다.' });
 
           setState((prev) => ({
@@ -85,7 +95,6 @@ const Location = () => {
   useEffect(() => {
     dispatch(getLocation(debouncedState));
   }, [debouncedState]);
-
   // 게시물에서 필요한 값 추출
   var positions = posts?.map((post) => {
     return {
@@ -103,7 +112,6 @@ const Location = () => {
   const handleToWritePage = async () => {
     const answer = await confirm({ title: '작성 페이지로 이동', message: '지금 위치에서 음악을 공유하시겠습니까?' });
     if (!answer) return;
-
     // 클릭 시 작성 페이지로 현재 좌표 값 갖고 이동
     navigate('/write/write', {
       state: { ...state.center }
@@ -154,7 +162,6 @@ const Location = () => {
           <CustomMarker key={item.id} item={item} setIsOpenOverlay={setIsOpenOverlay} setMarkerId={setMarkerId} />
         ))}
 
-        {/* <MapMarkerClusterer mapRef={mapRef} positions={positions} /> */}
         {filteredPosition?.map((item) => {
           return (
             isOpenOverlay && (

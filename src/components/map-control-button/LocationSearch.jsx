@@ -7,14 +7,15 @@ const { kakao } = window;
 
 const LocationSearch = ({ mapRef }) => {
   const [searchInput, setSearchInput] = useState('');
+
   const [isOpenInput, setIsOpenInput] = useState(false);
+
   const { alert, confirm } = useAlert();
 
   // 키워드로 장소 겁색 및 이동
   const handleToSearch = (e) => {
     e.preventDefault();
     if (!mapRef) return;
-
     const ps = new kakao.maps.services.Places();
 
     // 키워드를 입력하지 않았을 때

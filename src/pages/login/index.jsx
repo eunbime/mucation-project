@@ -11,14 +11,20 @@ import { ReactComponent as Home } from 'styles/img/loginPage/home.svg';
 
 const Login = () => {
   const params = useParams();
+
   const currentLoginPageMode = params.mode;
 
   const { loginHandler, signUpHandler } = useAuth();
 
   const [email, setEmail, setEmailValue] = useInput();
+
   const [password, setPassword, setPasswordValue] = useInput();
+
   const [passwordCheck, setPasswordCheck, setPasswordCheckValue] = useInput();
+
   const [nickname, setNickname, setNicknameValue] = useInput();
+
+  const { alert } = useAlert();
 
   useEffect(() => {
     setEmailValue('');
@@ -42,8 +48,6 @@ const Login = () => {
   // input validation check
   const emailReg = new RegExp('[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}');
   const pwReg = new RegExp('(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}');
-
-  const { alert } = useAlert();
 
   const signUpInputValidation = () => {
     if (!email || !password || !passwordCheck || !nickname) {

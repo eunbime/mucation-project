@@ -5,6 +5,7 @@ const Button = ({ text, handler, mode }) => {
   const buttonClickEventHandler = () => {
     handler();
   };
+
   return (
     <StButton mode={mode} onClick={buttonClickEventHandler}>
       {text}

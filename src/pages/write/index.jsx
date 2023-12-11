@@ -18,6 +18,12 @@ const Write = () => {
 
   const { alert, confirm } = useAlert();
 
+  const { checkAuth, currentUser } = useAuth();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   const params = useParams();
 
   // 모드 선택 : write(글작성) / edit(수정)
@@ -46,12 +52,8 @@ const Write = () => {
   const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
 
   const { mutate: addMutate } = useMutation({ mutationFn: addPost });
-  const { mutate: editMutate } = useMutation({ mutationFn: editPost });
 
-  const { checkAuth, currentUser } = useAuth();
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  const { mutate: editMutate } = useMutation({ mutationFn: editPost });
 
   // 동영상 선택 모달 토글
   const toggleModal = () => {
@@ -81,17 +83,13 @@ const Write = () => {
 
   // 작성 완료 이벤트
   const postWriteHandler = () => {
-    // 새로운 데이터 묶음
-    // TODO : 데이터 변경 필요
-    // uid 데이터 추가 필요
-
     if (!selectVideo.videoId || !inputValue.title || !inputValue.context) {
       alert({ title: '입력오류', message: '모든 값을 입력해주세요' });
       return;
     }
 
     const newMusicPost = {
-      date: new Date().getTime(), //serverTimestamp(),
+      date: new Date().getTime(),
       location: state.center,
       videoId: selectVideo.videoId,
       title: inputValue.title,

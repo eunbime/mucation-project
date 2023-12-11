@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { alertOpen, closeModal, confirmOpen, setConfirmInfo, setResolveFunc } from '../redux/modules/alertSlice';
+import { alertOpen, closeModal, confirmOpen, setResolveFunc } from '../redux/modules/alertSlice';
 
 const useAlert = () => {
   const alertInfo = useSelector((state) => state.alertSlice);
+
   const dispatch = useDispatch();
 
   // confirm 사용시 // async내에서 await

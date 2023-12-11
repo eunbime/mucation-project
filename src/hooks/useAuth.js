@@ -8,7 +8,9 @@ import useAlert from './useAlert';
 
 export const useAuth = () => {
   const { alert } = useAlert();
+
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const logoutMutate = useMutation(logout, {
@@ -26,7 +28,14 @@ export const useAuth = () => {
       navigate('/');
     },
     onError: (error) => {
-      console.error('로그인 실패>>>>', error.message);
+      switch (error.code) {
+        case 'auth/invalid-credential':
+          alert({ title: '로그인에러', message: '잘못된 로그인 정보입니다.' });
+          break;
+        default:
+          alert({ title: '로그인에러', message: '로그인에러 입니다.' });
+          break;
+      }
     }
   });
 
@@ -39,7 +48,14 @@ export const useAuth = () => {
       navigate('/');
     },
     onError: (error) => {
-      console.error('회원가입 실패>>>>', error.message);
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          alert({ title: '회원가입에러', message: '이미 사용중인 이메일입니다.' });
+          break;
+        default:
+          alert({ title: '회원가입에러', message: '회원가입에러 입니다.' });
+          break;
+      }
     }
   });
 
@@ -51,7 +67,7 @@ export const useAuth = () => {
       navigate('/');
     },
     onError: (error) => {
-      console.error('소셜로그인 실패>>>>', error.message);
+      alert({ title: '소셜로그인에러', message: error.code });
     }
   });
 
@@ -83,21 +99,12 @@ export const useAuth = () => {
     const currentDate = new Date().getTime();
     auth.onAuthStateChanged((user) => {
       if (!user) {
-        console.log('토큰이 없습니다.');
         dispatch(setSuccessLogout());
         return;
       }
       if (currentDate > user?.stsTokenManager.expirationTime) {
-        //console.log('현재시간', currentDate);
-        //console.log('만료시간', user?.stsTokenManager.expirationTime);
-        //console.log('유효한 토큰이니?>', currentDate <= user?.stsTokenManager.expirationTime);
-        console.log('유효하지 않은 토큰입니다.');
         dispatch(setSuccessLogout());
       } else {
-        //console.log('현재시간', currentDate);
-        //console.log('만료시간', user?.stsTokenManager.expirationTime);
-        //console.log('유효한 토큰이니?>', currentDate <= user?.stsTokenManager.expirationTime);
-        console.log('유효한 토큰입니다.');
         dispatch(setSuccessLogin());
       }
     });

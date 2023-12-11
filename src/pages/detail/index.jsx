@@ -9,6 +9,7 @@ import { selectedvideo } from '../../redux/modules/seletcedVideoSlice';
 
 const Detail = () => {
   const { currentUser } = useAuth();
+
   const dispatch = useDispatch();
 
   //현재 비디오 데이터
@@ -21,7 +22,6 @@ const Detail = () => {
   const convertNumberToDate = () => {
     const number = parseInt(datas?.date);
     const dateObject = new Date(number);
-
     // 예시: "2023-01-01 12:34:56" 형식으로 표시
     const formattedDateString = dateObject.toLocaleString();
     return formattedDateString;

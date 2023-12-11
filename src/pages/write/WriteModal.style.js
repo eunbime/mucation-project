@@ -1,16 +1,4 @@
 import styled from 'styled-components';
-/* styled components
-상위폴더명.styles.js 형식의 styled components 파일만들어서 사용
-St{기능}{스타일정보} 형식의 이름 컨벤션 맞추기 */
-
-/* 모달 스타일 */
-/* // --mainWhite: #fff;
-// --mainBlack: #222;
-// --mainOrange: #FF683B;
-// --bgColor: #171717;
-// --subColor: #252525;
-// --neonColor: #D9FD79;
-// --violetColor: #7270FF; */
 
 const StModalOverlay = styled.div`
   position: fixed;

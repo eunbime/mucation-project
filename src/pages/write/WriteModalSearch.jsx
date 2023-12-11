@@ -2,18 +2,10 @@ import React, { useEffect, useState } from 'react';
 import youtubeApi from '../../axios/youtubeApi';
 import useInput from 'hooks/useInput';
 import axios from 'axios';
-import {
-  StWriteModalImg,
-  StWriteModalNonSearch,
-  StWriteModalSearchBtn,
-  StWriteModalSearchInput,
-  StWriteModalSectionBorder,
-  StThumbnailBox,
-  StPostTitle,
-  StInfoBox
-} from './WriteModalSearch.stlye.js';
+import { StWriteModalNonSearch, StWriteModalSearchBtn, StWriteModalSearchInput } from './WriteModalSearch.stlye.js';
+import WriteModalSearchItem from './WriteModalSearchItem';
 
-const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
+const WriteModalSearch = ({ setSelectVideo, toggleModal }) => {
   const [value, handler] = useInput('');
 
   const [search, setSearch] = useState('');
@@ -22,9 +14,8 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
     try {
       const response = await axios.get(`${youtubeApi}&q=${value}`);
       setSearch(response.data.items);
-      console.log('response.data.items', response.data.items);
     } catch {
-      console.log('error', console.error);
+      console.error('error', console.error);
     }
   };
 
@@ -48,21 +39,7 @@ const WriteModalSearch = ({ selectVideo, setSelectVideo, toggleModal }) => {
 
       {search.length > 0 ? (
         search.map((item) => (
-          <section key={item.id.videoId}>
-            <StWriteModalSectionBorder
-              onClick={() =>
-                handleVideoSelect({ videoId: item.id.videoId, thumbnail: item.snippet.thumbnails.high.url })
-              }
-            >
-              <StThumbnailBox>
-                <StWriteModalImg src={item.snippet.thumbnails.high.url} alt="앨범이미지" />
-              </StThumbnailBox>
-              <StInfoBox>
-                <StPostTitle> {item.snippet.title}</StPostTitle>
-                <div id={item.id.videoId}></div>
-              </StInfoBox>
-            </StWriteModalSectionBorder>
-          </section>
+          <WriteModalSearchItem key={item.id.videoId} item={item} handleVideoSelect={handleVideoSelect} />
         ))
       ) : (
         <StWriteModalNonSearch>좋아하는 노래를 검색 해주세요.</StWriteModalNonSearch>
