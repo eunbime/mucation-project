@@ -1,11 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
-
-  /* http://meyerweb.com/eric/tools/css/reset/ 
-    v2.0 | 20110126
-    License: none (public domain)
-  */
+  :root {
+    --mainWhite: #fff;
+    --mainBlack: #222;
+    --mainOrange: #FF683B;
+    --bgColor: #171717;
+    --subColor: #252525;
+    --neonColor: #D9FD79;
+    --violetColor: #7270FF;
+    --darkGrayColor: #2B2B2B;
+  }
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -27,7 +32,7 @@ const GlobalStyles = createGlobalStyle`
     font: inherit;
     vertical-align: baseline;
   }
-  /* HTML5 display-role reset for older browsers */
+ 
   article, aside, details, figcaption, figure, 
   footer, header, hgroup, menu, nav, section {
     display: block;
@@ -61,17 +66,6 @@ const GlobalStyles = createGlobalStyle`
   table {
     border-collapse: collapse;
     border-spacing: 0;
-  }
-
-  :root {
-    --mainWhite: #fff;
-    --mainBlack: #222;
-    --mainOrange: #FF683B;
-    --bgColor: #171717;
-    --subColor: #252525;
-    --neonColor: #D9FD79;
-    --violetColor: #7270FF;
-    --darkGrayColor: #2B2B2B;
   }
 
   body {

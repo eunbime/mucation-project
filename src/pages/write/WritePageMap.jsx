@@ -7,14 +7,20 @@ import { useLocation } from 'react-router-dom/dist';
 import { useSelector } from 'react-redux';
 
 const { kakao } = window;
+
 const MapInfo = ({ setState, state, mode }) => {
   const mapRef = useRef();
+
   const [loading, error] = useKakaoLoader({ appkey: process.env.REACT_APP_KAKAO_MAP_API_KEY });
-  // const [state, setState] = useState({ center: { lat: '', lng: '' }, isPanto: false, level: 0 });
+
   const [currentLocation, setCurrentLocation] = useState({ lat: '', lng: '' });
+
   const [address, setAddress] = useState('');
+
   const location = useLocation();
+
   const passedState = location.state;
+
   const datas = useSelector((state) => state.currentVideoSlice.videoInfo);
 
   useEffect(() => {
@@ -27,6 +33,7 @@ const MapInfo = ({ setState, state, mode }) => {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
+
           // 현재 위치 저장
           setCurrentLocation({ ...currentLocation, ...location });
 

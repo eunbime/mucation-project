@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// const initialState = localStorage.getItem('post') ? JSON.parse(localStorage.getItem('post')) : {};
 const initialState = {};
 
 const seletcedVideoSlice = createSlice({

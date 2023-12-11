@@ -8,7 +8,6 @@ import {
   StPostContent,
   StThumnailAndInfo
 } from './profile.styles';
-
 import { useQuery } from 'react-query';
 import { getCurrentUserPost } from '../../axios/firebaseApi.js';
 import { useNavigate } from 'react-router-dom';
@@ -19,9 +18,13 @@ import { selectedvideo } from '../../redux/modules/seletcedVideoSlice';
 
 const UserPostCard = () => {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
   const { currentUser } = useAuth();
-  const { isLoading, isError, data: posts } = useQuery(['posts'], getCurrentUserPost);
+
+  const { data: posts } = useQuery(['posts'], getCurrentUserPost);
+
   const filtered = posts?.filter((post) => post.uid === currentUser.uid);
 
   // 파이어베이스 날짜 변환
@@ -42,7 +45,6 @@ const UserPostCard = () => {
 
   const handleToDetailPage = (post) => {
     dispatch(selectedvideo(post));
-
     navigate('/detail');
   };
 

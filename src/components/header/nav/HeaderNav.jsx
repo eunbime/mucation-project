@@ -8,6 +8,7 @@ import useAlert from 'hooks/useAlert';
 
 const HeaderNav = () => {
   const navigate = useNavigate();
+
   const { confirm } = useAlert();
 
   const isLogin = useSelector((state) => state.authSlice.isLogin);

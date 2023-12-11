@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import WriteModalSearch from './WriteModalSearch';
 import { StModalClose, StModalContent, StModalOverlay } from './WriteModal.style';
 
 const WriteModal = ({ setSelectVideo, selectVideo, toggleModal }) => {
   return (
     <div>
-      <StModalOverlay  onClick={toggleModal}>
+      <StModalOverlay onClick={toggleModal}>
         <StModalContent onClick={(e) => e.stopPropagation()}>
           <StModalClose className="close" onClick={toggleModal}>
             &times;
@@ -18,4 +18,3 @@ const WriteModal = ({ setSelectVideo, selectVideo, toggleModal }) => {
 };
 
 export default WriteModal;
-

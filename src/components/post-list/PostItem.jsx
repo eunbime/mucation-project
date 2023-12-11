@@ -15,17 +15,19 @@ import {
 
 const PostItem = ({ post }) => {
   const dispatch = useDispatch();
+
   const navigation = useNavigate();
 
   // date 변환
   const number = parseInt(post.date);
+
   const dateObject = new Date(number);
+
   const formattedDateString = dateObject.toLocaleString();
 
   // 디테일 페이지로 이동
   const selectedMovieToDatail = (post) => {
     dispatch(selectedvideo(post));
-
     navigation('/detail');
   };
 

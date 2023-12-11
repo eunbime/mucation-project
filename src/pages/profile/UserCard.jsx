@@ -16,12 +16,10 @@ import { useAuth } from 'hooks/useAuth';
 
 const UserCard = () => {
   const dispatch = useDispatch();
+
   const { currentUser } = useAuth();
-  const {
-    isLoading,
-    isError,
-    data: user
-  } = useQuery({ queryKey: ['user'], queryFn: () => getUserInfo(currentUser.uid) });
+
+  const { data: user } = useQuery({ queryKey: ['user'], queryFn: () => getUserInfo(currentUser.uid) });
 
   // 프로필 수정 모달 열기
   const showEditProfileModal = () => {
@@ -39,14 +37,12 @@ const UserCard = () => {
       ></StAvatar>
       <StNickname>{currentUser.displayName ? currentUser.displayName : '이름없음'} </StNickname>
       <StEmail>{currentUser.email}</StEmail>
-
       <StIntroduce>{user?.introduce}</StIntroduce>
       <StUserInteresteWrapper key={user?.uid}>
         {user?.genre.map((item) => (
-          <StFavoriteGenre>{item}</StFavoriteGenre>
+          <StFavoriteGenre key={item}>{item}</StFavoriteGenre>
         ))}
       </StUserInteresteWrapper>
-
       <Button text="프로필 수정" handler={showEditProfileModal} />
     </StUserInfoContainer>
   );

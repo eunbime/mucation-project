@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const StLoginPageContainer = styled.div`
-  /* padding-top: 11.9375rem; */
   display: flex;
   flex-direction: column;
   align-items: center;

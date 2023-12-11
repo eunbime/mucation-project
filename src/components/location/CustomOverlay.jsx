@@ -12,14 +12,12 @@ import { useDispatch } from 'react-redux';
 
 const CustomOverlay = ({ item, setIsOpenOverlay, mapRef }) => {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const handleToDetailPage = async () => {
     const bounds = mapRef.current?.getBounds();
-    console.log(bounds);
-
     dispatch(selectedvideo(item));
-
     navigate('/detail', {
       state: bounds
     });
@@ -34,9 +32,7 @@ const CustomOverlay = ({ item, setIsOpenOverlay, mapRef }) => {
       yAnchor={0.9}
     >
       <StCustomOverlay style={{ backgroundColor: 'white', color: '#000' }}>
-        <StCustomOverlayThumbnail img={item.thumbnail}>
-          {/* <img src={item.thumbnail} alt="thumbnail" /> */}
-        </StCustomOverlayThumbnail>
+        <StCustomOverlayThumbnail img={item.thumbnail}></StCustomOverlayThumbnail>
         <StCustomOverlayInfo>
           <span>{item.title}</span>
           <pre>{item.content}</pre>

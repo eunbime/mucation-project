@@ -1,6 +1,6 @@
 import { addDoc, collection, doc, updateDoc, deleteDoc, getDocs, setDoc, getDoc, query } from 'firebase/firestore';
 
-import { db, auth, storage } from '../firebase.js';
+import { db, auth } from '../firebase.js';
 import {
   createUserWithEmailAndPassword,
   GithubAuthProvider,
@@ -10,7 +10,6 @@ import {
   signOut,
   updateProfile
 } from 'firebase/auth';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
 // POST 추가하기
 export const addPost = async ({ ...posts }) => {
@@ -18,7 +17,6 @@ export const addPost = async ({ ...posts }) => {
     // Data
     ...posts
   });
-  console.log(docRef.id);
 };
 
 // POST 수정하기
@@ -35,9 +33,7 @@ export const deletePost = async (id) => {
 
 // 회원가입
 export const signUpEmail = async ({ email, password, nickname }) => {
-  console.log(email, password, nickname);
   const response = await createUserWithEmailAndPassword(auth, email, password);
-  console.log(response, nickname);
   return { response, nickname };
 };
 

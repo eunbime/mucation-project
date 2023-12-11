@@ -10,9 +10,6 @@ import {
   StCopyright
 } from './Footer.styles';
 
-const icon = '/components/footer/Footer.jsx';
-console.log(icon);
-
 const Footer = () => {
   return (
     <StFooterContainer>
