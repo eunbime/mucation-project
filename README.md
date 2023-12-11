@@ -1,7 +1,5 @@
 # Mucation - READ.ME
 
-참고링크: https://github.com/Voluntain-SKKU/Voluntain-2nd
-
 # 🎵 Mucation
 
 ## Overview
