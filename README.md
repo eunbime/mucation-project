@@ -1,5 +1,3 @@
-# Mucation - READ.ME
-
 # 🎵 Mucation
 
 ## Overview
