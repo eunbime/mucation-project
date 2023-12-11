@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StSearchForm, StButton } from './LocationSearch.styles';
-import { MdOutlineSearch } from 'react-icons/md';
+import { ReactComponent as Search } from 'styles/img/map/search.svg';
+
 import useAlert from 'hooks/useAlert';
 
 const { kakao } = window;
@@ -53,7 +54,7 @@ const LocationSearch = ({ mapRef }) => {
   return (
     <StSearchForm onSubmit={(e) => handleToSearch(e)}>
       <StButton type="button" onClick={() => setIsOpenInput(!isOpenInput)}>
-        <MdOutlineSearch />
+        <Search />
       </StButton>
       {isOpenInput && (
         <input

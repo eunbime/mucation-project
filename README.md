@@ -1,71 +1,236 @@
-# Getting Started with Create React App
+# 🎵 Mucation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+> **내일배움캠프 (심화주차 아웃소싱 과제)**
 
-In the project directory, you can run:
+🕗 개발기간: 2023. 12. 4 ~ 2023. 12. 11  
 
-### `yarn start`
+💻 배포 주소: https://mucation-project.vercel.app/  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `yarn test`
+<br/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 팀소개
 
-### `yarn build`
+김범수: 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+김은비: https://github.com/eunbime
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+김명섭: https://github.com/kms99
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+시병택: https://github.com/BYEONGTAEK2023
 
-### `yarn eject`
+전지현: https://github.com/jihyun-j
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<br/>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 프로젝트 소개
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<aside>
+🎶 내가 원하는 장소에서 내가 좋아하는 음악(영상)을 공유해 보자!
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+</aside>
 
-## Learn More
+<br/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Stack
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Environment
+ 
+<img src="https://img.shields.io/badge/GIT-F05032?style=for-the-badge&logo=Git&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=GitHub&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/VISUAL STUDIO CODE-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white"/></a>
 
-### Code Splitting
+### Config
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<img src="https://img.shields.io/badge/NPM-CB3837?style=for-the-badge&logo=NPM&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/YARN-2C8EBB?style=for-the-badge&logo=Yarn&logoColor=white"/></a>
 
-### Analyzing the Bundle Size
+### Development
+<img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/JAVASCRIPT-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"/></a> 
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/></a>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Database
 
-### Making a Progressive Web App
+<img src="https://img.shields.io/badge/FIREBASE-FFCA28?style=for-the-badge&logo=Firebase&logoColor=black"/></a>  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### API
 
-### Advanced Configuration
+<img src="https://img.shields.io/badge/YOUTUBE-FF0000?style=for-the-badge&logo=Youtube&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/KAKAO MAP-FFCD00?style=for-the-badge&logo=KaKao&logoColor=black"/></a>  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Communication
 
-### Deployment
+<img src="https://img.shields.io/badge/SLACK-4A154B?style=for-the-badge&logo=Slack&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/FIGMA-F24E1E?style=for-the-badge&logo=Figma&logoColor=white"/></a>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `yarn build` fails to minify
+<br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# music-sharing-pj
+## 화면구성
+
+- 로그인 /  회원가입
+    - Firebase Authenticator를 이용해 구글, 깃허브 및 이메일과 비밀번호를 사용해 회원가입 및 로그인
+
+
+- 홈 - 지도 / 근처에서 공유된 영상들
+    - 초기 위치는 내 위치로 지정하여 내 근처에서 공유된 영상 리스트를 볼 수 있음
+    - 지도위에 마크된 위치에서 영상의 간단한 정보 보기 및 상세보기 이동 가능
+ 
+
+- 게시글 작성 페이지
+    - 유튜브 API를 이용해 공유하고 싶은 영상을 가져와서 추가
+    - 제목과 내용을 입력하고 공유하고 싶은 위치를 지정해서 게시글을 작성
+
+    
+- 게시글 상세보기
+    - Firebase에 영상에대한 정보를 저장해 두고, 공유된 영상에 대한 정보를 볼 수 있음
+    - 공유된 게시글이 현재 로그인된 사용자가 게시한 영상이면 수정 및 삭제가 가능 (권한부여)
+- 프로필
+    - 내가 공유한 영상들 모아서 볼 수 있음
+    - 내가 좋아하는 장르 추가 가능
+
+<br>
+
+## 주요기능
+
+### 📌 위치를 지정해서 영상 공유 가능
+
+- 내가 기억하고 싶은 장소 또는 공유하고 싶은 장소를 위치로 지정해 음악을 공유할 수 있어요
+
+### 📌 내 근처에서 사람들과 함께 영상 시청 또는 감상
+
+- 내가 공유한 음악을 근처 사람들과 함께 들을 수 있어요
+- 특정 위치의 사람들과 음악을 공유할 수 있어요 (멀리 있지만 공감대 형성?)
+
+<br/>
+
+## 📂 아키텍처
+
+```
+src
+ ┣ api
+ ┃ ┗ posts.js
+ ┣ assets
+ ┣ axios
+ ┃ ┣ firebaseApi.js
+ ┃ ┣ locationApi.js
+ ┃ ┗ youtubeApi.js
+ ┣ components
+ ┃ ┣ alertModal
+ ┃ ┃ ┣ AlertModal.jsx
+ ┃ ┃ ┣ AlertModalMainContainer.jsx
+ ┃ ┃ ┣ BackDrop.jsx
+ ┃ ┃ ┗ alertModal.styles.js
+ ┃ ┣ common
+ ┃ ┃ ┗ Button.jsx
+ ┃ ┣ footer
+ ┃ ┃ ┣ Footer.jsx
+ ┃ ┃ ┗ Footer.styles.js
+ ┃ ┣ header
+ ┃ ┃ ┣ nav
+ ┃ ┃ ┃ ┗ HeaderNav.jsx
+ ┃ ┃ ┣ Header.jsx
+ ┃ ┃ ┗ Header.styles.js
+ ┃ ┣ location
+ ┃ ┃ ┣ CustomMarker.jsx
+ ┃ ┃ ┣ CustomMarker.styles.js
+ ┃ ┃ ┣ CustomOverlay.jsx
+ ┃ ┃ ┣ CustomOverlay.styles.js
+ ┃ ┃ ┣ Location.jsx
+ ┃ ┃ ┣ Location.styles.js
+ ┃ ┃ ┣ MapMarkerClusterer.jsx
+ ┃ ┃ ┗ MapMarkerClusterer.styles.js
+ ┃ ┣ map-control-button
+ ┃ ┃ ┣ CustomControlBar.jsx
+ ┃ ┃ ┣ LocationSearch.jsx
+ ┃ ┃ ┣ LocationSearch.styles.js
+ ┃ ┃ ┣ MapControlButton.jsx
+ ┃ ┃ ┗ MapControlButton.styles.js
+ ┃ ┗ post-list
+ ┃ ┃ ┣ PostItem.jsx
+ ┃ ┃ ┣ PostItem.styles.js
+ ┃ ┃ ┣ PostList.jsx
+ ┃ ┃ ┗ PostList.styles.js
+ ┣ hooks
+ ┃ ┣ useAlert.js
+ ┃ ┣ useAuth.js
+ ┃ ┣ useDebounce.js
+ ┃ ┗ useInput.js
+ ┣ pages
+ ┃ ┣ detail
+ ┃ ┃ ┣ Detail.styles.js
+ ┃ ┃ ┣ DetailPageUserInfo.jsx
+ ┃ ┃ ┣ DetailPageVideoArea.jsx
+ ┃ ┃ ┣ EditDeleteArea.jsx
+ ┃ ┃ ┗ index.jsx
+ ┃ ┣ home
+ ┃ ┃ ┣ Home.styles.js
+ ┃ ┃ ┗ index.jsx
+ ┃ ┣ login
+ ┃ ┃ ┣ Login.styles.js
+ ┃ ┃ ┣ LoginInputSection.jsx
+ ┃ ┃ ┣ LoginSocialLoginSection.jsx
+ ┃ ┃ ┗ index.jsx
+ ┃ ┣ profile
+ ┃ ┃ ┣ EditProfileModal.jsx
+ ┃ ┃ ┣ EditProfileModal.styles.js
+ ┃ ┃ ┣ UserCard.jsx
+ ┃ ┃ ┣ UserPostCard.jsx
+ ┃ ┃ ┣ index.jsx
+ ┃ ┃ ┗ profile.styles.js
+ ┃ ┗ write
+ ┃ ┃ ┣ WriteModal.jsx
+ ┃ ┃ ┣ WriteModal.style.js
+ ┃ ┃ ┣ WriteModalSearch.jsx
+ ┃ ┃ ┣ WriteModalSearch.stlye.js
+ ┃ ┃ ┣ WritePageContext.jsx
+ ┃ ┃ ┣ WritePageMap.jsx
+ ┃ ┃ ┣ WritePageMap.styles.js
+ ┃ ┃ ┣ WritePageTitle.jsx
+ ┃ ┃ ┣ WritePageVideoArea.jsx
+ ┃ ┃ ┣ index.jsx
+ ┃ ┃ ┗ write.styles.js
+ ┣ redux
+ ┃ ┣ config
+ ┃ ┃ ┗ configStore.js
+ ┃ ┗ modules
+ ┃ ┃ ┣ alertSlice.js
+ ┃ ┃ ┣ authSlice.js
+ ┃ ┃ ┣ currentVideoSlice.js
+ ┃ ┃ ┣ mapSlice.js
+ ┃ ┃ ┣ profileSlice.js
+ ┃ ┃ ┗ seletcedVideoSlice.js
+ ┣ shared
+ ┃ ┣ Layout
+ ┃ ┃ ┣ AuthLayout.jsx
+ ┃ ┃ ┗ Layout.jsx
+ ┃ ┗ Router.js
+ ┣ styles
+ ┃ ┣ img
+ ┃ ┃ ┣ alertModal
+ ┃ ┃ ┃ ┗ closeBtn.svg
+ ┃ ┃ ┣ detailPage
+ ┃ ┃ ┃ ┣ arrow-left.svg
+ ┃ ┃ ┃ ┣ arrow-right.svg
+ ┃ ┃ ┃ ┣ delete.svg
+ ┃ ┃ ┃ ┣ edit.svg
+ ┃ ┃ ┃ ┗ heart.svg
+ ┃ ┃ ┣ loginPage
+ ┃ ┃ ┃ ┣ github.svg
+ ┃ ┃ ┃ ┣ google.svg
+ ┃ ┃ ┃ ┗ home.svg
+ ┃ ┃ ┗ map
+ ┃ ┃ ┃ ┣ location.svg
+ ┃ ┃ ┃ ┗ search.svg
+ ┃ ┗ GlobalStyle.js
+ ┣ App.js
+ ┣ firebase.js
+ ┣ index.js
+ ┗ logo.svg
+```
